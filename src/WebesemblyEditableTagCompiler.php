@@ -35,7 +35,7 @@ class WebesemblyEditableTagCompiler extends ComponentTagCompiler
                     )*
                     \s*
                 )
-            \/?>
+            \/?>([^\r]+)<\/div>
         /x";
 
         return preg_replace_callback($pattern, function (array $matches) use ($value) {
@@ -47,9 +47,6 @@ class WebesemblyEditableTagCompiler extends ComponentTagCompiler
 
                 return [(string) str($key)->trim() => $value];
             })->toArray();
-
-
-            dd($matches);
 
             preg_match("/webesembly:editable=(['\"])([\w\-\:\.]*)(['\"]) /", $matches[0], $matchTypeOfModule);
 
