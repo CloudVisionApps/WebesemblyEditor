@@ -6,12 +6,17 @@
 
     <title>{{ config('app.name', 'Webesembly Editor') }}</title>
 
+    <link rel="stylesheet" href="{{asset('webesembly-editor/loading-book.css')}}" />
     <script src="{{asset('webesembly-editor/webesembly-editor.js') . '?time='.time()}}"></script>
 </head>
 <body>
     <div id="webesembly-editor-app" class="w-screen h-screen">
         <webesembly-editor>
-            Loading Webesembly Editor...
+            <div class="book">
+                <div class="book__page"></div>
+                <div class="book__page"></div>
+                <div class="book__page"></div>
+            </div>
         </webesembly-editor>
     </div>
 </body>
