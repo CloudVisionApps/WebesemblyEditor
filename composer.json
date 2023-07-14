@@ -2,7 +2,7 @@
     "name": "cloudvision-apps/webesembly-editor",
     "description": "New generation of website building",
     "type": "project",
-    "license": "Paid",
+    "license": "GNU",
     "authors": [
         {
             "name": "Bozhidar Slaveykov",
