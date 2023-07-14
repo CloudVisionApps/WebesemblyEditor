@@ -61,7 +61,7 @@ export class LiveEdit {
             });
 
            app.appendStyles();
-           app.findDuplicableElements();
+          // app.findDuplicableElements();
 
        });
 
