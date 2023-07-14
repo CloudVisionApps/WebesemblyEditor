@@ -1,0 +1,551 @@
+@import url(https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400;700&display=swap);
+#js-live-edit-element-handle-flex-grid-resizer {
+  /*core*/
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+  pointer-events: none;
+  position: absolute;
+  top: 20px;
+  z-index: 1000000000;
+  display: none;
+}
+
+#js-live-edit-element-handle-flex-grid-resizer-north {
+  -webkit-user-select: contain;
+     -moz-user-select: contain;
+          user-select: contain;
+  pointer-events: all;
+  top: -30px;
+  position: absolute;
+  right: 50%;
+}
+
+#js-live-edit-element-handle-flex-grid-resizer-north-west {
+  -webkit-user-select: contain;
+     -moz-user-select: contain;
+          user-select: contain;
+  pointer-events: all;
+  top: -30px;
+  position: absolute;
+  left: -80px;
+}
+
+#js-live-edit-element-handle-flex-grid-resizer-south {
+  -webkit-user-select: contain;
+     -moz-user-select: contain;
+          user-select: contain;
+  pointer-events: all;
+  bottom: -30px;
+  position: absolute;
+  right: 50%;
+}
+
+#js-live-edit-element-handle-flex-grid-resizer-move {
+  -webkit-user-select: contain;
+     -moz-user-select: contain;
+          user-select: contain;
+  pointer-events: all;
+  bottom: -8px;
+  position: absolute;
+  right: 4%;
+}
+
+#js-live-edit-element-handle-flex-grid-resizer-south-west {
+  -webkit-user-select: contain;
+     -moz-user-select: contain;
+          user-select: contain;
+  pointer-events: all;
+  bottom: -30px;
+  position: absolute;
+  left: -84px;
+}
+
+#js-live-edit-element-handle-flex-grid-resizer-east {
+  -webkit-user-select: contain;
+     -moz-user-select: contain;
+          user-select: contain;
+  pointer-events: all;
+  position: absolute;
+  right: -50px;
+  top: 50%;
+}
+
+#js-live-edit-element-handle-flex-grid-resizer-north-east {
+  -webkit-user-select: contain;
+     -moz-user-select: contain;
+          user-select: contain;
+  pointer-events: all;
+  top: -30px;
+  position: absolute;
+  right: -80px;
+}
+
+#js-live-edit-element-handle-flex-grid-resizer-south-east {
+  -webkit-user-select: contain;
+     -moz-user-select: contain;
+          user-select: contain;
+  pointer-events: all;
+  bottom: -30px;
+  position: absolute;
+  right: -84px;
+}
+
+#js-live-edit-element-handle-flex-grid-resizer-west {
+  -webkit-user-select: contain;
+     -moz-user-select: contain;
+          user-select: contain;
+  pointer-events: all;
+  position: absolute;
+  left: -50px;
+  top: 50%;
+}
+
+:root {
+  --live-edit-border-radius: 8px;
+  --live-edit-shadow: 0px 0px 7px #ddd;
+  --live-edit-font-family: "Raleway", sans-serif;
+}
+
+.js-live-edit-element {
+  cursor: pointer;
+}
+
+.js-live-edit-element[contenteditable=true] {
+  caret-color: #e110ef;
+  outline: 0px;
+  cursor: text;
+}
+
+#js-live-edit-element-handle {
+  position: absolute;
+  top: 20px;
+  display: none;
+  z-index: 1000000000;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+  pointer-events: none;
+  /*design*/
+  border-radius: var(--live-edit-border-radius);
+  border: 2px solid #027aff;
+}
+
+#js-live-edit-element-handle-name {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+  pointer-events: none;
+  /*design*/
+  display: flex;
+  width: -moz-max-content;
+  width: max-content;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  gap: 12px;
+  line-height: 18px;
+  margin-top: -25px;
+  padding: 1px 7px;
+  margin-left: -2px;
+  border-radius: var(--live-edit-border-radius);
+  font-size: 12px;
+  text-align: center;
+  font-family: var(--live-edit-font-family);
+  font-weight: 700;
+  background: #027aff;
+  color: #fff;
+  text-transform: uppercase;
+}
+
+#js-live-edit-element-handle-active {
+  /*core*/
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+  pointer-events: none;
+  position: absolute;
+  top: 20px;
+  z-index: 1000000000;
+  display: none;
+  /*design*/
+  border-radius: var(--live-edit-border-radius);
+  border: 2px solid #027aff;
+  transition: 0.2s ease height;
+  box-shadow: 0px 0px 10px rgba(138, 138, 138, 0.4392156863);
+}
+
+#js-live-edit-element-handle-active-name {
+  /*core*/
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+  pointer-events: none;
+  /*design*/
+  display: flex;
+  width: -moz-max-content;
+  width: max-content;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  gap: 12px;
+  line-height: 18px;
+  margin-top: -25px;
+  padding: 1px 7px;
+  margin-left: -2px;
+  border-radius: var(--live-edit-border-radius);
+  font-size: 12px;
+  text-align: center;
+  font-family: var(--live-edit-font-family);
+  font-weight: 700;
+  text-transform: uppercase;
+  background: #027aff;
+  color: #fff;
+}
+
+#js-live-edit-element-handle-active-settings {
+  font-size: 12px;
+  text-align: center;
+  margin-top: -38px;
+  margin-left: 10px;
+  display: flex;
+  width: 186px;
+}
+
+#js-live-edit-element-handle-active-settings button {
+  cursor: pointer;
+  color: #FFFFFF;
+  padding: 10px;
+  width: 100%;
+  border-right: 1px solid rgba(231, 231, 231, 0.14);
+  -webkit-user-select: contain;
+     -moz-user-select: contain;
+          user-select: contain;
+  pointer-events: visible;
+  background: #4085f2;
+}
+
+#js-live-edit-element-handle-active-settings button:first-child {
+  border-top-left-radius: 2px;
+}
+
+#js-live-edit-element-handle-active-settings button:last-child {
+  border: 0px;
+  border-top-right-radius: 2px;
+}
+
+#js-live-edit-element-handle-active-settings button:hover {
+  background: #2976ef;
+}
+
+#js-live-edit-section-handle {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+  pointer-events: none;
+  position: absolute;
+  top: 20px;
+  display: none;
+  z-index: 1000000;
+  /*design*/
+  border: 3px solid #027aff;
+  border-radius: var(--live-edit-border-radius);
+}
+
+.js-live-edit-section-handle-menu {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  display: grid;
+  background: #fff;
+  gap: 8px;
+  padding: 12px;
+  border-radius: var(--live-edit-border-radius);
+  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1294117647);
+}
+
+.js-live-edit-section-handle-menu button {
+  -webkit-user-select: contain;
+     -moz-user-select: contain;
+          user-select: contain;
+  pointer-events: all;
+  background: #fff;
+  border-radius: var(--live-edit-border-radius);
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  color: #000;
+  padding: 10px 26px;
+  font-size: 13px;
+  font-family: "Raleway", sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition-duration: 0.2s;
+}
+
+.js-live-edit-section-handle-menu button svg {
+  width: 24px;
+  height: 24px;
+}
+
+.js-live-edit-section-handle-menu button:hover {
+  background: #f5f5f5;
+  color: #000;
+}
+
+.js-live-edit-section-handle-menu button.remove {
+  color: rgb(195, 45, 56);
+  fill: rgb(195, 45, 56);
+}
+
+.js-live-edit-section-handle-menu button.remove:hover {
+  background: rgba(255, 0, 0, 0.0588235294);
+}
+
+#js-live-edit-section-handle-action-add-block {
+  -webkit-user-select: contain;
+     -moz-user-select: contain;
+          user-select: contain;
+  pointer-events: all;
+  left: 17px;
+  position: absolute;
+  top: 17px;
+  background: #fff;
+  padding: 13px 28px;
+  border: 0px;
+  color: #000;
+  border-radius: var(--live-edit-border-radius);
+  text-transform: uppercase;
+  font-size: 12px;
+  font-family: var(--live-edit-font-family);
+  font-weight: 700;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.0705882353);
+  display: flex;
+  align-items: center;
+}
+
+.js-live-edit-section-handle-action-add {
+  -webkit-user-select: contain;
+     -moz-user-select: contain;
+          user-select: contain;
+  pointer-events: all;
+  background: #027aff;
+  border-radius: var(--live-edit-border-radius);
+  padding: 8px 20px;
+  text-transform: uppercase;
+  text-align: center;
+  border: 0px;
+  position: absolute;
+  color: #fff;
+  font-size: 12px;
+  font-family: var(--live-edit-font-family);
+  font-weight: 700;
+}
+
+#js-live-edit-section-handle-action-add-top {
+  top: -19px;
+  left: 50%;
+  width: 200px;
+  margin-left: -100px;
+}
+
+#js-live-edit-section-handle-action-add-bottom {
+  bottom: -19px;
+  left: 50%;
+  width: 200px;
+  margin-left: -100px;
+}
+
+.js-live-edit-module-not-found-message {
+  background: #f80e4d;
+  padding: 5px 7px;
+  color: #fff;
+}
+
+.js-live-edit-module {
+  border: 0px solid transparent;
+}
+
+.js-live-edit-module-hover {
+  border: 2px dashed rgba(53, 245, 130, 0.56);
+}
+
+.js-live-edit-module-border {
+  border: 2px solid rgba(53, 146, 245, 0.42);
+}
+
+#js-live-edit-module-handle {
+  position: absolute;
+  top: 20px;
+  display: none;
+  z-index: 1000000000;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+  pointer-events: none;
+  /*design*/
+  border-radius: var(--live-edit-border-radius);
+  border: 2px solid #fff;
+}
+
+#js-live-edit-module-handle-name {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+  pointer-events: none;
+  /*design*/
+  display: flex;
+  width: -moz-max-content;
+  width: max-content;
+  padding: 7px 11px;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  gap: 12px;
+  line-height: 18px;
+  margin-top: -38px;
+  margin-left: -2px;
+  border-radius: var(--live-edit-border-radius);
+  font-size: 12px;
+  text-align: center;
+  text-transform: uppercase;
+  font-family: var(--live-edit-font-family);
+  font-weight: 700;
+  background: #fff;
+  color: #717171;
+}
+
+#js-live-edit-module-handle-active {
+  display: none;
+  position: absolute;
+  z-index: 1000000000;
+  top: 20px;
+  /* user-select: none;
+   pointer-events: none;*/
+  /*design*/
+  border-radius: var(--live-edit-border-radius);
+  border: 2px solid #fff;
+  transition: 0.2s ease height;
+}
+
+#js-live-edit-module-handle-active-name {
+  -webkit-user-select: contain;
+     -moz-user-select: contain;
+          user-select: contain;
+  pointer-events: visible;
+}
+
+#js-live-edit-module-handle-active-settings {
+  margin-top: -58px;
+  margin-left: -2px;
+  display: flex;
+  width: -moz-max-content;
+  width: max-content;
+  padding: 7px 11px;
+  line-height: 18px;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  gap: 12px;
+  pointer-events: visible;
+  /*design*/
+  font-size: 12px;
+  text-align: center;
+  text-transform: uppercase;
+  font-family: var(--live-edit-font-family);
+  font-weight: 700;
+  border-radius: var(--live-edit-border-radius);
+  background: #fff;
+  color: #000;
+  transition: 0.2s ease height;
+}
+
+#js-live-edit-module-handle-active-settings button {
+  cursor: pointer;
+  color: #000;
+  padding: 6px;
+  -webkit-user-select: contain;
+     -moz-user-select: contain;
+          user-select: contain;
+  pointer-events: visible;
+  background: #e8e8e8;
+  border-radius: var(--live-edit-border-radius);
+  border: none; /* Safari */
+  transition-duration: 0.2s;
+}
+
+#js-live-edit-module-handle-active-settings button svg {
+  fill: #000;
+}
+
+#js-live-edit-module-handle-active-settings button:hover {
+  background: #505050;
+  color: #FFFFFF;
+}
+
+#js-live-edit-module-handle-active-settings button:hover svg {
+  fill: #FFFFFF !important;
+}
+
+#js-live-edit-header-handle {
+  display: none;
+  position: absolute;
+  z-index: 1000000000;
+  background: rgba(0, 0, 0, 0.4705882353);
+  transition-duration: 0.2s;
+}
+
+#js-live-edit-header-handle div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+#js-live-edit-header-handle button {
+  -webkit-user-select: contain;
+     -moz-user-select: contain;
+          user-select: contain;
+  pointer-events: visible;
+  cursor: pointer;
+  padding: 10px 20px;
+  background: #ffffff;
+  font-weight: 700;
+  font-family: "Raleway", sans-serif;
+  font-size: 12px;
+  text-transform: uppercase;
+  border: 0px;
+  border-radius: 0px;
+}
+
+#js-live-edit-footer-handle {
+  display: none;
+  position: absolute;
+  z-index: 1000000000;
+  background: rgba(0, 0, 0, 0.4705882353);
+  transition-duration: 0.2s;
+}
+
+#js-live-edit-footer-handle div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+#js-live-edit-footer-handle button {
+  -webkit-user-select: contain;
+     -moz-user-select: contain;
+          user-select: contain;
+  pointer-events: visible;
+  cursor: pointer;
+  padding: 10px 20px;
+  background: #ffffff;
+  font-weight: 700;
+  font-family: "Raleway", sans-serif;
+  font-size: 12px;
+  text-transform: uppercase;
+  border: 0px;
+  border-radius: 0px;
+}

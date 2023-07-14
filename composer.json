@@ -1,0 +1,36 @@
+{
+    "name": "cloudvision-apps/webesembly-editor",
+    "description": "New generation of website building",
+    "type": "project",
+    "license": "Paid",
+    "authors": [
+        {
+            "name": "Bozhidar Slaveykov",
+            "email": "bobicloudvision@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^8.0",
+        "inertiajs/inertia-laravel": "^0.6.8",
+    },
+    "autoload": {
+        "files": [
+            "src/helpers.php"
+        ],
+        "psr-4": {
+            "WebesemblyEditor\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "WebesemblyEditor\\WebesemblyEditorServiceProvider"
+            ]
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

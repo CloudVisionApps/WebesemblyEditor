@@ -1,0 +1,30 @@
+
+#js-live-edit-footer-handle {
+    display:none;
+    position: absolute;
+    z-index: 1000000000;
+    background: #00000078;
+    -webkit-transition-duration: 0.2s;
+    transition-duration: 0.2s;
+}
+#js-live-edit-footer-handle div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+#js-live-edit-footer-handle button {
+
+    user-select: contain;
+    pointer-events: visible;
+    cursor: pointer;
+
+    padding: 10px 20px;
+    background: #ffffff;
+    font-weight: 700;
+    font-family: 'Raleway', sans-serif;
+    font-size: 12px;
+    text-transform: uppercase;
+    border: 0px;
+    border-radius: 0px;
+}

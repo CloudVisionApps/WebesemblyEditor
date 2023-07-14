@@ -1,0 +1,123 @@
+.js-live-edit-element {
+    cursor: pointer;
+}
+
+.js-live-edit-element[contenteditable='true'] {
+    caret-color: #e110ef;
+    outline: 0px;
+    cursor: text;
+}
+
+#js-live-edit-element-handle {
+    position: absolute;
+    top: 20px;
+    display: none;
+    z-index: 1000000000;
+    user-select: none;
+    pointer-events: none;
+
+    /*design*/
+    border-radius: var(--live-edit-border-radius);
+    border: 2px solid #027aff;
+}
+
+#js-live-edit-element-handle-name {
+    user-select: none;
+    pointer-events: none;
+
+    /*design*/
+    display: flex;
+    width: max-content;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    gap: 12px;
+    line-height: 18px;
+    margin-top: -25px;
+    padding: 1px 7px;
+    margin-left: -2px;
+    border-radius: var(--live-edit-border-radius);
+    font-size: 12px;
+    text-align: center;
+    font-family: var(--live-edit-font-family);
+    font-weight: 700;
+    background: #027aff;
+    color: #fff;
+    text-transform: uppercase;
+}
+
+
+
+#js-live-edit-element-handle-active {
+
+    /*core*/
+    user-select: none;
+    pointer-events: none;
+    position: absolute;
+    top: 20px;
+    z-index: 1000000000;
+    display:none;
+
+    /*design*/
+    border-radius: var(--live-edit-border-radius);
+    border: 2px solid #027aff;
+    transition: 0.2s ease height;
+    box-shadow: 0px 0px 10px #8a8a8a70;
+}
+#js-live-edit-element-handle-active-name {
+
+    /*core*/
+    user-select: none;
+    pointer-events: none;
+
+    /*design*/
+    display: flex;
+    width: max-content;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    gap: 12px;
+    line-height: 18px;
+    margin-top: -25px;
+    padding: 1px 7px;
+    margin-left: -2px;
+    border-radius: var(--live-edit-border-radius);
+    font-size: 12px;
+    text-align: center;
+    font-family: var(--live-edit-font-family);
+    font-weight: 700;
+    text-transform: uppercase;
+    background: #027aff;
+    color: #fff;
+}
+
+#js-live-edit-element-handle-active-settings {
+    font-size: 12px;
+    text-align: center;
+    margin-top: -38px;
+    margin-left: 10px;
+    display: flex;
+    width: 186px;
+}
+
+#js-live-edit-element-handle-active-settings button {
+    cursor: pointer;
+    color: #FFFFFF;
+    padding: 10px;
+    width: 100%;
+    border-right: 1px solid rgba(231, 231, 231, 0.14);
+    user-select: contain;
+    pointer-events: visible;
+    background: #4085f2;
+}
+#js-live-edit-element-handle-active-settings button:first-child {
+    border-top-left-radius: 2px;
+}
+#js-live-edit-element-handle-active-settings button:last-child {
+    border:0px;
+    border-top-right-radius: 2px;
+}
+
+#js-live-edit-element-handle-active-settings button:hover {
+    background: #2976ef;
+}
