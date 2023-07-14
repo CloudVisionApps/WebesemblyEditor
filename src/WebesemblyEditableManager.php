@@ -46,6 +46,11 @@ class WebesemblyEditableManager
                 $originalContent = $decodedData['html'];
             }
         }
+        $findEditableFieldInDb = \WebesemblyEditor\Models\WebesemblyEditable::where('editable_field_name', $this->componentName)->first();
+        if (!empty($findEditableFieldInDb)) {
+            $originalContent = $findEditableFieldInDb->html;
+            $this->id = $findEditableFieldInDb->id;
+        }
 
         return '<div webesembly:id="'.$this->id.'" webesembly:editable="'.$this->componentName.'">
 
