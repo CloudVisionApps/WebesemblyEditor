@@ -1,4 +1,9 @@
-import {allowedEditElementsList, getElementFriendlyName, elementHasParentsWithId} from "../../helpers";
+import {
+    allowedEditElementsList,
+    getElementFriendlyName,
+    elementHasParentsWithId,
+    elementHasParentsWithAttribute
+} from "../../helpers";
 import {ElementHandle} from "./../ElementHandle";
 
 export class FlexGridResizer extends ElementHandle {
@@ -45,6 +50,10 @@ export class FlexGridResizer extends ElementHandle {
 
         let app = this;
         let clickedElement = app.liveEdit.clickedElement;
+
+        if (!elementHasParentsWithAttribute(clickedElement, 'webesembly:flex-grid')) {
+            return false;
+        }
 
         app.element.style.width = (clickedElement.offsetWidth + 60) + 'px';
         app.element.style.height = (clickedElement.offsetHeight + 60) + 'px';
