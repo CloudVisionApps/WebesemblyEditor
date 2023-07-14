@@ -48,6 +48,9 @@ class WebesemblyEditableTagCompiler extends ComponentTagCompiler
                 return [(string) str($key)->trim() => $value];
             })->toArray();
 
+
+            dd($matches);
+
             preg_match("/webesembly:editable=(['\"])([\w\-\:\.]*)(['\"]) /", $matches[0], $matchTypeOfModule);
 
             $component = '';
