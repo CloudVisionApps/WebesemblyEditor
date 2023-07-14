@@ -39,9 +39,17 @@ class WebesemblyEditableManager
 
     public function html()
     {
+        $originalContent = '';
+        if (isset($this->params['data'])) {
+            $decodedData = json_decode($this->params['data'], true);
+            if (isset($decodedData['html'])) {
+                $originalContent = $decodedData['html'];
+            }
+        }
+
         return '<div webesembly:id="'.$this->id.'" webesembly:editable="'.$this->componentName.'">
 
-       MEGA QKO
+            '.$originalContent.'
 
         </div>';
     }

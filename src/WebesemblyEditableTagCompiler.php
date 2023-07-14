@@ -2,63 +2,27 @@
 namespace WebesemblyEditor;
 
 use Illuminate\View\Compilers\ComponentTagCompiler;
-use function collect;
+
+include('helpers/simple_html_dom.php');
 
 class WebesemblyEditableTagCompiler extends ComponentTagCompiler
 {
     public function compile($value)
     {
-        return $this->compileEditableSelfClosingTags($value);
-    }
-
-    protected function compileEditableSelfClosingTags($value)
-    {
-        $pattern = "/
-            <div
-                \s*
-                webesembly:editable=(['\"])([\w\-\:\.]*)(['\"])
-                \s*
-                (?<attributes>
-                    (?:
-                        \s+
-                        [\w\-:.@]+
-                        (
-                            =
-                            (?:
-                                \\\"[^\\\"]*\\\"
-                                |
-                                \'[^\']*\'
-                                |
-                                [^\'\\\"=<>]+
-                            )
-                        )?
-                    )*
-                    \s*
-                )
-            \/?>([^\r]+)<\/div>
-        /x";
-
-        return preg_replace_callback($pattern, function (array $matches) use ($value) {
-
-            $attributes = $this->getAttributesFromAttributeString($matches['attributes']);
-            $attributes = collect($attributes)->mapWithKeys(function ($value, $key) {
-
-                if (str($key)->contains('_')) return [$key => $value];
-
-                return [(string) str($key)->trim() => $value];
-            })->toArray();
-
-            preg_match("/webesembly:editable=(['\"])([\w\-\:\.]*)(['\"]) /", $matches[0], $matchTypeOfModule);
-
-            $component = '';
-            if (isset($matchTypeOfModule[2])) {
-                $component = "'{$matchTypeOfModule[2]}'";;
+        $html = str_get_html($value);
+        $findEditableFields = $html->find('div[webesembly:editable]');
+        if (!empty($findEditableFields)) {
+            foreach ($findEditableFields as $editableField) {
+                $editableField->outertext = $this->componentString(
+                    "'".$editableField->getAttribute('webesembly:editable')."'", [
+                    'data'=>"'".json_encode(['html'=>$editableField->innertext])."'"
+                ]);
             }
+        }
 
-            $output = $this->componentString($component, $attributes);
+        $html->save();
 
-            return $output;
-        }, $value);
+        return $html->outertext;
     }
 
     protected function componentString(string $component, array $attributes)

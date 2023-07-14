@@ -19,5 +19,44 @@
             </div>
         </webesembly-editor>
     </div>
+
+    <div>
+        <div>
+            <div>
+                <section>
+                    <div>
+                        <div>
+
+                            <div>
+                                Mega qko
+                            </div>
+
+                            <div webesembly:editable="sauna-vai">
+
+                                <h1>This is my cool text</h1>
+                                <p>This is my cool paragraph</p>
+                                <br />
+                                <button type="button">Cool button is here</button>
+                                <br />
+
+                            </div>
+
+                            <div webesembly:editable="ebasi-paragraph">
+
+                                <h1>This is my cool text</h1>
+                                <p>This is my cool paragraph</p>
+                                <br />
+                                <button type="button">Cool button is here</button>
+                                <br />
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
