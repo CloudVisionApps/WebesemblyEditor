@@ -23,7 +23,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "WebesemblyEditor\\WebesemblyEditorServiceProvider"
+                "WebesemblyEditor\\Providers\\WebesemblyEditorServiceProvider"
             ]
         }
     },
