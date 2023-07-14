@@ -9,6 +9,9 @@ use WebesemblyEditor\View\WebesemblyComponents\Logo;
 use WebesemblyEditor\View\WebesemblyComponents\Menu;
 use WebesemblyEditor\View\WebesemblyComponents\SocialLinks;
 use WebesemblyEditor\View\WebesemblyComponents\Text;
+use WebesemblyEditor\WebesemblyEditableBladeDirectives;
+use WebesemblyEditor\WebesemblyEditableManager;
+use WebesemblyEditor\WebesemblyEditableTagCompiler;
 use WebesemblyEditor\WebesemblyModule;
 use WebesemblyEditor\WebesemblyModuleBladeDirectives;
 use WebesemblyEditor\WebesemblyModuleManager;
@@ -50,6 +53,7 @@ class WebesemblyEditorServiceProvider extends ServiceProvider
         WebesemblyModule::component('social-links', SocialLinks::class);
 
         Blade::directive('webesembly_module', [WebesemblyModuleBladeDirectives::class, 'module']);
+        Blade::directive('webesembly_editable', [WebesemblyEditableBladeDirectives::class, 'editable']);
 
     }
 
@@ -57,6 +61,9 @@ class WebesemblyEditorServiceProvider extends ServiceProvider
     {
         $this->app->singleton(WebesemblyModuleManager::class);
         $this->app->alias(WebesemblyModuleManager::class, 'webesembly-module');
+
+        $this->app->singleton(WebesemblyEditableManager::class);
+        $this->app->alias(WebesemblyEditableManager::class, 'webesembly-editable');
     }
 
     protected function registerTagCompiler()
@@ -64,6 +71,9 @@ class WebesemblyEditorServiceProvider extends ServiceProvider
         if (method_exists($this->app['blade.compiler'], 'precompiler')) {
             $this->app['blade.compiler']->precompiler(function ($string) {
                 return app(WebesemblyModuleTagCompiler::class)->compile($string);
+            });
+            $this->app['blade.compiler']->precompiler(function ($string) {
+                return app(WebesemblyEditableTagCompiler::class)->compile($string);
             });
         }
     }
