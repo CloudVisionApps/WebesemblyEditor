@@ -31,7 +31,7 @@
                                 Mega qko
                             </div>
 
-                            <div webesembly:editable="sauna-vai">
+                            <div webesembly:editable="true">
 
                                 <h1>This is my cool text</h1>
                                 <p>This is my cool paragraph</p>
@@ -41,7 +41,7 @@
 
                             </div>
 
-                            <div webesembly:editable="ebasi-paragraph">
+                            <div webesembly:editable="true">
 
                                 <h1>This is my cool text</h1>
                                 <p>This is my cool paragraph</p>
