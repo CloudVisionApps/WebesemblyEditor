@@ -41,9 +41,8 @@ class WebesemblyEditableManager
     {
         $originalContent = '';
         if (isset($this->params['data'])) {
-            $decodedData = json_decode($this->params['data'], true);
-            if (isset($decodedData['html'])) {
-                $originalContent = $decodedData['html'];
+            if (isset($this->params['data']['html'])) {
+                $originalContent = $this->params['data']['html'];
             }
         }
         $findEditableFieldInDb = \WebesemblyEditor\Models\WebesemblyEditable::where('editable_field_name', $this->componentName)->first();

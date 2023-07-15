@@ -9,7 +9,6 @@ use WebesemblyEditor\View\WebesemblyComponents\Logo;
 use WebesemblyEditor\View\WebesemblyComponents\Menu;
 use WebesemblyEditor\View\WebesemblyComponents\SocialLinks;
 use WebesemblyEditor\View\WebesemblyComponents\Text;
-use WebesemblyEditor\WebesemblyEditableBladeDirectives;
 use WebesemblyEditor\WebesemblyEditableManager;
 use WebesemblyEditor\WebesemblyEditableTagCompiler;
 use WebesemblyEditor\WebesemblyModule;
@@ -53,7 +52,6 @@ class WebesemblyEditorServiceProvider extends ServiceProvider
         WebesemblyModule::component('social-links', SocialLinks::class);
 
         Blade::directive('webesembly_module', [WebesemblyModuleBladeDirectives::class, 'module']);
-        Blade::directive('webesembly_editable', [WebesemblyEditableBladeDirectives::class, 'editable']);
 
     }
 

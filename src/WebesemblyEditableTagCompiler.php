@@ -2,6 +2,7 @@
 namespace WebesemblyEditor;
 
 use Illuminate\View\Compilers\ComponentTagCompiler;
+use Symfony\Component\DomCrawler\Crawler;
 
 include('helpers/simple_html_dom.php');
 
@@ -9,20 +10,27 @@ class WebesemblyEditableTagCompiler extends ComponentTagCompiler
 {
     public function compile($value)
     {
-        $html = str_get_html($value);
+        $html = str_get_html($value,
+            $lowercase=false,
+            $forceTagsClosed=false,
+            $target_charset = DEFAULT_TARGET_CHARSET,
+            $stripRN=false,
+            $defaultBRText=DEFAULT_BR_TEXT,
+            $defaultSpanText=DEFAULT_SPAN_TEXT);
+
         $findEditableFields = $html->find('div[webesembly:editable]');
         if (!empty($findEditableFields)) {
             foreach ($findEditableFields as $editableField) {
-                $editableField->outertext = $this->componentString(
-                    "'".$editableField->getAttribute('webesembly:editable')."'", [
-                    'data'=>"'".json_encode(['html'=>$editableField->innertext])."'"
-                ]);
+
+                $componentName = $editableField->getAttribute('webesembly:editable');
+                $params = [];
+                $params['data']['html'] = $editableField->innertext;
+
+                $editableField->outertext = \WebesemblyEditor\WebesemblyEditable::mount($componentName, $params)->html();;
             }
         }
 
-        $html->save();
-
-        return $html->outertext;
+        return $html->save();
     }
 
     protected function componentString(string $component, array $attributes)
