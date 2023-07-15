@@ -33,17 +33,22 @@ class WebesemblySectionTagCompiler extends ComponentTagCompiler
             }
         }
 
+        $replaceCount = 0;
         if (!empty($allFindedSections)) {
             foreach ($allFindedSections as $section) {
                 $componentName = $section->getAttribute('webesembly:section');
                 $params = [];
                 $params['data']['html'] = $section->innertext;
-
                 $section->outertext = \WebesemblyEditor\WebesemblySection::mount($componentName, $params)->html();;
+                $replaceCount++;
             }
         }
 
-        return $html->save();
+        if ($replaceCount > 0) {
+            return $html->save();
+        }
+
+        return $value;
     }
 
     protected function componentString(string $component, array $attributes)
