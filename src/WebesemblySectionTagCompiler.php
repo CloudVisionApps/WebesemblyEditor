@@ -6,7 +6,7 @@ use Symfony\Component\DomCrawler\Crawler;
 
 include('helpers/simple_html_dom.php');
 
-class WebesemblyEditableTagCompiler extends ComponentTagCompiler
+class WebesemblySectionTagCompiler extends ComponentTagCompiler
 {
     public function compile($value)
     {
@@ -17,16 +17,16 @@ class WebesemblyEditableTagCompiler extends ComponentTagCompiler
             $stripRN=false,
             $defaultBRText=DEFAULT_BR_TEXT,
             $defaultSpanText=DEFAULT_SPAN_TEXT);
+        
+        $findSections = $html->find('div[webesembly:section]');
+        if (!empty($findSections)) {
+            foreach ($findSections as $section) {
 
-        $findEditableFields = $html->find('div[webesembly:editable]');
-        if (!empty($findEditableFields)) {
-            foreach ($findEditableFields as $editableField) {
-
-                $componentName = $editableField->getAttribute('webesembly:editable');
+                $componentName = $section->getAttribute('webesembly:section');
                 $params = [];
-                $params['data']['html'] = $editableField->innertext;
+                $params['data']['html'] = $section->innertext;
 
-                $editableField->outertext = \WebesemblyEditor\WebesemblyEditable::mount($componentName, $params)->html();;
+                $section->outertext = \WebesemblyEditor\WebesemblySection::mount($componentName, $params)->html();;
             }
         }
 
@@ -35,7 +35,7 @@ class WebesemblyEditableTagCompiler extends ComponentTagCompiler
 
     protected function componentString(string $component, array $attributes)
     {
-        return "@webesembly_editable({$component}, [".$this->attributesToString($attributes, $escapeBound = false).'])';
+        return "@webesembly_section({$component}, [".$this->attributesToString($attributes, $escapeBound = false).'])';
     }
 
     protected function attributesToString(array $attributes, $escapeBound = true)

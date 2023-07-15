@@ -9,10 +9,10 @@ use Illuminate\Support\Facades\Facade;
  *
  * @see
  */
-class WebesemblyEditable extends Facade
+class WebesemblySection extends Facade
 {
     public static function getFacadeAccessor()
     {
-        return 'webesembly-editable';
+        return 'webesembly-section';
     }
 }

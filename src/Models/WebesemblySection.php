@@ -5,7 +5,7 @@ namespace WebesemblyEditor\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class WebesemblyEditable extends Model
+class WebesemblySection extends Model
 {
     use HasFactory;
 

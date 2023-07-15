@@ -13,10 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('webesembly_editables', function (Blueprint $table) {
+        Schema::create('webesembly_sections', function (Blueprint $table) {
             $table->id();
 
-            $table->string('editable_field_name');
+            $table->string('name');
             $table->longText('params');
             $table->longText('html');
 
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('webesembly_editables');
+        Schema::dropIfExists('webesembly_sections');
     }
 };

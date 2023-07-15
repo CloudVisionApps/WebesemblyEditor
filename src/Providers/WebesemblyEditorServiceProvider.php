@@ -9,8 +9,8 @@ use WebesemblyEditor\View\WebesemblyComponents\Logo;
 use WebesemblyEditor\View\WebesemblyComponents\Menu;
 use WebesemblyEditor\View\WebesemblyComponents\SocialLinks;
 use WebesemblyEditor\View\WebesemblyComponents\Text;
-use WebesemblyEditor\WebesemblyEditableManager;
-use WebesemblyEditor\WebesemblyEditableTagCompiler;
+use WebesemblyEditor\WebesemblySectionManager;
+use WebesemblyEditor\WebesemblySectionTagCompiler;
 use WebesemblyEditor\WebesemblyModule;
 use WebesemblyEditor\WebesemblyModuleBladeDirectives;
 use WebesemblyEditor\WebesemblyModuleManager;
@@ -60,8 +60,8 @@ class WebesemblyEditorServiceProvider extends ServiceProvider
         $this->app->singleton(WebesemblyModuleManager::class);
         $this->app->alias(WebesemblyModuleManager::class, 'webesembly-module');
 
-        $this->app->singleton(WebesemblyEditableManager::class);
-        $this->app->alias(WebesemblyEditableManager::class, 'webesembly-editable');
+        $this->app->singleton(WebesemblySectionManager::class);
+        $this->app->alias(WebesemblySectionManager::class, 'webesembly-section');
     }
 
     protected function registerTagCompiler()
@@ -71,7 +71,7 @@ class WebesemblyEditorServiceProvider extends ServiceProvider
                 return app(WebesemblyModuleTagCompiler::class)->compile($string);
             });
             $this->app['blade.compiler']->precompiler(function ($string) {
-                return app(WebesemblyEditableTagCompiler::class)->compile($string);
+                return app(WebesemblySectionTagCompiler::class)->compile($string);
             });
         }
     }

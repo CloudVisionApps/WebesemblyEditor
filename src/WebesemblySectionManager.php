@@ -4,7 +4,7 @@ namespace WebesemblyEditor;
 
 use Illuminate\Support\Str;
 
-class WebesemblyEditableManager
+class WebesemblySectionManager
 {
     /**
      * @var string
@@ -45,13 +45,13 @@ class WebesemblyEditableManager
                 $originalContent = $this->params['data']['html'];
             }
         }
-        $findEditableFieldInDb = \WebesemblyEditor\Models\WebesemblyEditable::where('editable_field_name', $this->componentName)->first();
-        if (!empty($findEditableFieldInDb)) {
-            $originalContent = $findEditableFieldInDb->html;
-            $this->id = $findEditableFieldInDb->id;
+        $findSections = \WebesemblyEditor\Models\WebesemblySection::where('name', $this->componentName)->first();
+        if (!empty($findSections)) {
+            $originalContent = $findSections->html;
+            $this->id = $findSections->id;
         }
 
-        return '<div webesembly:id="'.$this->id.'" webesembly:editable="'.$this->componentName.'">
+        return '<div webesembly:id="'.$this->id.'" webesembly:section="'.$this->componentName.'">
 
             '.$originalContent.'
 
