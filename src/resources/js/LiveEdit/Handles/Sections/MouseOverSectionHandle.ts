@@ -70,12 +70,10 @@ export class MouseOverSectionHandle extends ElementHandle {
                 'name':getElementParentSectionElement.getAttribute('webesembly:section'),
                 'html':getElementParentSectionElement.outerHTML,
             }).then(() => {
-
+                alert('Промените са запазени!');
             }).catch(error => {
-
+                alert('Възникна грешка при запазването на промените!');
             });
-
-            console.log(getElementParentSectionElement);
         });
     }
 
