@@ -8,10 +8,6 @@
             "email": "bobicloudvision@gmail.com"
         }
     ],
-    "require": {
-        "php": "^8.0",
-        "inertiajs/inertia-laravel": "^0.6.8"
-    },
     "autoload": {
         "files": [
             "src/helpers.php"
