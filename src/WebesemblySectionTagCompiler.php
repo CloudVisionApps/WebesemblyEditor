@@ -17,11 +17,24 @@ class WebesemblySectionTagCompiler extends ComponentTagCompiler
             $stripRN=false,
             $defaultBRText=DEFAULT_BR_TEXT,
             $defaultSpanText=DEFAULT_SPAN_TEXT);
-        
-        $findSections = $html->find('div[webesembly:section]');
+
+        $allFindedSections = [];
+        $findSections = $html->find('section[webesembly:section]');
         if (!empty($findSections)) {
             foreach ($findSections as $section) {
+                $allFindedSections[] = $section;
+            }
+        }
 
+        $findDivSections = $html->find('div[webesembly:section]');
+        if (!empty($findDivSections)) {
+            foreach ($findDivSections as $section) {
+                $allFindedSections[] = $section;
+            }
+        }
+
+        if (!empty($allFindedSections)) {
+            foreach ($allFindedSections as $section) {
                 $componentName = $section->getAttribute('webesembly:section');
                 $params = [];
                 $params['data']['html'] = $section->innertext;
