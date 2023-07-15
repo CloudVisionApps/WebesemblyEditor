@@ -58,7 +58,7 @@ export class MouseOverSectionHandle extends ElementHandle {
             let mouseOverElement = app.iframeManager.document.elementFromPoint(e.clientX, e.clientY);
             if (mouseOverElement) {
 
-                let getElementParentSectionElement = elementHasParentsWithTagName(mouseOverElement, 'section');
+                let getElementParentSectionElement = elementHasParentsWithAttribute(mouseOverElement, 'webesembly:section');
                 if (!getElementParentSectionElement) {
                     return;
                 }

@@ -1,4 +1,9 @@
-import {getElementFriendlyName, elementHasParentsWithId, allowedEditElementsList} from "../../helpers";
+import {
+    getElementFriendlyName,
+    elementHasParentsWithId,
+    allowedEditElementsList,
+    elementHasParentsWithAttribute
+} from "../../helpers";
 import {ElementHandle} from "./../ElementHandle";
 
 export class MouseOverElementHandle extends ElementHandle {
@@ -43,6 +48,11 @@ export class MouseOverElementHandle extends ElementHandle {
                 }
 
                 if (!this.canIEditThisElement(mouseOverElement)) {
+                    return;
+                }
+
+                let getElementParentSectionElement = elementHasParentsWithAttribute(mouseOverElement, 'webesembly:section');
+                if (!getElementParentSectionElement) {
                     return;
                 }
 

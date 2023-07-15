@@ -1,4 +1,9 @@
-import {allowedEditElementsList, getElementFriendlyName, elementHasParentsWithId} from "../../helpers";
+import {
+    allowedEditElementsList,
+    getElementFriendlyName,
+    elementHasParentsWithId,
+    elementHasParentsWithAttribute
+} from "../../helpers";
 import {ElementHandle} from "./../ElementHandle";
 
 export class ClickedElementHandle extends ElementHandle {
@@ -79,6 +84,11 @@ export class ClickedElementHandle extends ElementHandle {
 
                 if (!this.canIEditThisElement(clickedElement)) {
                     this.liveEdit.clickedElement = null;
+                    return;
+                }
+
+                let getElementParentSectionElement = elementHasParentsWithAttribute(clickedElement, 'webesembly:section');
+                if (!getElementParentSectionElement) {
                     return;
                 }
 
