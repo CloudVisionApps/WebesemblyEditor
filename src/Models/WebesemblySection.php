@@ -9,8 +9,12 @@ class WebesemblySection extends Model
 {
     use HasFactory;
 
+    protected $casts = [
+        'params' => 'array',
+    ];
+
     protected $fillable = [
-        'editable_field_name',
+        'name',
         'params',
         'html',
     ];

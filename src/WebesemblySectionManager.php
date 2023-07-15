@@ -45,13 +45,16 @@ class WebesemblySectionManager
                 $originalContent = $this->params['data']['html'];
             }
         }
+
+        $idAttribute = '';
         $findSections = \WebesemblyEditor\Models\WebesemblySection::where('name', $this->componentName)->first();
         if (!empty($findSections)) {
             $originalContent = $findSections->html;
             $this->id = $findSections->id;
+            $idAttribute = 'id="'.$this->id.'"';
         }
 
-        return '<div webesembly:id="'.$this->id.'" webesembly:section="'.$this->componentName.'">
+        return '<div '.$idAttribute.' webesembly:section="'.$this->componentName.'">
 
             '.$originalContent.'
 

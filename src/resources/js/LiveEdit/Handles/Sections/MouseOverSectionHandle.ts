@@ -6,11 +6,14 @@ import {
     elementHasParentsWithAttribute,
 } from "../../helpers";
 import {ElementHandle} from "./../ElementHandle";
+import {nextTick} from "vue";
+import axios from "axios";
 
 export class MouseOverSectionHandle extends ElementHandle {
 
     public handleActionAddElementTop;
     public handleActionAddElementBottom;
+    public handleActionSave;
     public handleMainElement;
 
     constructor(public liveEdit) {
@@ -39,6 +42,10 @@ export class MouseOverSectionHandle extends ElementHandle {
             '<svg xmlns="http://www.w3.org/2000/svg" height="12px" viewBox="0 0 256 256"><path d="M216 48h-40v-8a24 24 0 0 0-24-24h-48a24 24 0 0 0-24 24v8H40a8 8 0 0 0 0 16h8v144a16 16 0 0 0 16 16h128a16 16 0 0 0 16-16V64h8a8 8 0 0 0 0-16ZM96 40a8 8 0 0 1 8-8h48a8 8 0 0 1 8 8v8H96Zm96 168H64V64h128Zm-80-104v64a8 8 0 0 1-16 0v-64a8 8 0 0 1 16 0Zm48 0v64a8 8 0 0 1-16 0v-64a8 8 0 0 1 16 0Z"/></svg> ' +
             'Remove ' +
             '</button>' +
+            '<button id="js-live-edit-section-handle-action-save" class="save" type="button">' +
+            '<svg xmlns="http://www.w3.org/2000/svg" height="12px" viewBox="0 0 24 24"><path fill="currentColor" d="m9.55 18l-5.7-5.7l1.425-1.425L9.55 15.15l9.175-9.175L20.15 7.4L9.55 18Z"/></svg> ' +
+            'Save ' +
+            '</button>' +
             '</div>' +
             '' +
             '<button type="button" class="js-live-edit-section-handle-action-add" id="js-live-edit-section-handle-action-add-bottom">Add section</button>';
@@ -48,6 +55,28 @@ export class MouseOverSectionHandle extends ElementHandle {
         this.handleMainElement = this.iframeManager.document.getElementById('js-live-edit-section-handle');
         this.handleActionAddElementTop = this.iframeManager.document.getElementById('js-live-edit-section-handle-action-add-top');
         this.handleActionAddElementBottom = this.iframeManager.document.getElementById('js-live-edit-section-handle-action-add-bottom');
+        this.handleActionSave = this.iframeManager.document.getElementById('js-live-edit-section-handle-action-save');
+
+
+        this.handleActionSave.addEventListener('click', () => {
+
+            let clickedElement = this.liveEdit.clickedElement;
+            let getElementParentSectionElement = elementHasParentsWithAttribute(clickedElement, 'webesembly:section');
+            if (!getElementParentSectionElement) {
+                return;
+            }
+
+            axios.post('/webesembly/save-section', {
+                'name':getElementParentSectionElement.getAttribute('webesembly:section'),
+                'html':getElementParentSectionElement.outerHTML,
+            }).then(() => {
+
+            }).catch(error => {
+
+            });
+
+            console.log(getElementParentSectionElement);
+        });
     }
 
     public addListener()

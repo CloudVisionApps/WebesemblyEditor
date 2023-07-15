@@ -12,51 +12,10 @@
 <body>
     <div id="webesembly-editor-app" class="w-screen h-screen">
         <webesembly-editor>
-            <div class="book">
-                <div class="book__page"></div>
-                <div class="book__page"></div>
-                <div class="book__page"></div>
+            <div class="book" style="border:0px;color:#fff;font-size: 24px;width:400px;padding:15px 30px;">
+                Loading Webesembly Editor...
             </div>
         </webesembly-editor>
-    </div>
-
-    <div>
-        <div>
-            <div>
-                <section>
-                    <div>
-                        <div>
-
-                            <div>
-                                Mega qko
-                            </div>
-
-                            <div webesembly:editable="true">
-
-                                <h1>This is my cool text</h1>
-                                <p>This is my cool paragraph</p>
-                                <br />
-                                <button type="button">Cool button is here</button>
-                                <br />
-
-                            </div>
-
-                            <div webesembly:editable="true">
-
-                                <h1>This is my cool text</h1>
-                                <p>This is my cool paragraph</p>
-                                <br />
-                                <button type="button">Cool button is here</button>
-                                <br />
-
-                            </div>
-
-                        </div>
-
-                    </div>
-                </section>
-            </div>
-        </div>
     </div>
 </body>
 </html>

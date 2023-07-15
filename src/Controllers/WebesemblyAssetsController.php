@@ -17,4 +17,9 @@ class WebesemblyAssetsController
     {
         return $this->pretendResponseIsFile(__DIR__.'/../../dist/webesembly/webesembly-iframe.css', 'text/css');
     }
+
+    public function editorLoading()
+    {
+        return $this->pretendResponseIsFile(__DIR__.'/../../dist/webesembly/loading-book.css', 'text/css');
+    }
 }
