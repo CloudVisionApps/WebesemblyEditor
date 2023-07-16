@@ -18,34 +18,36 @@ class WebesemblySectionTagCompiler extends ComponentTagCompiler
             $defaultBRText=DEFAULT_BR_TEXT,
             $defaultSpanText=DEFAULT_SPAN_TEXT);
 
-        $allFindedSections = [];
-        $findSections = $html->find('section[webesembly:section]');
-        if (!empty($findSections)) {
-            foreach ($findSections as $section) {
-                $allFindedSections[] = $section;
+        if ($html) {
+            $allFindedSections = [];
+            $findSections = $html->find('section[webesembly:section]');
+            if (!empty($findSections)) {
+                foreach ($findSections as $section) {
+                    $allFindedSections[] = $section;
+                }
             }
-        }
 
-        $findDivSections = $html->find('div[webesembly:section]');
-        if (!empty($findDivSections)) {
-            foreach ($findDivSections as $section) {
-                $allFindedSections[] = $section;
+            $findDivSections = $html->find('div[webesembly:section]');
+            if (!empty($findDivSections)) {
+                foreach ($findDivSections as $section) {
+                    $allFindedSections[] = $section;
+                }
             }
-        }
 
-        $replaceCount = 0;
-        if (!empty($allFindedSections)) {
-            foreach ($allFindedSections as $section) {
-                $componentName = $section->getAttribute('webesembly:section');
-                $params = [];
-                $params['data']['html'] = $section->innertext;
-                $section->outertext = \WebesemblyEditor\WebesemblySection::mount($componentName, $params)->html();;
-                $replaceCount++;
+            $replaceCount = 0;
+            if (!empty($allFindedSections)) {
+                foreach ($allFindedSections as $section) {
+                    $componentName = $section->getAttribute('webesembly:section');
+                    $params = [];
+                    $params['data']['html'] = $section->innertext;
+                    $section->outertext = \WebesemblyEditor\WebesemblySection::mount($componentName, $params)->html();;
+                    $replaceCount++;
+                }
             }
-        }
 
-        if ($replaceCount > 0) {
-            return $html->save();
+            if ($replaceCount > 0) {
+                return $html->save();
+            }
         }
 
         return $value;
