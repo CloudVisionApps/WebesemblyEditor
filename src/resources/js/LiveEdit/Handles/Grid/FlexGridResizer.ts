@@ -63,7 +63,13 @@ export class FlexGridResizer extends ElementHandle {
 
         let findEditableElements = htmlElement.getElementsByClassName('js-webesembly-element');
         while(findEditableElements.length > 0){
-            console.log(findEditableElements[0]);
+            if (findColumnElements[0].hasAttribute('contenteditable')) {
+                findEditableElements[0].removeAttribute('contenteditable');
+            }
+            findEditableElements[0].classList.remove('js-webesembly-element');
+            if (findEditableElements[0].classList.length == 0) {
+                findEditableElements[0].removeAttribute('class');
+            }
         }
 
         return htmlElement.innerHTML;
@@ -79,7 +85,7 @@ export class FlexGridResizer extends ElementHandle {
         }
 
         // if (!clickedElement.classList.contain('webesembly-grid')) {
-        //     clickedElement.classList.add('webesembly-grid'); 
+        //     clickedElement.classList.add('webesembly-grid');
         // }
 
         app.element.style.width = (clickedElement.offsetWidth + 60) + 'px';
