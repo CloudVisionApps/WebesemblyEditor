@@ -85,4 +85,33 @@ class WebesemblyEditorController
 
         return response()->json(['success' => true]);
     }
+
+
+    public function deleteSection(Request $request)
+    {
+
+        $pageId = null;
+        $pageName = $request->get('pageName', false);
+        if (!empty($pageName)) {
+            $findPage = WebesemblyPage::where('name', $pageName)->first();
+            if (!$findPage) {
+                $findPage = new WebesemblyPage();
+                $findPage->name = $pageName;
+                $findPage->params = [];
+                $findPage->html = '';
+                $findPage->save();
+            }
+            $pageId = $findPage->id;
+        }
+
+
+        $section = WebesemblySection::where('name', $request->get('name'))->where('page_id',$pageId)->first();
+        if ($section) {
+            $section->delete();
+        }
+
+        \Artisan::call('view:clear');
+
+        return response()->json(['success' => true]);
+    }
 }

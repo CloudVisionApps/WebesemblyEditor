@@ -15,6 +15,7 @@ export class MouseOverSectionHandle extends ElementHandle {
     public handleActionAddElementBottom;
     public handleActionSave;
     public handleActionReset;
+    public handleActionDelete;
     public handleMainElement;
 
     constructor(public liveEdit) {
@@ -39,7 +40,7 @@ export class MouseOverSectionHandle extends ElementHandle {
             '<svg xmlns="http://www.w3.org/2000/svg" height="12px" viewBox="0 0 20 20"><path d="M17.181 2.927a2.975 2.975 0 0 0-4.259-.054l-9.375 9.375a2.438 2.438 0 0 0-.656 1.194l-.877 3.95a.5.5 0 0 0 .596.597l3.927-.873a2.518 2.518 0 0 0 1.234-.678l9.358-9.358a2.975 2.975 0 0 0 .052-4.153Zm-3.552.653a1.975 1.975 0 1 1 2.793 2.793l-.671.671l-2.793-2.792l.671-.672Zm-1.378 1.38l2.793 2.792l-7.98 7.98a1.518 1.518 0 0 1-.744.409l-3.16.702l.708-3.183c.059-.267.193-.511.386-.704l7.997-7.996Z"/></svg> ' +
             'Edit Section' +
             '</button>' +
-            '<button class="remove" type="button">' +
+            '<button id="js-live-edit-section-handle-action-delete" class="remove" type="button">' +
             '<svg xmlns="http://www.w3.org/2000/svg" height="12px" viewBox="0 0 256 256"><path d="M216 48h-40v-8a24 24 0 0 0-24-24h-48a24 24 0 0 0-24 24v8H40a8 8 0 0 0 0 16h8v144a16 16 0 0 0 16 16h128a16 16 0 0 0 16-16V64h8a8 8 0 0 0 0-16ZM96 40a8 8 0 0 1 8-8h48a8 8 0 0 1 8 8v8H96Zm96 168H64V64h128Zm-80-104v64a8 8 0 0 1-16 0v-64a8 8 0 0 1 16 0Zm48 0v64a8 8 0 0 1-16 0v-64a8 8 0 0 1 16 0Z"/></svg> ' +
             'Remove ' +
             '</button>' +
@@ -62,6 +63,7 @@ export class MouseOverSectionHandle extends ElementHandle {
         this.handleActionAddElementBottom = this.iframeManager.document.getElementById('js-live-edit-section-handle-action-add-bottom');
         this.handleActionSave = this.iframeManager.document.getElementById('js-live-edit-section-handle-action-save');
         this.handleActionReset = this.iframeManager.document.getElementById('js-live-edit-section-handle-action-reset');
+        this.handleActionDelete = this.iframeManager.document.getElementById('js-live-edit-section-handle-action-delete');
 
         this.handleActionReset.addEventListener('click', () => {
 
@@ -89,6 +91,31 @@ export class MouseOverSectionHandle extends ElementHandle {
 
         });
 
+
+        this.handleActionDelete.addEventListener('click', () => {
+
+            let clickedElement = this.liveEdit.clickedElement;
+            let getElementParentSectionElement = elementHasParentsWithAttribute(clickedElement, 'webesembly:section');
+            if (!getElementParentSectionElement) {
+                return;
+            }
+
+            let pageName = '';
+            let getElementParentPageElement = elementHasParentsWithAttribute(clickedElement, 'webesembly:page');
+            if (getElementParentPageElement) {
+                pageName = getElementParentPageElement.getAttribute('webesembly:page');
+            }
+
+            axios.post('/webesembly/delete-section', {
+                'name':getElementParentSectionElement.getAttribute('webesembly:section'),
+                'pageName':pageName
+            }).then((result) => {
+                 alert('Секцията е изтрита успешно!');
+            }).catch(error => {
+                alert('Възникна грешка при изтриването на секцията!');
+            });
+
+        });
         this.handleActionSave.addEventListener('click', () => {
 
             let clickedElement = this.liveEdit.clickedElement;

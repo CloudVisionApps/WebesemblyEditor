@@ -8,6 +8,7 @@ Route::namespace('WebesemblyEditor\Controllers')->group(function() {
 
     Route::post('/webesembly/save-section', 'WebesemblyEditorController@saveSection');
     Route::post('/webesembly/reset-section', 'WebesemblyEditorController@resetSection');
+    Route::post('/webesembly/delete-section', 'WebesemblyEditorController@deleteSection');
 
     Route::get('/webesembly-editor/webesembly-editor.js', 'WebesemblyAssetsController@editor');
     Route::get('/webesembly-editor/webesembly-iframe.css', 'WebesemblyAssetsController@iframeCss');
