@@ -62,8 +62,8 @@ export class FlexGridResizer extends ElementHandle {
         }
 
         let findEditableElements = htmlElement.getElementsByClassName('js-webesembly-element');
-        while(findEditableElements.length > 0){
-            if (findColumnElements[0].hasAttribute('contenteditable')) {
+        while (findEditableElements.length > 0) {
+            if (findEditableElements[0].hasAttribute('contenteditable')) {
                 findEditableElements[0].removeAttribute('contenteditable');
             }
             findEditableElements[0].classList.remove('js-webesembly-element');
