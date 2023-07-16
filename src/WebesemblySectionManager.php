@@ -59,7 +59,16 @@ class WebesemblySectionManager
             }
         }
 
-        $idAttribute = '';
+        $htmlAttributes = '';
+        if (isset($this->params['data']['attributes'])) {
+            $attributes = $this->params['data']['attributes'];
+            if (!empty($attributes)) {
+                foreach ($attributes as $attribute => $value) {
+                    $htmlAttributes .= $attribute.'="'.$value.'" ';
+                }
+            }
+        }
+
         $findSections = \WebesemblyEditor\Models\WebesemblySection::where('name', $this->componentName)
             ->where('page_id', $pageId)
             ->first();
@@ -67,14 +76,15 @@ class WebesemblySectionManager
         if (!empty($findSections)) {
             $originalContent = $findSections->html;
             $this->id = $findSections->id;
-            $idAttribute = 'id="'.$this->id.'"';
+            $htmlAttributes .= ' webesembly:section-id="'.$this->id.'"';
         }
 
-        return '<div '.$idAttribute.' webesembly:section="'.$this->componentName.'">
+        return '<div '.$htmlAttributes.' >
 
             '.$originalContent.'
 
         </div>';
     }
+
 
 }

@@ -40,6 +40,7 @@ class WebesemblySectionTagCompiler extends ComponentTagCompiler
                     $componentName = $section->getAttribute('webesembly:section');
                     $hasParent = $this->findFirstParentWithAttribute($section, 'webesembly:page');
                     $params = [];
+                    $params['data']['attributes'] = $section->attr;
                     $params['data']['html'] = $section->innertext;
                     if ($hasParent) {
                         $params['data']['pageName'] = $hasParent->getAttribute('webesembly:page');

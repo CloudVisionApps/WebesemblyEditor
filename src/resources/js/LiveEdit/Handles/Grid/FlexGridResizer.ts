@@ -46,6 +46,26 @@ export class FlexGridResizer extends ElementHandle {
 
     }
 
+    public clearHtml(html) {
+
+        let htmlElement = document.createElement('div');
+        htmlElement.innerHTML = html;
+
+        let findColumnElements = htmlElement.getElementsByClassName('js-tailwind-x-grid-column');
+        while(findColumnElements.length > 0){
+            findColumnElements[0].parentNode.removeChild(findColumnElements[0]);
+        }
+
+        let findRowElements = htmlElement.getElementsByClassName('js-tailwind-x-grid-row');
+        while(findRowElements.length > 0){
+            findRowElements[0].parentNode.removeChild(findRowElements[0]);
+        }
+
+        console.log(htmlElement);
+
+        return htmlElement.innerHTML;
+    }
+
     public calculateHandlePosition() {
 
         let app = this;
