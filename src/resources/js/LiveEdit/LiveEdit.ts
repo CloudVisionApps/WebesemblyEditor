@@ -57,7 +57,7 @@ export class LiveEdit {
            app.handles.mouseOverModuleHandle = new MouseOverModuleHandle(app);
 
             app.iframeManager.body.addEventListener("keyup", (event) => {
-             //   app.handles.clickedElementHandle.calculateHandlePosition();
+                app.handles.clickedElementHandle.calculateHandlePosition();
             });
 
            app.appendStyles();

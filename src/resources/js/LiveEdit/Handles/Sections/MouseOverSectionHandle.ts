@@ -83,16 +83,11 @@ export class MouseOverSectionHandle extends ElementHandle {
             }
 
             let clonedHtmlSection = getElementParentSectionElement.outerHTML;
-
             clonedHtmlSection = this.liveEdit.handles.flexGridResizerHandle.clearHtml(clonedHtmlSection);
-
-            console.log(clonedHtmlSection);
-
-            return;
 
             axios.post('/webesembly/save-section', {
                 'name':getElementParentSectionElement.getAttribute('webesembly:section'),
-                'html':clonedHtmlSection,
+                'html':clonedHtmlSection, 
                 'pageName':pageName
             }).then(() => {
                 alert('Промените са запазени!');

@@ -61,8 +61,6 @@ export class FlexGridResizer extends ElementHandle {
             findRowElements[0].parentNode.removeChild(findRowElements[0]);
         }
 
-        console.log(htmlElement);
-
         return htmlElement.innerHTML;
     }
 
