@@ -46,8 +46,12 @@ class WebesemblySectionManager
             }
         }
 
+        $pageId = 0;
         $idAttribute = '';
-        $findSections = \WebesemblyEditor\Models\WebesemblySection::where('name', $this->componentName)->first();
+        $findSections = \WebesemblyEditor\Models\WebesemblySection::where('name', $this->componentName)
+            ->where('page_id', $pageId)
+            ->first();
+
         if (!empty($findSections)) {
             $originalContent = $findSections->html;
             $this->id = $findSections->id;

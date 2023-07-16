@@ -66,14 +66,22 @@ export class MouseOverSectionHandle extends ElementHandle {
                 return;
             }
 
+            let pageName = '';
+            let getElementParentPageElement = elementHasParentsWithAttribute(clickedElement, 'webesembly:page');
+            if (getElementParentPageElement) {
+                pageName = getElementParentPageElement.getAttribute('webesembly:page');
+            }
+
             axios.post('/webesembly/save-section', {
                 'name':getElementParentSectionElement.getAttribute('webesembly:section'),
                 'html':getElementParentSectionElement.outerHTML,
+                'pageName':pageName
             }).then(() => {
                 alert('Промените са запазени!');
             }).catch(error => {
                 alert('Възникна грешка при запазването на промените!');
             });
+
         });
     }
 

@@ -17,8 +17,9 @@ return new class extends Migration
             $table->id();
 
             $table->string('name');
-            $table->longText('params');
+            $table->longText('params')->nullable();
             $table->longText('html');
+            $table->bigInteger('page_id')->nullable();
 
             $table->timestamps();
         });

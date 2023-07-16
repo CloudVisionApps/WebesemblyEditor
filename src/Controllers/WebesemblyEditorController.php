@@ -3,6 +3,7 @@
 namespace WebesemblyEditor\Controllers;
 
 use Illuminate\Http\Request;
+use WebesemblyEditor\Models\WebesemblyPage;
 use WebesemblyEditor\Models\WebesemblySection;
 
 class WebesemblyEditorController
@@ -24,11 +25,29 @@ class WebesemblyEditorController
 
     public function saveSection(Request $request)
     {
-        $section = WebesemblySection::where('name', $request->get('name'))->first();
+
+        $pageId = null;
+        $pageName = $request->get('pageName', false);
+        if (!empty($pageName)) {
+            $findPage = WebesemblyPage::where('name', $pageName)->first();
+            if (!$findPage) {
+                $findPage = new WebesemblyPage();
+                $findPage->name = $pageName;
+                $findPage->params = [];
+                $findPage->html = '';
+                $findPage->save();
+            }
+            $pageId = $findPage->id;
+        }
+
+
+        $section = WebesemblySection::where('name', $request->get('name'))->where('page_id',$pageId)->first();
         if (!$section) {
             $section = new WebesemblySection();
             $section->name = $request->get('name');
+            $section->page_id = $pageId;
         }
+
         $section->html = $request->get('html');
         $section->params = [];
         $section->save();
