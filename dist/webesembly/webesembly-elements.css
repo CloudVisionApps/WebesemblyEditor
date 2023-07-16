@@ -3,8 +3,20 @@
     --webesembly-grid-max-width: 1400px;
 }
 
-[webesembly\:flex-grid-block-contents="true"] {
-
+[webesembly\:flex-grid-element-content="true"] div {
+    width: 100%;
+    height: 100%;
+}
+[webesembly\:flex-grid-element-content="true"] img {
+    height: 100%;
+}
+[webesembly\:flex-grid-element-content="true"] button {
+    width: 100%;
+    height: 100%;
+}
+[webesembly\:flex-grid-element] {
+    border:1px solid #c4c4c4;
+    border-radius: 3px;
 }
 [webesembly\:flex-grid="true"] {
 

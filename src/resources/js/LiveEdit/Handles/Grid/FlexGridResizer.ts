@@ -87,15 +87,19 @@ export class FlexGridResizer extends ElementHandle {
         if (!elementHasParentsWithAttribute(clickedElement, 'webesembly:flex-grid')) {
             return false;
         }
+        let flexGridElement = elementHasParentsWithAttribute(clickedElement, 'webesembly:flex-grid-element');
+        if (!flexGridElement) {
+            return;
+        }
 
         // if (!clickedElement.classList.contain('webesembly-grid')) {
         //     clickedElement.classList.add('webesembly-grid');
         // }
 
-        app.element.style.width = (clickedElement.offsetWidth + 60) + 'px';
-        app.element.style.height = (clickedElement.offsetHeight + 60) + 'px';
+        app.element.style.width = (flexGridElement.offsetWidth + 60) + 'px';
+        app.element.style.height = (flexGridElement.offsetHeight + 60) + 'px';
 
-        let mouseOverElementBounding = clickedElement.getBoundingClientRect();
+        let mouseOverElementBounding = flexGridElement.getBoundingClientRect();
         app.element.style.top = (mouseOverElementBounding.top + (app.iframeManager.window.scrollY - 30)) + 'px';
         app.element.style.left = (mouseOverElementBounding.left + (app.iframeManager.window.scrollX - 30)) + 'px';
 
@@ -268,7 +272,7 @@ export class FlexGridResizer extends ElementHandle {
        if (instance.resizeEastNow) {
            let boundingClientRect = this.resizeEast.getBoundingClientRect();
            let diffBetween = Math.abs((boundingClientRect.x - e.clientX) / e.clientX * 100);
-           if (diffBetween > 10) {
+           if (diffBetween > 5) {
                if (boundingClientRect.x > e.clientX) {
                    console.log('drag left' + boundingClientRect.x);
                    flexGridElement.style['grid-column-end'] = (parseInt(flexGridElement.style['grid-column-end']) - 1);
@@ -282,7 +286,7 @@ export class FlexGridResizer extends ElementHandle {
         if (instance.resizeWestNow) {
             let boundingClientRect = this.resizeWest.getBoundingClientRect();
             let diffBetween = Math.abs((boundingClientRect.x - e.clientX) / e.clientX * 100);
-            if (diffBetween > 10) {
+            if (diffBetween > 5) {
                 if (boundingClientRect.x > e.clientX) {
                     console.log('drag left' + boundingClientRect.x);
                     flexGridElement.style['grid-column-start'] = (parseInt(flexGridElement.style['grid-column-start']) - 1);
@@ -296,7 +300,7 @@ export class FlexGridResizer extends ElementHandle {
         if (instance.resizeSouthNow) {
             let boundingClientRectSouth = this.resizeSouth.getBoundingClientRect();
             let diffBetweenSouth = Math.abs((boundingClientRectSouth.y - e.clientY) / e.clientY * 100);
-            if (diffBetweenSouth > 13) {
+            if (diffBetweenSouth > 5) {
                 console.log('diffBetweenSouth' + diffBetweenSouth);
 
                 if (boundingClientRectSouth.y > e.clientY) {
@@ -320,7 +324,7 @@ export class FlexGridResizer extends ElementHandle {
         if (instance.resizeNorthNow) {
             let boundingClientRectNorth = this.resizeNorth.getBoundingClientRect();
             let diffBetweenNorth = Math.abs((boundingClientRectNorth.y - e.clientY) / e.clientY * 100);
-            if (diffBetweenNorth > 23) {
+            if (diffBetweenNorth > 5) {
                 console.log('diffBetweenNorth' + diffBetweenNorth);
 
                 if (boundingClientRectNorth.y > e.clientY) {
@@ -346,7 +350,7 @@ export class FlexGridResizer extends ElementHandle {
         if (instance.resizeMoveNow) {
             let boundingClientRectMove = this.resizeMove.getBoundingClientRect();
             let diffBetweenMoveY = Math.abs((boundingClientRectMove.y - e.clientY) / e.clientY * 100);
-            if (diffBetweenMoveY > 23) {
+            if (diffBetweenMoveY > 5) {
                 console.log('diffBetweenMove' + diffBetweenMoveY);
                 if (boundingClientRectMove.y > e.clientY) {
                     console.log('move top' + boundingClientRectMove.y);
@@ -360,7 +364,7 @@ export class FlexGridResizer extends ElementHandle {
             }
 
             let diffBetweenMoveX = Math.abs((boundingClientRectMove.x - e.clientX) / e.clientX * 100);
-            if (diffBetweenMoveX > 23) {
+            if (diffBetweenMoveX > 5) {
                 console.log('diffBetweenMove' + diffBetweenMoveX);
                 if (boundingClientRectMove.x > e.clientX) {
                     console.log('move top' + boundingClientRectMove.x);
