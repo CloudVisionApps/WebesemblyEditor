@@ -74,7 +74,7 @@ export class MouseOverSectionHandle extends ElementHandle {
         this.handleActionMoveElementDuplicate = this.iframeManager.document.getElementById('js-live-edit-section-handle-action-duplicate');
         this.handleActionMoveElementDuplicate.addEventListener('click', () => {
 
-            console.log('duplicate'); 
+            console.log('duplicate');
 
             let cloneSection = this.currentSectionElement.cloneNode(true);
             cloneSection.setAttribute('webesembly:section', Math.floor(Math.random() * 1000000000));
