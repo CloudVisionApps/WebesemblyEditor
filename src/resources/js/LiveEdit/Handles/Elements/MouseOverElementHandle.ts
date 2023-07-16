@@ -55,8 +55,8 @@ export class MouseOverElementHandle extends ElementHandle {
                 if (!getElementParentSectionElement) {
                     return;
                 }
-                let getElementParentFlexGridElement = elementHasParentsWithAttribute(mouseOverElement, 'webesembly:flex-grid');
-                if (getElementParentFlexGridElement) {
+
+                if (mouseOverElement.hasAttribute('webesembly:flex-grid')) {
                     return;
                 }
 

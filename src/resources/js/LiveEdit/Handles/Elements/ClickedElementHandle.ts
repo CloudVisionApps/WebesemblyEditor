@@ -92,8 +92,7 @@ export class ClickedElementHandle extends ElementHandle {
                     return;
                 }
 
-                let getElementParentFlexGridElement = elementHasParentsWithAttribute(clickedElement, 'webesembly:flex-grid');
-                if (getElementParentFlexGridElement) {
+                if (clickedElement.hasAttribute('webesembly:flex-grid')) {
                     return;
                 }
 
