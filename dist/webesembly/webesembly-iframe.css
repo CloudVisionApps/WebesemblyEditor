@@ -279,12 +279,59 @@
   display: grid;
   background: #fff;
   gap: 8px;
-  padding: 12px;
+  padding: 10px 12px;
   border-radius: var(--live-edit-border-radius);
   box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1294117647);
 }
 
-.js-live-edit-section-handle-menu button {
+.js-live-edit-section-handle-menu-group {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  border-radius: var(--live-edit-border-radius);
+  background: #fff;
+  padding: 5px 7px;
+}
+
+.js-live-edit-section-handle-menu-group button:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.js-live-edit-section-handle-menu-group button {
+  cursor: pointer;
+  background: none;
+  border: 0px;
+  -webkit-user-select: contain;
+     -moz-user-select: contain;
+          user-select: contain;
+  pointer-events: all;
+  color: #000;
+  padding: 8px 10px;
+  font-size: 13px;
+  font-family: "Raleway", sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition-duration: 0.2s;
+}
+
+.js-live-edit-section-handle-menu-group button svg {
+  width: 24px;
+  height: 24px;
+}
+
+.js-live-edit-section-handle-menu-group button:hover {
+  background: rgba(0, 0, 0, 0.09);
+  color: #000;
+  border-radius: var(--live-edit-border-radius);
+}
+
+.js-live-edit-section-handle-menu .button-action {
+  cursor: pointer;
   -webkit-user-select: contain;
      -moz-user-select: contain;
           user-select: contain;
@@ -300,26 +347,25 @@
   text-transform: uppercase;
   display: flex;
   align-items: center;
-  gap: 5px;
   transition-duration: 0.2s;
 }
 
-.js-live-edit-section-handle-menu button svg {
+.js-live-edit-section-handle-menu .button-action svg {
   width: 24px;
   height: 24px;
 }
 
-.js-live-edit-section-handle-menu button:hover {
+.js-live-edit-section-handle-menu .button-action:hover {
   background: #f5f5f5;
   color: #000;
 }
 
-.js-live-edit-section-handle-menu button.remove {
+.js-live-edit-section-handle-menu .button-action.remove {
   color: rgb(195, 45, 56);
   fill: rgb(195, 45, 56);
 }
 
-.js-live-edit-section-handle-menu button.remove:hover {
+.js-live-edit-section-handle-menu .button-action.remove:hover {
   background: rgba(255, 0, 0, 0.0588235294);
 }
 
@@ -331,6 +377,7 @@
   left: 17px;
   position: absolute;
   top: 17px;
+  cursor: pointer;
   background: #fff;
   padding: 13px 28px;
   border: 0px;
@@ -350,6 +397,7 @@
      -moz-user-select: contain;
           user-select: contain;
   pointer-events: all;
+  cursor: pointer;
   background: #027aff;
   border-radius: var(--live-edit-border-radius);
   padding: 8px 20px;
