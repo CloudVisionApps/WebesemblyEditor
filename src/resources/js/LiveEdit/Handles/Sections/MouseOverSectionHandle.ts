@@ -65,6 +65,27 @@ export class MouseOverSectionHandle extends ElementHandle {
 
         this.handleActionReset.addEventListener('click', () => {
 
+            let clickedElement = this.liveEdit.clickedElement;
+            let getElementParentSectionElement = elementHasParentsWithAttribute(clickedElement, 'webesembly:section');
+            if (!getElementParentSectionElement) {
+                return;
+            }
+
+            let pageName = '';
+            let getElementParentPageElement = elementHasParentsWithAttribute(clickedElement, 'webesembly:page');
+            if (getElementParentPageElement) {
+                pageName = getElementParentPageElement.getAttribute('webesembly:page');
+            }
+
+            axios.post('/webesembly/reset-section', {
+                'name':getElementParentSectionElement.getAttribute('webesembly:section'),
+                'pageName':pageName
+            }).then((result) => {
+                // alert('Секцията е възстановена до първоначалното си състояние!');
+                console.log(result);
+            }).catch(error => {
+                alert('Възникна грешка при възстановяването на секцията!');
+            });
 
         });
 
