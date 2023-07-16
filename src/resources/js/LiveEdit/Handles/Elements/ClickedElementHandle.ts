@@ -92,6 +92,11 @@ export class ClickedElementHandle extends ElementHandle {
                     return;
                 }
 
+                let getElementParentFlexGridElement = elementHasParentsWithAttribute(clickedElement, 'webesembly:flex-grid');
+                if (getElementParentFlexGridElement) {
+                    return;
+                }
+
                 // Remove old content editable elements
                 let editableElementsInPage = app.iframeManager.body.getElementsByTagName('*');
                 for (var j = 0; j < editableElementsInPage.length; j++) {
