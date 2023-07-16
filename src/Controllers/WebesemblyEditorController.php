@@ -23,6 +23,41 @@ class WebesemblyEditorController
         return view('webesembly-editor::editor-ui');
     }
 
+    public function resetPage(Request $request)
+    {
+        $pageName = $request->get('name', false);
+        if (!empty($pageName)) {
+            $findPage = WebesemblyPage::where('name', $pageName)->first();
+            if ($findPage) {
+                $findPage->delete();
+            }
+        } 
+
+        \Artisan::call('view:clear');
+
+        return response()->json(['success' => true]);
+    }
+
+    public function savePage(Request $request)
+    {
+        $pageName = $request->get('name', false);
+        if (!empty($pageName)) {
+            $findPage = WebesemblyPage::where('name', $pageName)->first();
+            if (!$findPage) {
+                $findPage = new WebesemblyPage();
+                $findPage->name = $pageName;
+            }
+
+            $findPage->params = [];
+            $findPage->html = $request->get('html');
+            $findPage->save();
+        }
+
+        \Artisan::call('view:clear');
+
+        return response()->json(['success' => true]);
+    }
+
     public function saveSection(Request $request)
     {
 

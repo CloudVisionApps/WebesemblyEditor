@@ -11,6 +11,7 @@ import {FlexGridResizer} from "./Handles/Grid/FlexGridResizer";
 
 import {MouseOverModuleHandle} from "./Handles/Modules/MouseOverModuleHandle";
 import {ClickedModuleHandle} from "./Handles/Modules/ClickedModuleHandle";
+import axios from "axios";
 
 export class LiveEdit {
 
@@ -66,6 +67,42 @@ export class LiveEdit {
           // app.findDuplicableElements();
 
        });
+
+        document.addEventListener("JsLiveEdit::RequestToSavePage", (event) => {
+
+            let findPageElements = app.iframeManager.body.querySelectorAll('[webesembly\\:page]');
+            for (let i = 0; i < findPageElements.length; i++) {
+                let savePageElement = findPageElements[i];
+
+                axios.post('/webesembly/save-page', {
+                    'name':savePageElement.getAttribute('webesembly:page'),
+                    'html':savePageElement.innerHTML,
+                }).then(() => {
+                    alert('Промените са запазени!');
+                }).catch(error => {
+                    alert('Възникна грешка при запазването на промените!');
+                });
+            }
+
+        });
+
+        document.addEventListener("JsLiveEdit::RequestToResetPage", (event) => {
+
+            let findPageElements = app.iframeManager.body.querySelectorAll('[webesembly\\:page]');
+            for (let i = 0; i < findPageElements.length; i++) {
+                let savePageElement = findPageElements[i];
+
+                axios.post('/webesembly/reset-page', {
+                    'name':savePageElement.getAttribute('webesembly:page'),
+                }).then((result) => {
+                    alert('Страницата е върната в първоначалното си състояние!');
+                    window.location.reload();
+                }).catch(error => {
+                    alert('Възникна грешка при връщането на страницата в първоначалното си състояние!');
+                });
+            }
+
+        });
 
     }
 

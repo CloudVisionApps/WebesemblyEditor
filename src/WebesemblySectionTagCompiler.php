@@ -20,6 +20,21 @@ class WebesemblySectionTagCompiler extends ComponentTagCompiler
 
         if ($html) {
 
+
+            $findPages = $html->find('div[webesembly:page]');
+            if (!empty($findPages)) {
+                foreach ($findPages as $page) {
+                    $componentName = $page->getAttribute('webesembly:page');
+
+                    $params = [];
+                    $params['data']['attributes'] = $page->attr;
+                    $params['data']['html'] = $page->innertext;
+
+                    $page->outertext = \WebesemblyEditor\WebesemblyPage::mount($componentName, $params)->html();;
+
+                }
+            }
+
             $findFlexGridElements = $html->find('[webesembly:flex-grid-element]');
             if (!empty($findFlexGridElements)) {
                 foreach ($findFlexGridElements as $flexGridElement) {
@@ -63,39 +78,38 @@ class WebesemblySectionTagCompiler extends ComponentTagCompiler
                 }
             }
 
+//            $allFindedSections = [];
+//            $findSections = $html->find('section[webesembly:section]');
+//            if (!empty($findSections)) {
+//                foreach ($findSections as $section) {
+//                    $allFindedSections[] = $section;
+//                }
+//            }
+//
+//            $findDivSections = $html->find('div[webesembly:section]');
+//            if (!empty($findDivSections)) {
+//                foreach ($findDivSections as $section) {
+//                    $allFindedSections[] = $section;
+//                }
+//            }
+//
+//            $replaceCount = 0;
+//            if (!empty($allFindedSections)) {
+//                foreach ($allFindedSections as $section) {
+//                    $componentName = $section->getAttribute('webesembly:section');
+//                    $hasParent = $this->findFirstParentWithAttribute($section, 'webesembly:page');
+//                    $params = [];
+//                    $params['data']['attributes'] = $section->attr;
+//                    $params['data']['html'] = $section->innertext;
+//                    if ($hasParent) {
+//                        $params['data']['pageName'] = $hasParent->getAttribute('webesembly:page');
+//                    }
+//                    $section->outertext = \WebesemblyEditor\WebesemblySection::mount($componentName, $params)->html();;
+//                    $replaceCount++;
+//                }
+//            }
 
-            $allFindedSections = [];
-            $findSections = $html->find('section[webesembly:section]');
-            if (!empty($findSections)) {
-                foreach ($findSections as $section) {
-                    $allFindedSections[] = $section;
-                }
-            }
-
-            $findDivSections = $html->find('div[webesembly:section]');
-            if (!empty($findDivSections)) {
-                foreach ($findDivSections as $section) {
-                    $allFindedSections[] = $section;
-                }
-            }
-
-            $replaceCount = 0;
-            if (!empty($allFindedSections)) {
-                foreach ($allFindedSections as $section) {
-                    $componentName = $section->getAttribute('webesembly:section');
-                    $hasParent = $this->findFirstParentWithAttribute($section, 'webesembly:page');
-                    $params = [];
-                    $params['data']['attributes'] = $section->attr;
-                    $params['data']['html'] = $section->innertext;
-                    if ($hasParent) {
-                        $params['data']['pageName'] = $hasParent->getAttribute('webesembly:page');
-                    }
-                    $section->outertext = \WebesemblyEditor\WebesemblySection::mount($componentName, $params)->html();;
-                    $replaceCount++;
-                }
-            }
-
-            if ($replaceCount > 0) {
+            if (!empty($findPages)) {
 
                 $findWebesemblyElementsCss = [];
                 $getStylesheets = $html->find('link[rel="stylesheet"]');

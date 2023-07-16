@@ -31,6 +31,20 @@
 <!--    </div>-->
 
 
+    <div class="bg-gray-400 py-3 px-3 gap-3 align-items-center justify-center flex">
+       <div>
+           <BrowserSwitch />
+       </div>
+        <div>
+            <button v-on:click="savePage()" type="button" class="bg-gray-800 text-white px-3 py-2 rounded-md text-sm font-medium">
+                Save
+            </button>
+            <button v-on:click="resetPage()" type="button" class="bg-red-800 text-white px-3 py-2 rounded-md text-sm font-medium">
+                Reset
+            </button>
+        </div>
+    </div>
+
     <div class="w-full h-full flex justify-center items-center">
         <iframe id="js-tailwind-editor-iframe"
 
@@ -110,6 +124,18 @@ export default {
         TextAlign,
         TextColor,
         BackgroundColor,
+    },
+    methods: {
+        savePage() {
+            console.log('request to save page');
+            let liveEditEvent = new CustomEvent('JsLiveEdit::RequestToSavePage', {});
+            document.dispatchEvent(liveEditEvent);
+        },
+        resetPage() {
+            console.log('request to reset page');
+            let liveEditEvent = new CustomEvent('JsLiveEdit::RequestToResetPage', {});
+            document.dispatchEvent(liveEditEvent);
+        }
     },
     mounted() {
 

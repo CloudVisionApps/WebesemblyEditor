@@ -9,6 +9,7 @@ use WebesemblyEditor\View\WebesemblyComponents\Logo;
 use WebesemblyEditor\View\WebesemblyComponents\Menu;
 use WebesemblyEditor\View\WebesemblyComponents\SocialLinks;
 use WebesemblyEditor\View\WebesemblyComponents\Text;
+use WebesemblyEditor\WebesemblyPageManager;
 use WebesemblyEditor\WebesemblySectionManager;
 use WebesemblyEditor\WebesemblySectionTagCompiler;
 use WebesemblyEditor\WebesemblyModule;
@@ -62,6 +63,9 @@ class WebesemblyEditorServiceProvider extends ServiceProvider
 
         $this->app->singleton(WebesemblySectionManager::class);
         $this->app->alias(WebesemblySectionManager::class, 'webesembly-section');
+
+        $this->app->singleton(WebesemblyPageManager::class);
+        $this->app->alias(WebesemblyPageManager::class, 'webesembly-page');
     }
 
     protected function registerTagCompiler()
