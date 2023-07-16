@@ -82,7 +82,7 @@ export class MouseOverSectionHandle extends ElementHandle {
                 pageName = getElementParentPageElement.getAttribute('webesembly:page');
             }
 
-            let clonedHtmlSection = getElementParentSectionElement.outerHTML;
+            let clonedHtmlSection = getElementParentSectionElement.innerHTML; 
             clonedHtmlSection = this.liveEdit.handles.flexGridResizerHandle.clearHtml(clonedHtmlSection);
 
             axios.post('/webesembly/save-section', {
