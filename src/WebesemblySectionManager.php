@@ -39,14 +39,26 @@ class WebesemblySectionManager
 
     public function html()
     {
+        $pageName = null;
         $originalContent = '';
         if (isset($this->params['data'])) {
             if (isset($this->params['data']['html'])) {
                 $originalContent = $this->params['data']['html'];
             }
+            if (isset($this->params['data']['pageName'])) {
+                $pageName = $this->params['data']['pageName'];
+            }
         }
 
         $pageId = 0;
+
+        if (!empty($pageName)) {
+            $findPage = \WebesemblyEditor\Models\WebesemblyPage::where('name', $pageName)->first();
+            if (!empty($findPage)) {
+                $pageId = $findPage->id;
+            }
+        }
+
         $idAttribute = '';
         $findSections = \WebesemblyEditor\Models\WebesemblySection::where('name', $this->componentName)
             ->where('page_id', $pageId)

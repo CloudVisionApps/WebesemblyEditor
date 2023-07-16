@@ -38,8 +38,12 @@ class WebesemblySectionTagCompiler extends ComponentTagCompiler
             if (!empty($allFindedSections)) {
                 foreach ($allFindedSections as $section) {
                     $componentName = $section->getAttribute('webesembly:section');
+                    $hasParent = $this->findFirstParentWithAttribute($section, 'webesembly:page');
                     $params = [];
                     $params['data']['html'] = $section->innertext;
+                    if ($hasParent) {
+                        $params['data']['pageName'] = $hasParent->getAttribute('webesembly:page');
+                    }
                     $section->outertext = \WebesemblyEditor\WebesemblySection::mount($componentName, $params)->html();;
                     $replaceCount++;
                 }
@@ -51,6 +55,20 @@ class WebesemblySectionTagCompiler extends ComponentTagCompiler
         }
 
         return $value;
+    }
+
+    protected function findFirstParentWithAttribute($element, $attributeName)
+    {
+        $parent = $element->parent();
+        if ($parent) {
+            if ($parent->hasAttribute($attributeName)) {
+                return $parent;
+            } else {
+                return $this->findFirstParentWithAttribute($parent, $attributeName);
+            }
+        }
+
+        return null;
     }
 
     protected function componentString(string $component, array $attributes)
