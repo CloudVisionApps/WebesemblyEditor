@@ -1,5 +1,5 @@
 @import url(https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400;700&display=swap);
-#js-live-edit-element-handle-flex-grid-resizer {
+#js-webesembly-element-handle-flex-grid-resizer {
   /*core*/
   -webkit-user-select: none;
      -moz-user-select: none;
@@ -11,7 +11,7 @@
   display: none;
 }
 
-#js-live-edit-element-handle-flex-grid-resizer-north {
+#js-webesembly-element-handle-flex-grid-resizer-north {
   -webkit-user-select: contain;
      -moz-user-select: contain;
           user-select: contain;
@@ -21,7 +21,7 @@
   right: 50%;
 }
 
-#js-live-edit-element-handle-flex-grid-resizer-north-west {
+#js-webesembly-element-handle-flex-grid-resizer-north-west {
   -webkit-user-select: contain;
      -moz-user-select: contain;
           user-select: contain;
@@ -31,7 +31,7 @@
   left: -80px;
 }
 
-#js-live-edit-element-handle-flex-grid-resizer-south {
+#js-webesembly-element-handle-flex-grid-resizer-south {
   -webkit-user-select: contain;
      -moz-user-select: contain;
           user-select: contain;
@@ -41,7 +41,7 @@
   right: 50%;
 }
 
-#js-live-edit-element-handle-flex-grid-resizer-move {
+#js-webesembly-element-handle-flex-grid-resizer-move {
   -webkit-user-select: contain;
      -moz-user-select: contain;
           user-select: contain;
@@ -51,7 +51,7 @@
   right: 4%;
 }
 
-#js-live-edit-element-handle-flex-grid-resizer-south-west {
+#js-webesembly-element-handle-flex-grid-resizer-south-west {
   -webkit-user-select: contain;
      -moz-user-select: contain;
           user-select: contain;
@@ -61,7 +61,7 @@
   left: -84px;
 }
 
-#js-live-edit-element-handle-flex-grid-resizer-east {
+#js-webesembly-element-handle-flex-grid-resizer-east {
   -webkit-user-select: contain;
      -moz-user-select: contain;
           user-select: contain;
@@ -71,7 +71,7 @@
   top: 50%;
 }
 
-#js-live-edit-element-handle-flex-grid-resizer-north-east {
+#js-webesembly-element-handle-flex-grid-resizer-north-east {
   -webkit-user-select: contain;
      -moz-user-select: contain;
           user-select: contain;
@@ -81,7 +81,7 @@
   right: -80px;
 }
 
-#js-live-edit-element-handle-flex-grid-resizer-south-east {
+#js-webesembly-element-handle-flex-grid-resizer-south-east {
   -webkit-user-select: contain;
      -moz-user-select: contain;
           user-select: contain;
@@ -91,7 +91,7 @@
   right: -84px;
 }
 
-#js-live-edit-element-handle-flex-grid-resizer-west {
+#js-webesembly-element-handle-flex-grid-resizer-west {
   -webkit-user-select: contain;
      -moz-user-select: contain;
           user-select: contain;
@@ -107,17 +107,17 @@
   --live-edit-font-family: "Raleway", sans-serif;
 }
 
-.js-live-edit-element {
+.js-webesembly-element {
   cursor: pointer;
 }
 
-.js-live-edit-element[contenteditable=true] {
+.js-webesembly-element[contenteditable=true] {
   caret-color: #e110ef;
   outline: 0px;
   cursor: text;
 }
 
-#js-live-edit-element-handle {
+#js-webesembly-element-handle {
   position: absolute;
   top: 20px;
   display: none;
@@ -131,7 +131,7 @@
   border: 2px solid #027aff;
 }
 
-#js-live-edit-element-handle-name {
+#js-webesembly-element-handle-name {
   -webkit-user-select: none;
      -moz-user-select: none;
           user-select: none;
@@ -158,7 +158,7 @@
   text-transform: uppercase;
 }
 
-#js-live-edit-element-handle-active {
+#js-webesembly-element-handle-active {
   /*core*/
   -webkit-user-select: none;
      -moz-user-select: none;
@@ -175,7 +175,7 @@
   box-shadow: 0px 0px 10px rgba(138, 138, 138, 0.4392156863);
 }
 
-#js-live-edit-element-handle-active-name {
+#js-webesembly-element-handle-active-name {
   /*core*/
   -webkit-user-select: none;
      -moz-user-select: none;
@@ -203,7 +203,7 @@
   color: #fff;
 }
 
-#js-live-edit-element-handle-active-settings {
+#js-webesembly-element-handle-active-settings {
   font-size: 12px;
   text-align: center;
   margin-top: -38px;
@@ -212,7 +212,7 @@
   width: 186px;
 }
 
-#js-live-edit-element-handle-active-settings button {
+#js-webesembly-element-handle-active-settings button {
   cursor: pointer;
   color: #FFFFFF;
   padding: 10px;
@@ -225,16 +225,16 @@
   background: #4085f2;
 }
 
-#js-live-edit-element-handle-active-settings button:first-child {
+#js-webesembly-element-handle-active-settings button:first-child {
   border-top-left-radius: 2px;
 }
 
-#js-live-edit-element-handle-active-settings button:last-child {
+#js-webesembly-element-handle-active-settings button:last-child {
   border: 0px;
   border-top-right-radius: 2px;
 }
 
-#js-live-edit-element-handle-active-settings button:hover {
+#js-webesembly-element-handle-active-settings button:hover {
   background: #2976ef;
 }
 
