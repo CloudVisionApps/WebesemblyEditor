@@ -87,7 +87,7 @@ export class MouseOverSectionHandle extends ElementHandle {
 
             axios.post('/webesembly/save-section', {
                 'name':getElementParentSectionElement.getAttribute('webesembly:section'),
-                'html':clonedHtmlSection, 
+                'html':clonedHtmlSection,
                 'pageName':pageName
             }).then(() => {
                 alert('Промените са запазени!');

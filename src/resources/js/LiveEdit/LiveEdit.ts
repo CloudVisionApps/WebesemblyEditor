@@ -26,7 +26,9 @@ export class LiveEdit {
         mouseOverHeaderHandle: {},
         mouseOverFooterHandle: {},
         mouseOverSectionHandle: {},
-        clickedElementHandle: {},
+        clickedElementHandle: {
+            calculateHandlePosition: function() {}
+        },
         clickedModuleHandle: {},
         mouseOverElementHandle: {},
         mouseOverModuleHandle: {},
