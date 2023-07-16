@@ -3,6 +3,9 @@
     --webesembly-grid-max-width: 1400px;
 }
 
+[webesembly\:flex-grid-block-contents="true"] {
+
+}
 [webesembly\:flex-grid="true"] {
 
     display: grid;

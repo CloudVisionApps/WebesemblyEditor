@@ -20,6 +20,32 @@ class WebesemblySectionTagCompiler extends ComponentTagCompiler
 
         if ($html) {
 
+            $findFlexGridElements = $html->find('[webesembly:flex-grid-element]');
+            if (!empty($findFlexGridElements)) {
+                foreach ($findFlexGridElements as $flexGridElement) {
+                    $elementWidth = 2;
+                    $elementHeight = 1;
+                    if ($flexGridElement->hasAttribute('webesembly:flex-grid-element-width')) {
+                        $elementWidth = $flexGridElement->getAttribute('webesembly:flex-grid-element-width');
+                    }
+                    if ($flexGridElement->hasAttribute('webesembly:flex-grid-element-height')) {
+                        $elementHeight = $flexGridElement->getAttribute('webesembly:flex-grid-element-height');
+                    }
+                    $flexGridElement->setAttribute('style', 'z-index:1;grid-area: 1 / 1 / '.$elementHeight.'/ '.$elementWidth);
+                    $flexGridSetup = '
+                          <div style="z-index: 5; position: relative; height: 100%; pointer-events: auto;" >
+                        <div style="height: 100%; width: 100%; position: absolute; left: 0px; top: 0px;">
+                            <div style="height: 100%; width: 100%; display: flex; justify-content: center;">
+                            '.$flexGridElement->innertext.'
+                            </div>
+                        </div>
+                    </div>
+                    ';
+                    $flexGridElement->innertext = $flexGridSetup;
+                }
+            }
+
+
             $allFindedSections = [];
             $findSections = $html->find('section[webesembly:section]');
             if (!empty($findSections)) {
