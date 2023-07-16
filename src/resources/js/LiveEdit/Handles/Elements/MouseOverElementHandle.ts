@@ -55,6 +55,10 @@ export class MouseOverElementHandle extends ElementHandle {
                 if (!getElementParentSectionElement) {
                     return;
                 }
+                let getElementParentFlexGridElement = elementHasParentsWithAttribute(mouseOverElement, 'webesembly:flex-grid');
+                if (getElementParentFlexGridElement) {
+                    return;
+                }
 
                 mouseOverElement.classList.add('js-live-edit-element');
 
