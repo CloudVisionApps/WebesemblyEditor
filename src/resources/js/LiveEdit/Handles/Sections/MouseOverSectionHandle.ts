@@ -74,13 +74,13 @@ export class MouseOverSectionHandle extends ElementHandle {
         this.handleActionMoveElementDuplicate = this.iframeManager.document.getElementById('js-live-edit-section-handle-action-duplicate');
         this.handleActionMoveElementDuplicate.addEventListener('click', () => {
 
-            console.log('duplicate');
+            console.log('duplicate'); 
 
             let cloneSection = this.currentSectionElement.cloneNode(true);
-            this.currentSectionElement.parentNode.appendChild(cloneSection);
+            cloneSection.setAttribute('webesembly:section', Math.floor(Math.random() * 1000000000));
+            this.currentSectionElement.after(cloneSection);
 
-            cloneSection.scrollIntoView({block: "center"});
-
+            cloneSection.scrollIntoView({block: "center", behavior: "smooth"});
 
         });
 
@@ -92,7 +92,7 @@ export class MouseOverSectionHandle extends ElementHandle {
             if (this.currentSectionElement.previousElementSibling) {
                 this.currentSectionElement.parentNode.insertBefore(this.currentSectionElement, this.currentSectionElement.previousElementSibling);
 
-                this.currentSectionElement.scrollIntoView({block: "center"});
+                this.currentSectionElement.scrollIntoView({block: "center", behavior: "smooth"});
             }
 
         });
@@ -105,7 +105,7 @@ export class MouseOverSectionHandle extends ElementHandle {
             if (this.currentSectionElement.nextElementSibling) {
                 this.currentSectionElement.parentNode.insertBefore(this.currentSectionElement.nextElementSibling, this.currentSectionElement);
 
-                this.currentSectionElement.scrollIntoView({block: "center"});
+                this.currentSectionElement.scrollIntoView({block: "center", behavior: "smooth"});
             }
 
         });
