@@ -63,12 +63,16 @@ export class FlexGridResizer extends ElementHandle {
 
         let findEditableElements = htmlElement.getElementsByClassName('js-webesembly-element');
         while (findEditableElements.length > 0) {
-            if (findEditableElements[0].hasAttribute('contenteditable')) {
-                findEditableElements[0].removeAttribute('contenteditable');
-            }
-            findEditableElements[0].classList.remove('js-webesembly-element');
-            if (findEditableElements[0].classList.length == 0) {
-                findEditableElements[0].removeAttribute('class');
+
+            if (findEditableElements[0]) {
+                if (findEditableElements[0].hasAttribute('contenteditable')) {
+                    findEditableElements[0].removeAttribute('contenteditable');
+                }
+
+                findEditableElements[0].classList.remove('js-webesembly-element');
+                // if (findEditableElements[0].classList.length == 0) {
+                //     findEditableElements[0].removeAttribute('class');
+                // }
             }
         }
 
@@ -399,13 +403,11 @@ export class FlexGridResizer extends ElementHandle {
 
     public appendBackgroundGridDisplay(gridRows = 18, gridColumns = 18)
     {
-
-        let grids = this.iframeManager.document.getElementsByClassName('js-webesembly-grid');
-        for (let i = 0; i < grids.length; i++) {
-            let currentGrid = grids[i];
+        let currentGrid = elementHasParentsWithAttribute(this.liveEdit.clickedElement, 'webesembly:flex-grid');
+        if (currentGrid) {
 
             // Add grid columns display
-            for (let gridColumnI = 1; gridColumnI < gridColumns+1; gridColumnI++) {
+            for (let gridColumnI = 1; gridColumnI < gridColumns + 1; gridColumnI++) {
                 let gridColumn = document.createElement("div");
                 gridColumn.setAttribute('style', 'grid-area: 1 / ' + gridColumnI + ' / -1 / ' + gridColumnI);
                 gridColumn.classList.add('js-webesembly-grid-column');
@@ -415,7 +417,7 @@ export class FlexGridResizer extends ElementHandle {
             }
 
             // Add grid rows display
-            for (let gridRowI = 1; gridRowI < gridRows+1; gridRowI++) {
+            for (let gridRowI = 1; gridRowI < gridRows + 1; gridRowI++) {
                 let gridRow = document.createElement("div");
                 gridRow.setAttribute('style', 'grid-area: ' + gridRowI + ' / 1 / ' + gridRowI + '/ -1');
                 gridRow.classList.add('js-webesembly-grid-row');

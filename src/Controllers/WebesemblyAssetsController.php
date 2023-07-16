@@ -22,4 +22,10 @@ class WebesemblyAssetsController
     {
         return $this->pretendResponseIsFile(__DIR__.'/../../dist/webesembly/loading-book.css', 'text/css');
     }
+
+    public function elementsCss()
+    {
+        return $this->pretendResponseIsFile(__DIR__.'/../../dist/webesembly/webesembly-elements.css', 'text/css');
+    }
+
 }
