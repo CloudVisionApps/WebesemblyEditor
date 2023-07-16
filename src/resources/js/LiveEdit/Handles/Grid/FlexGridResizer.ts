@@ -51,12 +51,12 @@ export class FlexGridResizer extends ElementHandle {
         let htmlElement = document.createElement('div');
         htmlElement.innerHTML = html;
 
-        let findColumnElements = htmlElement.getElementsByClassName('js-tailwind-x-grid-column');
+        let findColumnElements = htmlElement.getElementsByClassName('js-webesembly-grid-column');
         while(findColumnElements.length > 0){
             findColumnElements[0].parentNode.removeChild(findColumnElements[0]);
         }
 
-        let findRowElements = htmlElement.getElementsByClassName('js-tailwind-x-grid-row');
+        let findRowElements = htmlElement.getElementsByClassName('js-webesembly-grid-row');
         while(findRowElements.length > 0){
             findRowElements[0].parentNode.removeChild(findRowElements[0]);
         }
@@ -222,11 +222,13 @@ export class FlexGridResizer extends ElementHandle {
 
         console.log('initDrag');
 
-        let gridRow = this.iframeManager.document.getElementsByClassName('js-tailwind-x-grid-row');
+        this.appendBackgroundGridDisplay();
+
+        let gridRow = this.iframeManager.document.getElementsByClassName('js-webesembly-grid-row');
         for (let i = 0; i < gridRow.length; i++) {
             gridRow[i].style['opacity'] = 1;
         }
-        let gridColumn = this.iframeManager.document.getElementsByClassName('js-tailwind-x-grid-column');
+        let gridColumn = this.iframeManager.document.getElementsByClassName('js-webesembly-grid-column');
         for (let i = 0; i < gridColumn.length; i++) {
             gridColumn[i].style['opacity'] = 1;
         }
@@ -360,11 +362,11 @@ export class FlexGridResizer extends ElementHandle {
         console.log('stopDrag');
 
 
-        let gridRow = this.iframeManager.document.getElementsByClassName('js-tailwind-x-grid-row');
+        let gridRow = this.iframeManager.document.getElementsByClassName('js-webesembly-grid-row');
         for (let i = 0; i < gridRow.length; i++) {
             gridRow[i].style['opacity'] = 0;
         }
-        let gridColumn = this.iframeManager.document.getElementsByClassName('js-tailwind-x-grid-column');
+        let gridColumn = this.iframeManager.document.getElementsByClassName('js-webesembly-grid-column');
         for (let i = 0; i < gridColumn.length; i++) {
             gridColumn[i].style['opacity'] = 0;
         }
@@ -373,9 +375,10 @@ export class FlexGridResizer extends ElementHandle {
     }
 
 
-    public appendBackgroundGridDisplay(appendToElement, gridRows, gridColumns)
+    public appendBackgroundGridDisplay(gridRows = 18, gridColumns = 18)
     {
-        let grids = appendToElement.getElementsByClassName('js-tailwind-x-grid');
+
+        let grids = this.iframeManager.document.getElementsByClassName('js-webesembly-grid');
         for (let i = 0; i < grids.length; i++) {
             let currentGrid = grids[i];
 
@@ -383,7 +386,7 @@ export class FlexGridResizer extends ElementHandle {
             for (let gridColumnI = 1; gridColumnI < gridColumns+1; gridColumnI++) {
                 let gridColumn = document.createElement("div");
                 gridColumn.setAttribute('style', 'grid-area: 1 / ' + gridColumnI + ' / -1 / ' + gridColumnI);
-                gridColumn.classList.add('js-tailwind-x-grid-column');
+                gridColumn.classList.add('js-webesembly-grid-column');
                 //gridColumn.innerHTML = 'x' + gridColumnI;
 
                 currentGrid.append(gridColumn);
@@ -393,7 +396,7 @@ export class FlexGridResizer extends ElementHandle {
             for (let gridRowI = 1; gridRowI < gridRows+1; gridRowI++) {
                 let gridRow = document.createElement("div");
                 gridRow.setAttribute('style', 'grid-area: ' + gridRowI + ' / 1 / ' + gridRowI + '/ -1');
-                gridRow.classList.add('js-tailwind-x-grid-row');
+                gridRow.classList.add('js-webesembly-grid-row');
                 //gridRow.innerHTML = 'y' + gridRowI;
 
                 currentGrid.append(gridRow);
