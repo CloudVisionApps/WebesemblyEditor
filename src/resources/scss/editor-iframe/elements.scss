@@ -1,14 +1,14 @@
-.js-live-edit-element {
+.js-webesembly-element {
     cursor: pointer;
 }
 
-.js-live-edit-element[contenteditable='true'] {
+.js-webesembly-element[contenteditable='true'] {
     caret-color: #e110ef;
     outline: 0px;
     cursor: text;
 }
 
-#js-live-edit-element-handle {
+#js-webesembly-element-handle {
     position: absolute;
     top: 20px;
     display: none;
@@ -21,7 +21,7 @@
     border: 2px solid #027aff;
 }
 
-#js-live-edit-element-handle-name {
+#js-webesembly-element-handle-name {
     user-select: none;
     pointer-events: none;
 
@@ -48,7 +48,7 @@
 
 
 
-#js-live-edit-element-handle-active {
+#js-webesembly-element-handle-active {
 
     /*core*/
     user-select: none;
@@ -64,7 +64,7 @@
     transition: 0.2s ease height;
     box-shadow: 0px 0px 10px #8a8a8a70;
 }
-#js-live-edit-element-handle-active-name {
+#js-webesembly-element-handle-active-name {
 
     /*core*/
     user-select: none;
@@ -91,7 +91,7 @@
     color: #fff;
 }
 
-#js-live-edit-element-handle-active-settings {
+#js-webesembly-element-handle-active-settings {
     font-size: 12px;
     text-align: center;
     margin-top: -38px;
@@ -100,7 +100,7 @@
     width: 186px;
 }
 
-#js-live-edit-element-handle-active-settings button {
+#js-webesembly-element-handle-active-settings button {
     cursor: pointer;
     color: #FFFFFF;
     padding: 10px;
@@ -110,14 +110,14 @@
     pointer-events: visible;
     background: #4085f2;
 }
-#js-live-edit-element-handle-active-settings button:first-child {
+#js-webesembly-element-handle-active-settings button:first-child {
     border-top-left-radius: 2px;
 }
-#js-live-edit-element-handle-active-settings button:last-child {
+#js-webesembly-element-handle-active-settings button:last-child {
     border:0px;
     border-top-right-radius: 2px;
 }
 
-#js-live-edit-element-handle-active-settings button:hover {
+#js-webesembly-element-handle-active-settings button:hover {
     background: #2976ef;
 }

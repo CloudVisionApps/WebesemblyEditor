@@ -23,13 +23,13 @@ export class MouseOverElementHandle extends ElementHandle {
     public createElementHandle() {
 
         const createElementHandle = this.iframeManager.document.createElement("div");
-        createElementHandle.id = 'js-live-edit-element-handle';
-        createElementHandle.innerHTML = '<div id="js-live-edit-element-handle-name">Loading..</div>';
+        createElementHandle.id = 'js-webesembly-element-handle';
+        createElementHandle.innerHTML = '<div id="js-webesembly-element-handle-name">Loading..</div>';
 
         this.iframeManager.body.appendChild(createElementHandle);
 
-        this.handleMainElement = this.iframeManager.document.getElementById('js-live-edit-element-handle');
-        this.handleNameElement = this.iframeManager.document.getElementById('js-live-edit-element-handle-name');
+        this.handleMainElement = this.iframeManager.document.getElementById('js-webesembly-element-handle');
+        this.handleNameElement = this.iframeManager.document.getElementById('js-webesembly-element-handle-name');
     }
 
     public addListener()
@@ -60,7 +60,7 @@ export class MouseOverElementHandle extends ElementHandle {
                     return;
                 }
 
-                mouseOverElement.classList.add('js-live-edit-element');
+                mouseOverElement.classList.add('js-webesembly-element');
 
                 app.handleMainElement.style.width = (mouseOverElement.offsetWidth + 10) + 'px';
                 app.handleMainElement.style.height = (mouseOverElement.offsetHeight + 10) + 'px';

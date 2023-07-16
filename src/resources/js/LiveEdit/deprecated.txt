@@ -29,15 +29,15 @@
         //     let editorClass = editorIframeBody.getElementsByClassName(editableElementsClasses[i]);
         //     for (var j = 0; j < editorClass.length; j++) {
         //
-        //         editorClass[j].classList.add('js-live-edit-element');
+        //         editorClass[j].classList.add('js-webesembly-element');
         //
         //         editorClass[j].addEventListener('mouseover', function () {
-        //             this.classList.add('js-live-edit-element-border');
+        //             this.classList.add('js-webesembly-element-border');
         //         });
         //
         //         editorClass[j].addEventListener('mouseleave', function () {
-        //             this.classList.remove('js-live-edit-element-border');
-        //             this.classList.remove('js-live-edit-element-background');
+        //             this.classList.remove('js-webesembly-element-border');
+        //             this.classList.remove('js-webesembly-element-background');
         //         });
         //
         //     }
@@ -54,9 +54,9 @@
         function removeAllColoredActivelements() {
             let editorTag = this.editorIframeBody.getElementsByTagName('*');
             for (var j = 0; j < editorTag.length; j++) {
-                // editorTag[j].classList.remove('js-live-edit-element-border');
-                // editorTag[j].classList.remove('js-live-edit-element-background');
-                // editorTag[j].classList.remove('js-live-edit-element-editing');
+                // editorTag[j].classList.remove('js-webesembly-element-border');
+                // editorTag[j].classList.remove('js-webesembly-element-background');
+                // editorTag[j].classList.remove('js-webesembly-element-editing');
             }
         }
 
@@ -76,7 +76,7 @@
         let editorTag = this.editorIframeBody.getElementsByTagName('*');
         for (var j = 0; j < editorTag.length; j++) {
 
-            //    editorTag[j].classList.add('js-live-edit-element');
+            //    editorTag[j].classList.add('js-webesembly-element');
 
             /// stop href clicking
             if (editorTag[j].hasAttribute('href')) {
@@ -90,8 +90,8 @@
             });
 
             // editorTag[j].addEventListener('mouseleave', function () {
-            //     if (!this.classList.contains('js-live-edit-element-editing')) {
-            //         this.classList.remove('js-live-edit-element-border');
+            //     if (!this.classList.contains('js-webesembly-element-editing')) {
+            //         this.classList.remove('js-webesembly-element-border');
             //     }
             // });
 
@@ -114,9 +114,9 @@
 
                 elementHandle.style.display = 'none';
 
-                // instanceElement.classList.add('js-live-edit-element-border');
-                // instanceElement.classList.add('js-live-edit-element-background');
-                // instanceElement.classList.add('js-live-edit-element-editing');
+                // instanceElement.classList.add('js-webesembly-element-border');
+                // instanceElement.classList.add('js-webesembly-element-background');
+                // instanceElement.classList.add('js-webesembly-element-editing');
 
                 //document.getElementById('lastSelectedElement').innerHTML = this.innerHTML;
 

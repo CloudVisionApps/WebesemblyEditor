@@ -61,6 +61,11 @@ export class FlexGridResizer extends ElementHandle {
             findRowElements[0].parentNode.removeChild(findRowElements[0]);
         }
 
+        let findEditableElements = htmlElement.getElementsByClassName('js-webesembly-element');
+        while(findEditableElements.length > 0){
+            console.log(findEditableElements[0]);
+        }
+
         return htmlElement.innerHTML;
     }
 
@@ -87,32 +92,32 @@ export class FlexGridResizer extends ElementHandle {
 
         const createElementHandle = this.iframeManager.document.createElement("div");
 
-        createElementHandle.id = 'js-live-edit-element-handle-flex-grid-resizer';
+        createElementHandle.id = 'js-webesembly-element-handle-flex-grid-resizer';
         createElementHandle.innerHTML = '' +
             '' +
-            '<button id="js-live-edit-element-handle-flex-grid-resizer-north" type="button"> north </button>' +
-            '<button id="js-live-edit-element-handle-flex-grid-resizer-north-west" type="button"> north-west </button>' +
-            '<button id="js-live-edit-element-handle-flex-grid-resizer-north-east" type="button"> north-east </button>' +
-            '<button id="js-live-edit-element-handle-flex-grid-resizer-west" type="button"> west </button>' +
-            '<button id="js-live-edit-element-handle-flex-grid-resizer-south" type="button"> south </button>' +
-            '<button id="js-live-edit-element-handle-flex-grid-resizer-south-west" type="button"> south-west </button>' +
-            '<button id="js-live-edit-element-handle-flex-grid-resizer-south-east" type="button"> south-east </button>' +
-            '<button id="js-live-edit-element-handle-flex-grid-resizer-east" type="button"> east </button>' +
-            '<button id="js-live-edit-element-handle-flex-grid-resizer-move" type="button"> move </button>' +
+            '<button id="js-webesembly-element-handle-flex-grid-resizer-north" type="button"> north </button>' +
+            '<button id="js-webesembly-element-handle-flex-grid-resizer-north-west" type="button"> north-west </button>' +
+            '<button id="js-webesembly-element-handle-flex-grid-resizer-north-east" type="button"> north-east </button>' +
+            '<button id="js-webesembly-element-handle-flex-grid-resizer-west" type="button"> west </button>' +
+            '<button id="js-webesembly-element-handle-flex-grid-resizer-south" type="button"> south </button>' +
+            '<button id="js-webesembly-element-handle-flex-grid-resizer-south-west" type="button"> south-west </button>' +
+            '<button id="js-webesembly-element-handle-flex-grid-resizer-south-east" type="button"> south-east </button>' +
+            '<button id="js-webesembly-element-handle-flex-grid-resizer-east" type="button"> east </button>' +
+            '<button id="js-webesembly-element-handle-flex-grid-resizer-move" type="button"> move </button>' +
             '' +
             '';
         this.iframeManager.body.appendChild(createElementHandle);
 
-        this.element = this.iframeManager.document.getElementById('js-live-edit-element-handle-flex-grid-resizer');
-        this.resizeNorth = this.iframeManager.document.getElementById('js-live-edit-element-handle-flex-grid-resizer-north');
-        this.resizeNorthWest = this.iframeManager.document.getElementById('js-live-edit-element-handle-flex-grid-resizer-north-west');
-        this.resizeNorthEast = this.iframeManager.document.getElementById('js-live-edit-element-handle-flex-grid-resizer-north-east');
-        this.resizeWest = this.iframeManager.document.getElementById('js-live-edit-element-handle-flex-grid-resizer-west');
-        this.resizeSouth = this.iframeManager.document.getElementById('js-live-edit-element-handle-flex-grid-resizer-south');
-        this.resizeSouthWest = this.iframeManager.document.getElementById('js-live-edit-element-handle-flex-grid-resizer-south-west');
-        this.resizeSouthEast = this.iframeManager.document.getElementById('js-live-edit-element-handle-flex-grid-resizer-south-east');
-        this.resizeEast = this.iframeManager.document.getElementById('js-live-edit-element-handle-flex-grid-resizer-east');
-        this.resizeMove = this.iframeManager.document.getElementById('js-live-edit-element-handle-flex-grid-resizer-move');
+        this.element = this.iframeManager.document.getElementById('js-webesembly-element-handle-flex-grid-resizer');
+        this.resizeNorth = this.iframeManager.document.getElementById('js-webesembly-element-handle-flex-grid-resizer-north');
+        this.resizeNorthWest = this.iframeManager.document.getElementById('js-webesembly-element-handle-flex-grid-resizer-north-west');
+        this.resizeNorthEast = this.iframeManager.document.getElementById('js-webesembly-element-handle-flex-grid-resizer-north-east');
+        this.resizeWest = this.iframeManager.document.getElementById('js-webesembly-element-handle-flex-grid-resizer-west');
+        this.resizeSouth = this.iframeManager.document.getElementById('js-webesembly-element-handle-flex-grid-resizer-south');
+        this.resizeSouthWest = this.iframeManager.document.getElementById('js-webesembly-element-handle-flex-grid-resizer-south-west');
+        this.resizeSouthEast = this.iframeManager.document.getElementById('js-webesembly-element-handle-flex-grid-resizer-south-east');
+        this.resizeEast = this.iframeManager.document.getElementById('js-webesembly-element-handle-flex-grid-resizer-east');
+        this.resizeMove = this.iframeManager.document.getElementById('js-webesembly-element-handle-flex-grid-resizer-move');
 
 
         // grid-row-start
@@ -224,14 +229,14 @@ export class FlexGridResizer extends ElementHandle {
 
         this.appendBackgroundGridDisplay();
 
-        let gridRow = this.iframeManager.document.getElementsByClassName('js-webesembly-grid-row');
-        for (let i = 0; i < gridRow.length; i++) {
-            gridRow[i].style['opacity'] = 1;
-        }
-        let gridColumn = this.iframeManager.document.getElementsByClassName('js-webesembly-grid-column');
-        for (let i = 0; i < gridColumn.length; i++) {
-            gridColumn[i].style['opacity'] = 1;
-        }
+        // let gridRow = this.iframeManager.document.getElementsByClassName('js-webesembly-grid-row');
+        // for (let i = 0; i < gridRow.length; i++) {
+        //     gridRow[i].style['opacity'] = 1;
+        // }
+        // let gridColumn = this.iframeManager.document.getElementsByClassName('js-webesembly-grid-column');
+        // for (let i = 0; i < gridColumn.length; i++) {
+        //     gridColumn[i].style['opacity'] = 1;
+        // }
     }
 
     doDrag = (e) => {
@@ -363,12 +368,19 @@ export class FlexGridResizer extends ElementHandle {
 
 
         let gridRow = this.iframeManager.document.getElementsByClassName('js-webesembly-grid-row');
-        for (let i = 0; i < gridRow.length; i++) {
-            gridRow[i].style['opacity'] = 0;
+        // for (let i = 0; i < gridRow.length; i++) {
+        //     gridRow[i].style['opacity'] = 0;
+        // }
+        while(gridRow.length > 0){
+            gridRow[0].parentNode.removeChild(gridRow[0]);
         }
+
         let gridColumn = this.iframeManager.document.getElementsByClassName('js-webesembly-grid-column');
-        for (let i = 0; i < gridColumn.length; i++) {
-            gridColumn[i].style['opacity'] = 0;
+        // for (let i = 0; i < gridColumn.length; i++) {
+        //     gridColumn[i].style['opacity'] = 0;
+        // }
+        while(gridColumn.length > 0){
+            gridColumn[0].parentNode.removeChild(gridColumn[0]);
         }
 
 

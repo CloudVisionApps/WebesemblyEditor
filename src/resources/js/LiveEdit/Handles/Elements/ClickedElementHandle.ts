@@ -24,17 +24,17 @@ export class ClickedElementHandle extends ElementHandle {
     public createElementHandle() {
 
         const createElementHandle = this.iframeManager.document.createElement("div");
-        createElementHandle.id = 'js-live-edit-element-handle-active';
-        createElementHandle.innerHTML = '<div id="js-live-edit-element-handle-active-name">Image</div>' +
-            '<div id="js-live-edit-element-handle-active-settings">' +
+        createElementHandle.id = 'js-webesembly-element-handle-active';
+        createElementHandle.innerHTML = '<div id="js-webesembly-element-handle-active-name">Image</div>' +
+            '<div id="js-webesembly-element-handle-active-settings">' +
             '<button type="button">Settings</button>' +
             '</div>';
 
         this.iframeManager.body.appendChild(createElementHandle);
 
-        this.element = this.iframeManager.document.getElementById('js-live-edit-element-handle-active');
-        this.name = this.iframeManager.document.getElementById('js-live-edit-element-handle-active-name');
-        this.settings = this.iframeManager.document.getElementById('js-live-edit-element-handle-active-settings');
+        this.element = this.iframeManager.document.getElementById('js-webesembly-element-handle-active');
+        this.name = this.iframeManager.document.getElementById('js-webesembly-element-handle-active-name');
+        this.settings = this.iframeManager.document.getElementById('js-webesembly-element-handle-active-settings');
     }
 
     public enableSettingsDelete()
@@ -138,7 +138,7 @@ export class ClickedElementHandle extends ElementHandle {
                     clickedElement.setAttribute('contenteditable', 'true');
                 }
 
-                clickedElement.classList.add('js-live-edit-element');
+                clickedElement.classList.add('js-webesembly-element');
 
                 app.element.style.width = (clickedElement.offsetWidth + 10) + 'px';
                 app.element.style.height = (clickedElement.offsetHeight + 10) + 'px';

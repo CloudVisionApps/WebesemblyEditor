@@ -35,14 +35,14 @@
     </div>
 
 
-    <div id="js-live-edit-element-handle-active"
+    <div id="js-webesembly-element-handle-active"
          style="display:block;width: 884px; height: 68px; top: 150px; left: 78px;">
-        <div id="js-live-edit-element-handle-active-name">Paragraph - Clicked Handle</div>
-        <div id="js-live-edit-element-handle-active-settings"></div>
+        <div id="js-webesembly-element-handle-active-name">Paragraph - Clicked Handle</div>
+        <div id="js-webesembly-element-handle-active-settings"></div>
     </div>
 
-    <div id="js-live-edit-element-handle" style="display:block;width: 884px; height: 68px; top: 270px; left: 78px;">
-        <div id="js-live-edit-element-handle-name">Paragraph - Hover Handle</div>
+    <div id="js-webesembly-element-handle" style="display:block;width: 884px; height: 68px; top: 270px; left: 78px;">
+        <div id="js-webesembly-element-handle-name">Paragraph - Hover Handle</div>
     </div>
 
 

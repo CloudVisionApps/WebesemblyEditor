@@ -1,4 +1,4 @@
-#js-live-edit-element-handle-flex-grid-resizer {
+#js-webesembly-element-handle-flex-grid-resizer {
 
     /*core*/
     user-select: none;
@@ -8,7 +8,7 @@
     z-index: 1000000000;
     display:none;
 }
-#js-live-edit-element-handle-flex-grid-resizer-north {
+#js-webesembly-element-handle-flex-grid-resizer-north {
 
     user-select: contain;
     pointer-events: all;
@@ -17,7 +17,7 @@
     position: absolute;
     right: 50%;
 }
-#js-live-edit-element-handle-flex-grid-resizer-north-west {
+#js-webesembly-element-handle-flex-grid-resizer-north-west {
 
     user-select: contain;
     pointer-events: all;
@@ -26,7 +26,7 @@
     position: absolute;
     left: -80px;
 }
-#js-live-edit-element-handle-flex-grid-resizer-south {
+#js-webesembly-element-handle-flex-grid-resizer-south {
     user-select: contain;
     pointer-events: all;
 
@@ -34,7 +34,7 @@
     position: absolute;
     right: 50%;
 }
-#js-live-edit-element-handle-flex-grid-resizer-move {
+#js-webesembly-element-handle-flex-grid-resizer-move {
     user-select: contain;
     pointer-events: all;
 
@@ -42,7 +42,7 @@
     position: absolute;
     right: 4%;
 }
-#js-live-edit-element-handle-flex-grid-resizer-south-west {
+#js-webesembly-element-handle-flex-grid-resizer-south-west {
 
     user-select: contain;
     pointer-events: all;
@@ -51,7 +51,7 @@
     position: absolute;
     left: -84px;
 }
-#js-live-edit-element-handle-flex-grid-resizer-east {
+#js-webesembly-element-handle-flex-grid-resizer-east {
 
     user-select: contain;
     pointer-events: all;
@@ -60,7 +60,7 @@
     right: -50px;
     top: 50%;
 }
-#js-live-edit-element-handle-flex-grid-resizer-north-east {
+#js-webesembly-element-handle-flex-grid-resizer-north-east {
 
     user-select: contain;
     pointer-events: all;
@@ -69,7 +69,7 @@
     position: absolute;
     right: -80px;
 }
-#js-live-edit-element-handle-flex-grid-resizer-south-east {
+#js-webesembly-element-handle-flex-grid-resizer-south-east {
 
     user-select: contain;
     pointer-events: all;
@@ -78,7 +78,7 @@
     position: absolute;
     right: -84px;
 }
-#js-live-edit-element-handle-flex-grid-resizer-west {
+#js-webesembly-element-handle-flex-grid-resizer-west {
 
     user-select: contain;
     pointer-events: all;

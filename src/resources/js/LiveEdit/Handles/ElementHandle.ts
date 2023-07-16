@@ -27,11 +27,11 @@ export class ElementHandle {
             return false;
         }
 
-        if (elementHasParentsWithId(element, 'js-live-edit-element-handle')) {
+        if (elementHasParentsWithId(element, 'js-webesembly-element-handle')) {
             return false;
         }
 
-        if (elementHasParentsWithId(element, 'js-live-edit-element-handle-active')) {
+        if (elementHasParentsWithId(element, 'js-webesembly-element-handle-active')) {
             return false;
         }
 
