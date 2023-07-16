@@ -88,3 +88,20 @@
     top: 50%;
 }
 
+
+
+
+.js-webesembly-grid-column {
+    pointer-events: none;
+    user-select: none;
+    width:5px;
+    background: #eeeeee;
+    z-index: 0;
+}
+.js-webesembly-grid-row {
+    pointer-events: none;
+    user-select: none;
+    height:5px;
+    z-index: 0;
+    background: #e7e7e7;
+}
