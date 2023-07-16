@@ -75,9 +75,12 @@ export class MouseOverSectionHandle extends ElementHandle {
         this.handleActionMoveElementDuplicate.addEventListener('click', () => {
 
             console.log('duplicate');
-            
+
             let cloneSection = this.currentSectionElement.cloneNode(true);
             this.currentSectionElement.parentNode.appendChild(cloneSection);
+
+            cloneSection.scrollIntoView({block: "center"});
+
 
         });
 
@@ -88,6 +91,8 @@ export class MouseOverSectionHandle extends ElementHandle {
 
             if (this.currentSectionElement.previousElementSibling) {
                 this.currentSectionElement.parentNode.insertBefore(this.currentSectionElement, this.currentSectionElement.previousElementSibling);
+
+                this.currentSectionElement.scrollIntoView({block: "center"});
             }
 
         });
@@ -99,6 +104,8 @@ export class MouseOverSectionHandle extends ElementHandle {
 
             if (this.currentSectionElement.nextElementSibling) {
                 this.currentSectionElement.parentNode.insertBefore(this.currentSectionElement.nextElementSibling, this.currentSectionElement);
+
+                this.currentSectionElement.scrollIntoView({block: "center"});
             }
 
         });
