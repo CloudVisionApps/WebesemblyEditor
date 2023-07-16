@@ -381,6 +381,7 @@ export class FlexGridResizer extends ElementHandle {
         console.log('stopDrag');
 
 
+        return;
         let gridRow = this.iframeManager.document.getElementsByClassName('js-webesembly-grid-row');
         // for (let i = 0; i < gridRow.length; i++) {
         //     gridRow[i].style['opacity'] = 0;
@@ -401,7 +402,7 @@ export class FlexGridResizer extends ElementHandle {
     }
 
 
-    public appendBackgroundGridDisplay(gridRows = 18, gridColumns = 18)
+    public appendBackgroundGridDisplay(gridRows = 12, gridColumns = 26)
     {
         let currentGrid = elementHasParentsWithAttribute(this.liveEdit.clickedElement, 'webesembly:flex-grid');
         if (currentGrid) {
