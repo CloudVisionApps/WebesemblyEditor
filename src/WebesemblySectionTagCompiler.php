@@ -21,6 +21,7 @@ class WebesemblySectionTagCompiler extends ComponentTagCompiler
         if ($html) {
 
 
+            $pageIsFinded = false;
             $findPages = $html->find('div[webesembly:page]');
             if (!empty($findPages)) {
                 foreach ($findPages as $page) {
@@ -33,49 +34,52 @@ class WebesemblySectionTagCompiler extends ComponentTagCompiler
                     $mountPage = \WebesemblyEditor\WebesemblyPage::mount($componentName, $params)->html();
                     if (!empty($mountPage)) {
                         $page->outertext = $mountPage;
+                        $pageIsFinded = true;
                     }
                 }
             }
 
-            $findFlexGridElements = $html->find('[webesembly:flex-grid-element]');
-            if (!empty($findFlexGridElements)) {
-                foreach ($findFlexGridElements as $flexGridElement) {
+            if (!$pageIsFinded) {
+                $findFlexGridElements = $html->find('[webesembly:flex-grid-element]');
+                if (!empty($findFlexGridElements)) {
+                    foreach ($findFlexGridElements as $flexGridElement) {
 //                    $attributesInside = '';
 //                    if ($flexGridElement->hasAttribute('webesembly:editable')) {
 //                        $flexGridElement->removeAttribute('webesembly:editable');
 //                        $attributesInside .= ' webesembly:editable="true" ';
 //                    }
 
-                    $elementWidth = 2;
-                    $elementHeight = 1;
-                    if ($flexGridElement->hasAttribute('webesembly:flex-grid-element-width')) {
-                        $elementWidth = $flexGridElement->getAttribute('webesembly:flex-grid-element-width');
-                    }
-                    if ($flexGridElement->hasAttribute('webesembly:flex-grid-element-height')) {
-                        $elementHeight = $flexGridElement->getAttribute('webesembly:flex-grid-element-height');
-                    }
-                    $flexGridElement->setAttribute('style', 'z-index:1;grid-area: 1 / 1 / '.$elementHeight.'/ '.$elementWidth);
-
-                    if ($flexGridElement->hasAttribute('webesembly:flex-grid-element')) {
-                        $flexGridElementArea = $flexGridElement->getAttribute('webesembly:flex-grid-element');
-                        if (strpos($flexGridElementArea, '/') !== false) {
-                            $flexGridElement->setAttribute('style', 'z-index:1;grid-area: '.$flexGridElementArea);
+                        $elementWidth = 2;
+                        $elementHeight = 1;
+                        if ($flexGridElement->hasAttribute('webesembly:flex-grid-element-width')) {
+                            $elementWidth = $flexGridElement->getAttribute('webesembly:flex-grid-element-width');
                         }
-                    }
+                        if ($flexGridElement->hasAttribute('webesembly:flex-grid-element-height')) {
+                            $elementHeight = $flexGridElement->getAttribute('webesembly:flex-grid-element-height');
+                        }
+                        $flexGridElement->setAttribute('style', 'z-index:1;grid-area: 1 / 1 / ' . $elementHeight . '/ ' . $elementWidth);
 
-                    $flexGridSetup = '
+                        if ($flexGridElement->hasAttribute('webesembly:flex-grid-element')) {
+                            $flexGridElementArea = $flexGridElement->getAttribute('webesembly:flex-grid-element');
+                            if (strpos($flexGridElementArea, '/') !== false) {
+                                $flexGridElement->setAttribute('style', 'z-index:1;grid-area: ' . $flexGridElementArea);
+                            }
+                        }
+
+                        $flexGridSetup = '
                           <div style="z-index: 5; position: relative; height: 100%; pointer-events: auto;" >
                         <div style="height: 100%; width: 100%; position: absolute; left: 0px; top: 0px;">
                             <div webesembly:flex-grid-element-content="true" style="height: 100%; width: 100%; display: flex; justify-content: center;">
 
-                               '.$flexGridElement->innertext.'
+                               ' . $flexGridElement->innertext . '
 
                             </div>
                         </div>
                     </div>
                     ';
 
-                    $flexGridElement->innertext = $flexGridSetup;
+                        $flexGridElement->innertext = $flexGridSetup;
+                    }
                 }
             }
 
