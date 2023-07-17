@@ -26,14 +26,23 @@ class WebesemblyFlexGridTagCompiler extends ComponentTagCompiler
 
         if ($html) {
 
+            $appliedChanges = 0;
             $findFlexGridElements = $html->find('[webesembly:flex-grid-element]');
             if (!empty($findFlexGridElements)) {
                 foreach ($findFlexGridElements as $flexGridElement) {
-//                    $attributesInside = '';
-//                    if ($flexGridElement->hasAttribute('webesembly:editable')) {
-//                        $flexGridElement->removeAttribute('webesembly:editable');
-//                        $attributesInside .= ' webesembly:editable="true" ';
-//                    }
+
+                    $skip = false;
+                    $elementChildrens = $flexGridElement->children();
+                    if (!empty($elementChildrens)) {
+                        foreach ($elementChildrens as $elementChildren) {
+                            if ($elementChildren->hasAttribute('webesembly:flex-grid-element-relative')) {
+                                $skip = true;
+                            }
+                        }
+                    }
+                    if ($skip) {
+                        continue;
+                    }
 
                     $elementWidth = 2;
                     $elementHeight = 1;
@@ -65,9 +74,13 @@ class WebesemblyFlexGridTagCompiler extends ComponentTagCompiler
                     ';
 
                     $flexGridElement->innertext = $flexGridSetup;
+                    $appliedChanges++;
                 }
 
-                return $html->save();
+                if ($appliedChanges > 0) {
+                    return $html->save();
+                }
+                
             }
         }
 
