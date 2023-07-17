@@ -95,9 +95,9 @@ export class LiveEdit {
                     'html':currentPageDomCloned.innerHTML,
                     'sections': saveSections
                 }).then(() => {
-                    alert('Промените са запазени!');
+                    this.successMessageModal('Промените са запазени!');
                 }).catch(error => {
-                    alert('Възникна грешка при запазването на промените!');
+                    this.errorMessageModal('Възникна грешка при запазването на промените!');
                 });
             }
 
@@ -112,15 +112,35 @@ export class LiveEdit {
                 axios.post('/webesembly/reset-page', {
                     'name':savePageElement.getAttribute('webesembly:page'),
                 }).then((result) => {
-                    alert('Страницата е върната в първоначалното си състояние!');
+
+                    this.successMessageModal('Страницата е върната в първоначалното си състояние!');
                     window.location.reload();
                 }).catch(error => {
-                    alert('Възникна грешка при връщането на страницата в първоначалното си състояние!');
+                    this.errorMessageModal('Възникна грешка при връщането на страницата в първоначалното си състояние!');
                 });
             }
 
         });
 
+    }
+    public errorMessageModal(message) {
+        let liveEditEvent = new CustomEvent('JsLiveEdit::MessageModal', {
+            detail: {
+                title: message,
+                description: false,
+            }
+        });
+        document.dispatchEvent(liveEditEvent);
+    }
+
+    public successMessageModal(message) {
+        let liveEditEvent = new CustomEvent('JsLiveEdit::MessageModal', {
+            detail: {
+                title: message,
+                description: false,
+            }
+        });
+        document.dispatchEvent(liveEditEvent);
     }
 
     private findDuplicableElements()

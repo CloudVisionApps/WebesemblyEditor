@@ -1,5 +1,5 @@
 <template>
- 
+
 <!--
  <div>
         <div class="flex-1 flex items-center space-x-2">
@@ -61,6 +61,9 @@
        <Tags class="mt-2" />
    </div>-->
 
+    <MessageModal />
+    <SimpleModal />
+
 </template>
 
 <style>
@@ -98,6 +101,9 @@ import TextAlign from './Text/TextAlign.vue'
 import TextColor from './Text/TextColor.vue'
 import BackgroundColor from './Text/BackgroundColor.vue'
 import BrowserSwitch from './Responsive/BrowserSwitch.vue'
+import SimpleModal from "./SimpleModal.vue";
+import MessageModal from "./MessageModal.vue";
+
 import Button from "./Button.vue";
 
 let deviceName;
@@ -124,6 +130,8 @@ export default {
         TextAlign,
         TextColor,
         BackgroundColor,
+        SimpleModal,
+        MessageModal
     },
     methods: {
         savePage() {

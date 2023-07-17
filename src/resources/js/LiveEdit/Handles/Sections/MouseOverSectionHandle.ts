@@ -121,9 +121,9 @@ export class MouseOverSectionHandle extends ElementHandle {
                 'name':this.currentSectionElement.getAttribute('webesembly:section'),
                 'html':this.currentSectionElement.innerHTML,
             }).then(() => {
-                alert('Секцията е добавена към любими!');
+                this.liveEdit.successMessageModal('Секцията е добавена към любими!');
             }).catch(error => {
-                alert('Възникна грешка при добавянето на секцията към любими!');
+                this.liveEdit.errorMessageModal('Възникна грешка при добавянето на секцията към любими!');
             });
 
         });
