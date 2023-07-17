@@ -29,6 +29,14 @@ class WebesemblyEditorController
         if (!empty($pageName)) {
             $findPage = WebesemblyPage::where('name', $pageName)->first();
             if ($findPage) {
+
+                $sections = WebesemblySection::where('page_id', $findPage->id)->get();
+                if (!empty($sections)) {
+                    foreach ($sections as $section) {
+                        $section->delete();
+                    }
+                }
+
                 $findPage->delete();
             }
         }

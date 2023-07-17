@@ -9,6 +9,7 @@ use WebesemblyEditor\View\WebesemblyComponents\Logo;
 use WebesemblyEditor\View\WebesemblyComponents\Menu;
 use WebesemblyEditor\View\WebesemblyComponents\SocialLinks;
 use WebesemblyEditor\View\WebesemblyComponents\Text;
+use WebesemblyEditor\WebesemblyFlexGridTagCompiler;
 use WebesemblyEditor\WebesemblyPageManager;
 use WebesemblyEditor\WebesemblySectionManager;
 use WebesemblyEditor\WebesemblySectionTagCompiler;
@@ -71,11 +72,17 @@ class WebesemblyEditorServiceProvider extends ServiceProvider
     protected function registerTagCompiler()
     {
         if (method_exists($this->app['blade.compiler'], 'precompiler')) {
+
+            include(__DIR__ . '/../helpers/simple_html_dom.php');
+
             $this->app['blade.compiler']->precompiler(function ($string) {
                 return app(WebesemblyModuleTagCompiler::class)->compile($string);
             });
             $this->app['blade.compiler']->precompiler(function ($string) {
                 return app(WebesemblySectionTagCompiler::class)->compile($string);
+            });
+            $this->app['blade.compiler']->precompiler(function ($string) {
+                return app(WebesemblyFlexGridTagCompiler::class)->compile($string);
             });
         }
     }
