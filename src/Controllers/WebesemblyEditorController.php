@@ -51,6 +51,25 @@ class WebesemblyEditorController
             $findPage->params = [];
             $findPage->html = $request->get('html');
             $findPage->save();
+
+            $sections = $request->get('sections', []);
+            if (!empty($sections)) {
+                foreach ($sections as $section) {
+
+                    $sectionName = $section['name'];
+                    $findSection = WebesemblySection::where('name', $sectionName)->where('page_id', $findPage->id)->first();
+                    if (!$findSection) {
+                        $findSection = new WebesemblySection();
+                        $findSection->name = $sectionName;
+                        $findSection->page_id = $findPage->id;
+                    }
+
+                    $findSection->html = $section['html'];
+                    $findSection->params = [];
+                    $findSection->save();
+                }
+            }
+
         }
 
         \Artisan::call('view:clear');

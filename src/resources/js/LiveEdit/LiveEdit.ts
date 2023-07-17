@@ -73,10 +73,27 @@ export class LiveEdit {
             let findPageElements = app.iframeManager.body.querySelectorAll('[webesembly\\:page]');
             for (let i = 0; i < findPageElements.length; i++) {
                 let savePageElement = findPageElements[i];
+                let saveSections = [];
+
+                let currentPageDomCloned  = document.createElement('div');
+                currentPageDomCloned.innerHTML = savePageElement.innerHTML;
+
+                let findSections = currentPageDomCloned.querySelectorAll('[webesembly\\:section]');
+                for (let j = 0; j < findSections.length; j++) {
+                   // console.log(findSections);
+                    saveSections.push({
+                        'name':findSections[j].getAttribute('webesembly:section'),
+                        'attributes':findSections[j].attributes,
+                        'pageName:':savePageElement.getAttribute('webesembly:page'),
+                        'html':findSections[j].innerHTML,
+                    });
+                    findSections[j].innerHTML = '';
+                }
 
                 axios.post('/webesembly/save-page', {
                     'name':savePageElement.getAttribute('webesembly:page'),
-                    'html':savePageElement.innerHTML,
+                    'html':currentPageDomCloned.innerHTML,
+                    'sections': saveSections
                 }).then(() => {
                     alert('Промените са запазени!');
                 }).catch(error => {
