@@ -29,7 +29,7 @@
 
     /*design*/
     border-radius: var(--live-edit-border-radius);
-    border: 2px solid #fff;
+    border: 2px solid #6bca0c;
 }
 
 #js-live-edit-module-handle-name {
@@ -39,13 +39,13 @@
     /*design*/
     display: flex;
     width: max-content;
-    padding: 7px 11px;
+    padding: 2px 7px;
     justify-content: center;
     align-content: center;
     align-items: center;
     gap: 12px;
     line-height: 18px;
-    margin-top: -38px;
+    margin-top: -27px;
     margin-left: -2px;
     border-radius: var(--live-edit-border-radius);
     font-size: 12px;
@@ -53,8 +53,8 @@
     text-transform: uppercase;
     font-family: var(--live-edit-font-family);
     font-weight: 700;
-    background: #fff;
-    color: #717171;
+    background: #6bca0c;
+    color: #fff;
 }
 
 
@@ -70,7 +70,7 @@
 
     /*design*/
     border-radius: var(--live-edit-border-radius);
-    border: 2px solid #fff;
+    border: 2px solid #6bca0c;
     transition: 0.2s ease height;
 }
 
@@ -79,11 +79,11 @@
     pointer-events: visible;
 }
 #js-live-edit-module-handle-active-settings {
-    margin-top: -58px;
+    margin-top: -45px;
     margin-left: -2px;
     display: flex;
     width: max-content;
-    padding: 7px 11px;
+    padding: 2px 9px;
     line-height: 18px;
     justify-content: center;
     align-content: center;
@@ -99,8 +99,8 @@
     font-weight: 700;
 
     border-radius: var(--live-edit-border-radius);
-    background: #fff;
-    color:#000;
+    background: #6bca0c;
+    color: #fff;
     transition: 0.2s ease height;
 }
 

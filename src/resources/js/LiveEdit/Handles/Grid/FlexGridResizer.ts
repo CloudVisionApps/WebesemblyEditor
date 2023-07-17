@@ -87,6 +87,7 @@ export class FlexGridResizer extends ElementHandle {
         if (!elementHasParentsWithAttribute(clickedElement, 'webesembly:flex-grid')) {
             return false;
         }
+
         let flexGridElement = elementHasParentsWithAttribute(clickedElement, 'webesembly:flex-grid-element');
         if (!flexGridElement) {
             return;

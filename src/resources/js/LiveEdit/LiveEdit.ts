@@ -80,6 +80,8 @@ export class LiveEdit {
 
                 let findSections = currentPageDomCloned.querySelectorAll('[webesembly\\:section]');
                 for (let j = 0; j < findSections.length; j++) {
+
+
                    // console.log(findSections);
                     saveSections.push({
                         'name':findSections[j].getAttribute('webesembly:section'),
@@ -141,40 +143,6 @@ export class LiveEdit {
             }
         });
         document.dispatchEvent(liveEditEvent);
-    }
-
-    private findDuplicableElements()
-    {
-        const app = this;
-        let elementParents = [];
-        let editableElementsInPage = app.iframeManager.body.getElementsByTagName('*');
-        for (var j = 0; j < editableElementsInPage.length; j++) {
-            let objIndex = elementParents.findIndex((obj => obj.parent == editableElementsInPage[j].parentElement));
-            if (objIndex > 0) {
-                elementParents[objIndex].elements.push(editableElementsInPage[j]);
-            } else {
-                elementParents.push({
-                    'parent': editableElementsInPage[j].parentElement,
-                    'elements': [editableElementsInPage[j]]
-                });
-            }
-        }
-
-        for (var ja = 0; ja < elementParents.length; ja++) {
-            if (elementParents[ja].elements.length > 1) {
-                let elementClasses = [];
-                for (var jk = 0; jk < elementParents[ja].elements.length; jk++) {
-                    elementClasses.push(elementParents[ja].elements[jk].className);
-                }
-                const elementClassesCounts = {};
-                elementClasses.forEach(function (x) { elementClassesCounts[x] = (elementClassesCounts[x] || 0) + 1; });
-                if (Object.values(elementClassesCounts)[0] == elementParents[ja].elements.length) {
-                    for (var jkx = 0; jkx < elementParents[ja].elements.length; jkx++) {
-                        app.duplicableElements.push(elementParents[ja].elements[jkx]);
-                    }
-                }
-            }
-        }
     }
 
     private appendStyles()

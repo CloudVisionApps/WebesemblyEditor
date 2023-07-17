@@ -93,8 +93,19 @@ export class ClickedModuleHandle extends ElementHandle {
                     return;
                 }
 
+                this.liveEdit.clickedElement = getElementParentModuleElement;
                 this.liveEdit.clickedModule = getElementParentModuleElement;
+                
                 this.liveEdit.handles.mouseOverModuleHandle.hide();
+                //
+                var liveEditEvent = new CustomEvent('JsLiveEdit::ElementChange', {
+                    detail: {
+                        element: getElementParentModuleElement,
+                        elementType: getElementParentModuleElement.tagName,
+                        classList: getElementParentModuleElement.classList
+                    }
+                });
+                document.dispatchEvent(liveEditEvent);
 
                 app.handleMainElement.style.width = (getElementParentModuleElement.offsetWidth + 20) + 'px';
                 app.handleMainElement.style.height = (getElementParentModuleElement.offsetHeight + 20) + 'px';

@@ -79,8 +79,11 @@ export function getElementFriendlyName(tagName)
 }
 
 export function elementHasParentsWithId(element, id) {
+    if (!element) {
+        return false;
+    }
     do {
-        if (element.id && element.id == id) {
+        if (element && element.id && element.id == id) {
             return true;
         }
         element = element.parentNode;
@@ -89,8 +92,11 @@ export function elementHasParentsWithId(element, id) {
 }
 
 export function elementHasParentsWithAttribute(element, attributeKey) {
+    if (!element) {
+        return false;
+    }
     do {
-        if (element.attributes &&
+        if (element && element.attributes &&
             element.attributes.length > 0
             && element.hasAttribute(attributeKey)) {
             return element;
@@ -100,8 +106,11 @@ export function elementHasParentsWithAttribute(element, attributeKey) {
     return false;
 }
 export function elementHasParentsWithTagName(element, tagName) {
+    if (!element) {
+        return false;
+    }
     do {
-        if (element.tagName &&
+        if (element && element.tagName &&
             element.tagName.length > 0
             && element.tagName.toUpperCase() == tagName.toUpperCase()) {
             return element;
