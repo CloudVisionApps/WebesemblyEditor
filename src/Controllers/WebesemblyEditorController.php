@@ -19,6 +19,11 @@ class WebesemblyEditorController
         return view('webesembly-editor::editor');
     }
 
+    public function dev()
+    {
+        return view('webesembly-editor::dev');
+    }
+
     public function ui()
     {
         return view('webesembly-editor::editor-ui');

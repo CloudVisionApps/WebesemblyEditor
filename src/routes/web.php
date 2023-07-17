@@ -6,6 +6,9 @@ Route::namespace('WebesemblyEditor\Controllers')->group(function() {
     Route::get('/editor', 'WebesemblyEditorController@editor');
     Route::get('/editor-ui', 'WebesemblyEditorController@ui');
 
+    Route::get('/webesembly/dev', 'WebesemblyEditorController@dev');
+
+
     Route::post('/webesembly/save-page', 'WebesemblyEditorController@savePage');
     Route::post('/webesembly/reset-page', 'WebesemblyEditorController@resetPage');
 
