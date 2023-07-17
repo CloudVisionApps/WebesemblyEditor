@@ -235,11 +235,18 @@ export class FlexGridResizer extends ElementHandle {
         this.resizeEastNow = false;
     }
 
+    public mouseX = 0;
+    public mouseY = 0;
+
     initDrag = (e) => {
         // startX = e.clientX;
         // startY = e.clientY;
         // startWidth = parseInt(document.defaultView.getComputedStyle(p).width, 10);
         // startHeight = parseInt(document.defaultView.getComputedStyle(p).height, 10);
+
+
+        this.mouseX = e.clientX;
+        this.mouseY = e.clientY;
 
         this.iframeManager.document.addEventListener('mousemove', this.doDrag, false);
         this.iframeManager.document.addEventListener('mouseup', this.stopDrag, false);
@@ -349,18 +356,41 @@ export class FlexGridResizer extends ElementHandle {
         }
 
         if (instance.resizeMoveNow) {
+
             let boundingClientRectMove = this.resizeMove.getBoundingClientRect();
+
+            const dx = e.clientX - this.mouseX;
+            const dy = e.clientY - this.mouseY;
+
+            // Set the position of element
+            flexGridElement.style.position = 'relative';
+            flexGridElement.style.top = `${e.clientX- boundingClientRectMove.height}px`;
+            flexGridElement.style.left = `${e.clientY - boundingClientRectMove.width}px`;
+
+            // Reassign the position of mouse
+            this.mouseX = e.clientX;
+            this.mouseY = e.clientY;
+
+            console.log(flexGridElement);
+            console.log(flexGridElement.offsetTop);
+            console.log(flexGridElement.offsetLeft);
+            console.log(this.mouseX);
+            console.log(this.mouseY);
+
+            return;
+
             let diffBetweenMoveY = Math.abs((boundingClientRectMove.y - e.clientY) / e.clientY * 100);
             if (diffBetweenMoveY > 5) {
                 console.log('diffBetweenMove' + diffBetweenMoveY);
                 if (boundingClientRectMove.y > e.clientY) {
                     console.log('move top' + boundingClientRectMove.y);
-                    flexGridElement.style['grid-row-start'] = (parseInt(flexGridElement.style['grid-row-start']) - 1);
-                    flexGridElement.style['grid-row-end'] = (parseInt(flexGridElement.style['grid-row-end']) - 1);
+                    // flexGridElement.style['grid-row-start'] = (parseInt(flexGridElement.style['grid-row-start']) - 1);
+                    // flexGridElement.style['grid-row-end'] = (parseInt(flexGridElement.style['grid-row-end']) - 1);
                 } else {
                     console.log('move down' + boundingClientRectMove.y);
-                    flexGridElement.style['grid-row-start'] = (parseInt(flexGridElement.style['grid-row-start']) + 1);
-                    flexGridElement.style['grid-row-end'] = (parseInt(flexGridElement.style['grid-row-end']) + 1);
+
+                    // flexGridElement.style['grid-row-start'] = (parseInt(flexGridElement.style['grid-row-start']) + 1);
+                    // flexGridElement.style['grid-row-end'] = (parseInt(flexGridElement.style['grid-row-end']) + 1);
                 }
             }
 
@@ -369,31 +399,31 @@ export class FlexGridResizer extends ElementHandle {
                 console.log('diffBetweenMove' + diffBetweenMoveX);
                 if (boundingClientRectMove.x > e.clientX) {
                     console.log('move top' + boundingClientRectMove.x);
-                    flexGridElement.style['grid-column-start'] = (parseInt(flexGridElement.style['grid-column-start']) - 1);
-                    flexGridElement.style['grid-column-end'] = (parseInt(flexGridElement.style['grid-column-end']) - 1);
+                    // flexGridElement.style['grid-column-start'] = (parseInt(flexGridElement.style['grid-column-start']) - 1);
+                    // flexGridElement.style['grid-column-end'] = (parseInt(flexGridElement.style['grid-column-end']) - 1);
                 } else {
                     console.log('move down' + boundingClientRectMove.x);
-                    flexGridElement.style['grid-column-start'] = (parseInt(flexGridElement.style['grid-column-start']) + 1);
-                    flexGridElement.style['grid-column-end'] = (parseInt(flexGridElement.style['grid-column-end']) + 1);
+                    // flexGridElement.style['grid-column-start'] = (parseInt(flexGridElement.style['grid-column-start']) + 1);
+                    // flexGridElement.style['grid-column-end'] = (parseInt(flexGridElement.style['grid-column-end']) + 1);
                 }
             }
 
             console.log('resizeMoveNow');
         }
 
-       instance.calculateHandlePosition();
-
-        if (instance.liveEdit.clickedElement) {
-            this.liveEdit.handles.clickedElementHandle.calculateHandlePosition();
-        }
-
-        if (this.liveEdit.clickedModule) {
-            this.liveEdit.handles.clickedModuleHandle.calculateHandlePosition();
-        }
-
-        console.log(this.liveEdit.handles.clickedModuleHandle);
-
-       console.log('doDrag');
+       // instance.calculateHandlePosition();
+       //
+       //  if (instance.liveEdit.clickedElement) {
+       //      this.liveEdit.handles.clickedElementHandle.calculateHandlePosition();
+       //  }
+       //
+       //  if (this.liveEdit.clickedModule) {
+       //      this.liveEdit.handles.clickedModuleHandle.calculateHandlePosition();
+       //  }
+       //
+       //  console.log(this.liveEdit.handles.clickedModuleHandle);
+       //
+       // console.log('doDrag');
     }
 
     stopDrag = (e) => {

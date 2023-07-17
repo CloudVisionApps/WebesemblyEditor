@@ -8,6 +8,7 @@ import {MouseOverSectionHandle} from "./Handles/Sections/MouseOverSectionHandle"
 import {ClickedElementHandle} from "./Handles/Elements/ClickedElementHandle";
 import {MouseOverElementHandle} from "./Handles/Elements/MouseOverElementHandle";
 import {FlexGridResizer} from "./Handles/Grid/FlexGridResizer";
+import {FlexGridMover} from "./Handles/Grid/FlexGridMover";
 
 import {MouseOverModuleHandle} from "./Handles/Modules/MouseOverModuleHandle";
 import {ClickedModuleHandle} from "./Handles/Modules/ClickedModuleHandle";
@@ -34,6 +35,7 @@ export class LiveEdit {
         mouseOverElementHandle: {},
         mouseOverModuleHandle: {},
         flexGridResizerHandle: {},
+        flexGridMoverHandle: {},
     };
 
     public duplicableElements = [];
@@ -54,7 +56,8 @@ export class LiveEdit {
 
            app.handles.clickedElementHandle = new ClickedElementHandle(app);
            app.handles.mouseOverElementHandle = new MouseOverElementHandle(app);
-           app.handles.flexGridResizerHandle = new FlexGridResizer(app);
+           //app.handles.flexGridResizerHandle = new FlexGridResizer(app);
+           app.handles.flexGridMoverHandle = new FlexGridMover(app);
 
            app.handles.clickedModuleHandle = new ClickedModuleHandle(app);
            app.handles.mouseOverModuleHandle = new MouseOverModuleHandle(app);
