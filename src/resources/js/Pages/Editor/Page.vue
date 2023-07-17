@@ -35,7 +35,7 @@
        <div>
            <BrowserSwitch />
        </div>
-        <div>
+        <div class="flex gap-3">
             <button v-on:click="savePage()" type="button" class="bg-gray-800 text-white px-3 py-2 rounded-md text-sm font-medium">
                 Save
             </button>

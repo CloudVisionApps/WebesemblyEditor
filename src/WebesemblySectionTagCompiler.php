@@ -30,15 +30,16 @@ class WebesemblySectionTagCompiler extends ComponentTagCompiler
                     $params['data']['attributes'] = $page->attr;
                     $params['data']['html'] = $page->innertext;
 
-                    $page->outertext = \WebesemblyEditor\WebesemblyPage::mount($componentName, $params)->html();;
-
+                    $mountPage = \WebesemblyEditor\WebesemblyPage::mount($componentName, $params)->html();
+                    if (!empty($mountPage)) {
+                        $page->outertext = $mountPage;
+                    }
                 }
             }
 
             $findFlexGridElements = $html->find('[webesembly:flex-grid-element]');
             if (!empty($findFlexGridElements)) {
                 foreach ($findFlexGridElements as $flexGridElement) {
-
 //                    $attributesInside = '';
 //                    if ($flexGridElement->hasAttribute('webesembly:editable')) {
 //                        $flexGridElement->removeAttribute('webesembly:editable');

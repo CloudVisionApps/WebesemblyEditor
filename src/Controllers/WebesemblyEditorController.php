@@ -31,7 +31,7 @@ class WebesemblyEditorController
             if ($findPage) {
                 $findPage->delete();
             }
-        } 
+        }
 
         \Artisan::call('view:clear');
 

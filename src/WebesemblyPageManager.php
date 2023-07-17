@@ -63,13 +63,15 @@ class WebesemblyPageManager
             $originalContent = $findPage->html;
             $this->id = $findPage->id;
             $htmlAttributes .= ' webesembly:page-id="'.$this->id.'"';
-        }
 
-        return '<div '.$htmlAttributes.' >
+            return '<div '.$htmlAttributes.' >
 
             '.$originalContent.'
 
         </div>';
+        }
+
+        return false;
     }
 
 }
