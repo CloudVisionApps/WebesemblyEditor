@@ -17,6 +17,11 @@ class WebesemblySection extends Model
         'name',
         'params',
         'html',
+        'page_id'
     ];
 
+    public function page()
+    {
+        return $this->hasOne(WebesemblyPage::class);
+    }
 }

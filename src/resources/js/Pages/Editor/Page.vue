@@ -1,4 +1,5 @@
 <template>
+ 
 <!--
  <div>
         <div class="flex-1 flex items-center space-x-2">
@@ -56,10 +57,9 @@
             ]"></iframe>
     </div>
 
-   <div>
+<!--   <div>
        <Tags class="mt-2" />
-   </div>
-
+   </div>-->
 
 </template>
 

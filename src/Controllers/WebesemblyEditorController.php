@@ -5,6 +5,7 @@ namespace WebesemblyEditor\Controllers;
 use Illuminate\Http\Request;
 use WebesemblyEditor\Models\WebesemblyPage;
 use WebesemblyEditor\Models\WebesemblySection;
+use WebesemblyEditor\Models\WebesemblySectionFavorite;
 
 class WebesemblyEditorController
 {
@@ -81,6 +82,21 @@ class WebesemblyEditorController
         }
 
         \Artisan::call('view:clear');
+
+        return response()->json(['success' => true]);
+    }
+
+    public function saveSectionFavorite(Request $request)
+    {
+        $section = WebesemblySectionFavorite::where('name', $request->get('name'))->first();
+        if (!$section) {
+            $section = new WebesemblySectionFavorite();
+            $section->name = $request->get('name');
+        }
+
+        $section->html = $request->get('html');
+        $section->params = [];
+        $section->save();
 
         return response()->json(['success' => true]);
     }

@@ -112,6 +112,21 @@ export class MouseOverSectionHandle extends ElementHandle {
 
         this.handleActionMoveElementDuplicate = this.iframeManager.document.getElementById('js-live-edit-section-handle-action-duplicate');
         this.handleActionMoveElementFavorite = this.iframeManager.document.getElementById('js-live-edit-section-handle-action-favorite');
+        this.handleActionMoveElementFavorite.addEventListener('click', () => {
+
+            console.log('favorite');
+            console.log(this.currentSectionElement);
+
+            axios.post('/webesembly/save-section-favorite', {
+                'name':this.currentSectionElement.getAttribute('webesembly:section'),
+                'html':this.currentSectionElement.innerHTML,
+            }).then(() => {
+                alert('Секцията е добавена към любими!');
+            }).catch(error => {
+                alert('Възникна грешка при добавянето на секцията към любими!');
+            });
+
+        });
 
         this.handleActionRemove = this.iframeManager.document.getElementById('js-live-edit-section-handle-action-remove');
         this.handleActionRemove.addEventListener('click', () => {

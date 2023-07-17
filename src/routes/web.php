@@ -9,6 +9,7 @@ Route::namespace('WebesemblyEditor\Controllers')->group(function() {
     Route::post('/webesembly/save-page', 'WebesemblyEditorController@savePage');
     Route::post('/webesembly/reset-page', 'WebesemblyEditorController@resetPage');
 
+    Route::post('/webesembly/save-section-favorite', 'WebesemblyEditorController@saveSectionFavorite');
 //    Route::post('/webesembly/save-section', 'WebesemblyEditorController@saveSection');
 //    Route::post('/webesembly/reset-section', 'WebesemblyEditorController@resetSection');
 //    Route::post('/webesembly/delete-section', 'WebesemblyEditorController@deleteSection');

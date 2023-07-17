@@ -19,4 +19,9 @@ class WebesemblyPage extends Model
         'html',
     ];
 
+    public function sections()
+    {
+        return $this->hasMany(WebesemblySection::class);
+    }
+
 }
