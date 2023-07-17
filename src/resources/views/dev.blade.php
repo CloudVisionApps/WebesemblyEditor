@@ -1,99 +1,108 @@
-{{--
-
-<link rel="stylesheet" href="http://127.0.0.1:8000/themes/hotel_roberto/assets/style-68b7bf4e.css">
-
-<link rel="stylesheet" href="http://127.0.0.1:8000/webesembly-editor/webesembly-elements.css" type="text/css" media="all">
---}}
-
-
-<div>
-
-{{--        <section webesembly:section="modules-with-grid">--}}
-{{--            <div webesembly:flex-grid="true" style="background:#0000003b">--}}
-{{--                <div  webesembly:flex-grid-element="11 / 18 / 3 / 10" style="backround:rgba(115,215,92,0.34);z-index:1;grid-area: 6 / 18 / 3 / 10">--}}
-{{--                    <div webesembly:flex-grid-element-relative="true" style="z-index: 5; position: relative; height: 100%; pointer-events: auto;">--}}
-{{--                        <div webesembly:flex-grid-element-absolute="true" style="height: 100%; width: 100%; position: absolute; left: 0px; top: 0px;">--}}
-{{--                            <div webesembly:flex-grid-element-content="true" style="height: 100%; width: 100%; display: flex; justify-content: center;">--}}
-
-{{--                                <div webesembly:id="u3Y0c2AIY4oiRDpTaKAI" webesembly:module="logo">--}}
-{{--                                    <a href="#">--}}
-{{--                                        <img src="http://127.0.0.1:8000/themes/hotel_roberto/img/core-img/logo.png" alt="">--}}
-{{--                                    </a>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--            </div>--}}
-
-{{--        </section>--}}
-
-
-    <div id="container">
-        <div id="draggableElement">Drag me!</div>
-    </div>
-
+<div class="grid-container">
+    <div class="item draggable">Item 1</div>
+    <div class="item draggable">Item 2</div>
+    <div class="item draggable">Item 3</div>
+    <div class="item draggable">Item 4</div>
 </div>
 
 <style>
-    #container {
-        width: 400px;
-        height: 400px;
-        background: #d0d0d0;
+    .grid-container {
+        display: grid;
+        grid-template-columns: repeat(20, 1fr);
+        grid-template-rows: repeat(20, 1fr);
+        grid-gap: 10px;
         position: relative;
     }
 
-    #draggableElement {
-        width: 100px;
-        height: 100px;
-        background-color: red;
-        color: white;
+    .item {
+        background-color: #ee6363;
         text-align: center;
-        line-height: 100px;
+        cursor: move;
+    }
+
+    .grid-container::before {
+        user-select: none;
+        pointer-events: none;
+        content: "";
         position: absolute;
         top: 0;
         left: 0;
-        cursor: move;
+        width: 100%;
+        height: 100%;
+        background-image: linear-gradient(#aaa 1px, transparent 1px), linear-gradient(90deg, #aaa 1px, transparent 1px);
+        background-size: 21px 21px;
     }
 </style>
-
 <script>
-window.onload = function() {
+    document.addEventListener("DOMContentLoaded", function() {
+        const draggableElements = document.querySelectorAll(".draggable");
+        let draggingElement = null;
+        let offsetX = 0;
+        let offsetY = 0;
+        let gridY = 0;
+        let gridX = 0;
 
-    var draggableElement = document.getElementById('draggableElement');
-    var container = document.getElementById('container');
-    var isDragging = false;
-    var containerRect;
-    var draggableRect;
-    var offset = { x: 0, y: 0 };
+        function startDragging(e) {
+            draggingElement = this;
+            offsetX = e.clientX - draggingElement.getBoundingClientRect().left;
+            offsetY = e.clientY - draggingElement.getBoundingClientRect().top;
 
-    draggableElement.addEventListener('mousedown', function(event) {
-        isDragging = true;
+            draggingElement.style.zIndex = 9999;
+            draggingElement.style.gridArea = "";
+            draggingElement.style.position = "absolute";
+            draggingElement.style.pointerEvents = "none";
+            //draggingElement.style.transition = "transform 0.04s ease-in-out"; // Added transition effect
 
-        containerRect = container.getBoundingClientRect();
-        draggableRect = draggableElement.getBoundingClientRect();
+            document.addEventListener("mousemove", onMouseMove);
+            document.addEventListener("mouseup", onMouseUp);
+        }
 
-        offset.x = event.clientX - draggableRect.left;
-        offset.y = event.clientY - draggableRect.top;
-    });
+        draggableElements.forEach(function(element) {
+            element.addEventListener("mousedown", startDragging);
+        });
 
-    document.addEventListener('mousemove', function(event) {
-        if (isDragging) {
-            var x = event.clientX - containerRect.left - offset.x;
-            var y = event.clientY - containerRect.top - offset.y;
+        function onMouseMove(e) {
+            if (draggingElement) {
+                const x = e.clientX - offsetX;
+                const y = e.clientY - offsetY;
 
-            x = Math.max(0, Math.min(x, containerRect.width - draggableRect.width));
-            y = Math.max(0, Math.min(y, containerRect.height - draggableRect.height));
+                const gridContainer = document.querySelector(".grid-container");
+                let cellWidth = parseFloat(getComputedStyle(gridContainer).gridTemplateColumns.split(" ")[0]);
+                let cellHeight = parseFloat(getComputedStyle(gridContainer).gridTemplateRows.split(" ")[0]);
 
-            draggableElement.style.left = x + 'px';
-            draggableElement.style.top = y + 'px';
+                let cellWidthSmoothly = 1;
+                let cellHeightSmoothly = 1;
+
+                let gridXSmoothly = Math.floor(x / cellWidthSmoothly);
+                let gridYSmoothly = Math.floor(y / cellHeightSmoothly);
+
+                gridX = Math.floor(x / cellWidth);
+                gridY = Math.floor(y / cellHeight);
+
+                draggingElement.style.transform = `translate(${gridXSmoothly * cellWidthSmoothly}px, ${gridYSmoothly * cellHeightSmoothly}px)`; // Smooth transition
+
+                // Optionally, you can also update the grid area position for accuracy (uncomment the line below)
+               //draggingElement.style.gridArea = `${gridY} / ${gridX} / span 1 / span 1`;
+ 
+            }
+        }
+
+        function onMouseUp() {
+            if (draggingElement) {
+
+                draggingElement.style.zIndex = "";
+                draggingElement.style.position = "";
+                draggingElement.style.pointerEvents = "";
+                draggingElement.style.transition = ""; // Remove transition effect
+                draggingElement.style.transform = "";
+                draggingElement.style.gridArea = `${gridY} / ${gridX} / span 1 / span 1`;
+
+
+                document.removeEventListener("mousemove", onMouseMove);
+                document.removeEventListener("mouseup", onMouseUp);
+            }
         }
     });
 
-    document.addEventListener('mouseup', function() {
-        isDragging = false;
-    });
 
-
-}
 </script>
