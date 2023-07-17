@@ -382,7 +382,16 @@ export class FlexGridResizer extends ElementHandle {
         }
 
        instance.calculateHandlePosition();
-       this.liveEdit.handles.clickedElementHandle.calculateHandlePosition();
+
+        if (instance.liveEdit.clickedElement) {
+            this.liveEdit.handles.clickedElementHandle.calculateHandlePosition();
+        }
+
+        if (this.liveEdit.clickedModule) {
+            this.liveEdit.handles.clickedModuleHandle.calculateHandlePosition();
+        }
+
+        console.log(this.liveEdit.handles.clickedModuleHandle);
 
        console.log('doDrag');
     }

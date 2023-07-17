@@ -95,7 +95,7 @@ export class ClickedModuleHandle extends ElementHandle {
 
                 this.liveEdit.clickedElement = getElementParentModuleElement;
                 this.liveEdit.clickedModule = getElementParentModuleElement;
-                
+
                 this.liveEdit.handles.mouseOverModuleHandle.hide();
                 //
                 var liveEditEvent = new CustomEvent('JsLiveEdit::ElementChange', {
@@ -107,13 +107,7 @@ export class ClickedModuleHandle extends ElementHandle {
                 });
                 document.dispatchEvent(liveEditEvent);
 
-                app.handleMainElement.style.width = (getElementParentModuleElement.offsetWidth + 20) + 'px';
-                app.handleMainElement.style.height = (getElementParentModuleElement.offsetHeight + 20) + 'px';
-
-                let clickedElementBounding = getElementParentModuleElement.getBoundingClientRect();
-                app.handleMainElement.style.top = (clickedElementBounding.top + (app.iframeManager.window.scrollY - 10)) + 'px';
-                app.handleMainElement.style.left = (clickedElementBounding.left + (app.iframeManager.window.scrollX - 10)) + 'px';
-                app.handleMainElement.style.display = 'block';
+                this.calculateHandlePosition();
 
                 let moduleFriendlyName = getElementParentModuleElement.getAttribute('webesembly:module').toUpperCase();
 
@@ -124,4 +118,16 @@ export class ClickedModuleHandle extends ElementHandle {
         }, {passive: true});
     }
 
+    public calculateHandlePosition()
+    {
+        let app = this;
+
+        app.handleMainElement.style.width = (this.liveEdit.clickedModule.offsetWidth + 20) + 'px';
+        app.handleMainElement.style.height = (this.liveEdit.clickedModule.offsetHeight + 20) + 'px';
+
+        let clickedElementBounding = this.liveEdit.clickedModule.getBoundingClientRect();
+        app.handleMainElement.style.top = (clickedElementBounding.top + (app.iframeManager.window.scrollY - 10)) + 'px';
+        app.handleMainElement.style.left = (clickedElementBounding.left + (app.iframeManager.window.scrollX - 10)) + 'px';
+        app.handleMainElement.style.display = 'block';
+    }
 }
