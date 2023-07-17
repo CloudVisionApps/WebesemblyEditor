@@ -80,7 +80,7 @@ class WebesemblyFlexGridTagCompiler extends ComponentTagCompiler
                 if ($appliedChanges > 0) {
                     return $html->save();
                 }
-                
+
             }
         }
 
