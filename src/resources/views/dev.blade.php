@@ -83,7 +83,7 @@
 
                 // Optionally, you can also update the grid area position for accuracy (uncomment the line below)
                //draggingElement.style.gridArea = `${gridY} / ${gridX} / span 1 / span 1`;
- 
+
             }
         }
 
