@@ -359,38 +359,38 @@ export class FlexGridResizer extends ElementHandle {
 
             let boundingClientRectMove = this.resizeMove.getBoundingClientRect();
 
-            const dx = e.clientX - this.mouseX;
-            const dy = e.clientY - this.mouseY;
-
-            // Set the position of element
-            flexGridElement.style.position = 'relative';
-            flexGridElement.style.top = `${e.clientX- boundingClientRectMove.height}px`;
-            flexGridElement.style.left = `${e.clientY - boundingClientRectMove.width}px`;
-
-            // Reassign the position of mouse
-            this.mouseX = e.clientX;
-            this.mouseY = e.clientY;
-
-            console.log(flexGridElement);
-            console.log(flexGridElement.offsetTop);
-            console.log(flexGridElement.offsetLeft);
-            console.log(this.mouseX);
-            console.log(this.mouseY);
-
-            return;
+            // const dx = e.clientX - this.mouseX;
+            // const dy = e.clientY - this.mouseY;
+            //
+            // // Set the position of element
+            // flexGridElement.style.position = 'relative';
+            // flexGridElement.style.top = `${e.clientX- boundingClientRectMove.height}px`;
+            // flexGridElement.style.left = `${e.clientY - boundingClientRectMove.width}px`;
+            //
+            // // Reassign the position of mouse
+            // this.mouseX = e.clientX;
+            // this.mouseY = e.clientY;
+            //
+            // console.log(flexGridElement);
+            // console.log(flexGridElement.offsetTop);
+            // console.log(flexGridElement.offsetLeft);
+            // console.log(this.mouseX);
+            // console.log(this.mouseY);
+            //
+            // return;
 
             let diffBetweenMoveY = Math.abs((boundingClientRectMove.y - e.clientY) / e.clientY * 100);
             if (diffBetweenMoveY > 5) {
                 console.log('diffBetweenMove' + diffBetweenMoveY);
                 if (boundingClientRectMove.y > e.clientY) {
                     console.log('move top' + boundingClientRectMove.y);
-                    // flexGridElement.style['grid-row-start'] = (parseInt(flexGridElement.style['grid-row-start']) - 1);
-                    // flexGridElement.style['grid-row-end'] = (parseInt(flexGridElement.style['grid-row-end']) - 1);
+                     flexGridElement.style['grid-row-start'] = (parseInt(flexGridElement.style['grid-row-start']) - 1);
+                     flexGridElement.style['grid-row-end'] = (parseInt(flexGridElement.style['grid-row-end']) - 1);
                 } else {
                     console.log('move down' + boundingClientRectMove.y);
 
-                    // flexGridElement.style['grid-row-start'] = (parseInt(flexGridElement.style['grid-row-start']) + 1);
-                    // flexGridElement.style['grid-row-end'] = (parseInt(flexGridElement.style['grid-row-end']) + 1);
+                     flexGridElement.style['grid-row-start'] = (parseInt(flexGridElement.style['grid-row-start']) + 1);
+                     flexGridElement.style['grid-row-end'] = (parseInt(flexGridElement.style['grid-row-end']) + 1);
                 }
             }
 
@@ -399,31 +399,31 @@ export class FlexGridResizer extends ElementHandle {
                 console.log('diffBetweenMove' + diffBetweenMoveX);
                 if (boundingClientRectMove.x > e.clientX) {
                     console.log('move top' + boundingClientRectMove.x);
-                    // flexGridElement.style['grid-column-start'] = (parseInt(flexGridElement.style['grid-column-start']) - 1);
-                    // flexGridElement.style['grid-column-end'] = (parseInt(flexGridElement.style['grid-column-end']) - 1);
+                     flexGridElement.style['grid-column-start'] = (parseInt(flexGridElement.style['grid-column-start']) - 1);
+                     flexGridElement.style['grid-column-end'] = (parseInt(flexGridElement.style['grid-column-end']) - 1);
                 } else {
                     console.log('move down' + boundingClientRectMove.x);
-                    // flexGridElement.style['grid-column-start'] = (parseInt(flexGridElement.style['grid-column-start']) + 1);
-                    // flexGridElement.style['grid-column-end'] = (parseInt(flexGridElement.style['grid-column-end']) + 1);
+                    flexGridElement.style['grid-column-start'] = (parseInt(flexGridElement.style['grid-column-start']) + 1);
+                     flexGridElement.style['grid-column-end'] = (parseInt(flexGridElement.style['grid-column-end']) + 1);
                 }
             }
 
             console.log('resizeMoveNow');
         }
 
-       // instance.calculateHandlePosition();
-       //
-       //  if (instance.liveEdit.clickedElement) {
-       //      this.liveEdit.handles.clickedElementHandle.calculateHandlePosition();
-       //  }
-       //
-       //  if (this.liveEdit.clickedModule) {
-       //      this.liveEdit.handles.clickedModuleHandle.calculateHandlePosition();
-       //  }
-       //
-       //  console.log(this.liveEdit.handles.clickedModuleHandle);
-       //
-       // console.log('doDrag');
+       instance.calculateHandlePosition();
+
+        if (instance.liveEdit.clickedElement) {
+            this.liveEdit.handles.clickedElementHandle.calculateHandlePosition();
+        }
+
+        if (this.liveEdit.clickedModule) {
+            this.liveEdit.handles.clickedModuleHandle.calculateHandlePosition();
+        }
+
+        console.log(this.liveEdit.handles.clickedModuleHandle);
+
+       console.log('doDrag');
     }
 
     stopDrag = (e) => {
@@ -453,7 +453,7 @@ export class FlexGridResizer extends ElementHandle {
     }
 
 
-    public appendBackgroundGridDisplay(gridRows = 12, gridColumns = 26)
+    public appendBackgroundGridDisplay(gridRows = 40, gridColumns = 40)
     {
         let currentGrid = elementHasParentsWithAttribute(this.liveEdit.clickedElement, 'webesembly:flex-grid');
         if (currentGrid) {
