@@ -1,19 +1,59 @@
 <div class="grid-container">
 
-    <div style="background:yellow;grid-area: 3/6/9/12;" class="item draggable"></div>
+
+    <div style="color:#fff;grid-area: 3 / 7 / 6 / 14;" class="item draggable">
+        <h2>HTML Forms</h2>
+    </div>
+
+    <div style="grid-area: 6 / 7 / 13 / 14;background: #757575;padding: 19px;" class="item draggable">
+        <form action="/action_page.php">
+            <label for="fname">First name:</label><br>
+            <input type="text" id="fname" name="fname" value="John"><br>
+            <label for="lname">Last name:</label><br>
+            <input type="text" id="lname" name="lname" value="Doe"><br><br>
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+
+    <div style="grid-area: 13 / 7 / 16 / 18;color: #ffff;" class="item draggable">
+        <p>If you click the "Submit" button, the form-data will be sent to a page called "/action_page.php".</p>
+    </div>
 
 </div>
 
 
 <style>
+body {
+    color:#fff;
+    line-height:15px;
+    font-family:Tahoma;
+}
+    input {
+        border-radius:0px;
+        border:0px;
+        color:#000;
+        background: #a6a6a6;
+        padding:5px 7px;
+        margin:5px;
+    }
+
+    button {
+        border-radius:0px;
+        border:0px;
+        color:#000;
+        background: #a6a6a6;
+        padding:5px 7px;
+        margin:5px;
+    }
+
     .grid-container {
         display: grid;
         grid-template-columns: repeat(20, 1fr);
         grid-template-rows: repeat(20, 1fr);
         grid-gap: 4px;
         position: relative;
-        width:600px;
-        height:400px;
+        width:900px;
+        height:500px;
         background:#272725;
     }
 
@@ -25,8 +65,6 @@
     }
 
     .item {
-        background-color: red;
-        text-align: center;
         cursor: move;
     }
 
@@ -67,10 +105,15 @@
         //     gridItem.innerHTML = '';
         //     gridContainer.appendChild(gridItem);
         // }
+        //
+
+        let draggingElementShadow = document.createElement("div");
+        draggingElementShadow.style.userSelect = "none";
+        draggingElementShadow.style.pointerEvents = "none";
+        gridContainer.appendChild(draggingElementShadow);
 
         const draggableElements = document.querySelectorAll(".draggable");
         let draggingElement = null;
-        let draggingElementShadow = null;
         let offsetX = 0;
         let offsetY = 0;
         let gridY = 0;
@@ -97,13 +140,9 @@
                 gridColumnEnd: draggingElement.style.gridColumnEnd,
             };
 
-            createDraggingElementShadow =  document.createElement("div");
-            createDraggingElementShadow.style.border = '3px solid #09b0ef';
-            //createDraggingElementShadow.style.zIndex = 3;
-            createDraggingElementShadow.style.gridArea = draggingElement.style.gridArea;
-
-            this.after(createDraggingElementShadow);
-            draggingElementShadow = createDraggingElementShadow;
+            draggingElementShadow.style.opacity = 1;
+            draggingElementShadow.style.border = '3px solid #09b0ef';
+            draggingElementShadow.style.gridArea = draggingElement.style.gridArea;
 
             originalX = draggingElement.getBoundingClientRect().left;
             originalY = draggingElement.getBoundingClientRect().top;
@@ -178,8 +217,8 @@
                     if (newGridRowEnd < 22) {
                         newGridAreaForElement['gridRowStart'] = newGridRowStart;
                         newGridAreaForElement['gridRowEnd'] = newGridRowEnd;
-                        createDraggingElementShadow.style.gridRowStart = gridY;
-                        createDraggingElementShadow.style.gridRowEnd = gridY + (draggingElementGridAreaStart.gridRowEnd - draggingElementGridAreaStart.gridRowStart);
+                        draggingElementShadow.style.gridRowStart = gridY;
+                        draggingElementShadow.style.gridRowEnd = gridY + (draggingElementGridAreaStart.gridRowEnd - draggingElementGridAreaStart.gridRowStart);
                     }
 
                 }
@@ -194,8 +233,8 @@
                         newGridAreaForElement['gridColumnStart'] = newGridColumnStart;
                         newGridAreaForElement['gridColumnEnd'] = newGridColumnEnd;
 
-                        createDraggingElementShadow.style.gridColumnStart = gridX;
-                        createDraggingElementShadow.style.gridColumnEnd = gridX + (draggingElementGridAreaStart.gridColumnEnd - draggingElementGridAreaStart.gridColumnStart);
+                        draggingElementShadow.style.gridColumnStart = gridX;
+                        draggingElementShadow.style.gridColumnEnd = gridX + (draggingElementGridAreaStart.gridColumnEnd - draggingElementGridAreaStart.gridColumnStart);
                     }
                 }
 
@@ -263,8 +302,7 @@
                 draggingElement.style.gridColumnStart = newGridAreaForElement['gridColumnStart'];
                 draggingElement.style.gridColumnEnd = newGridAreaForElement['gridColumnEnd'];
 
-                draggingElementShadow.remove();
-                draggingElementShadow = null;
+                draggingElementShadow.style.opacity = 0;
 
                 document.removeEventListener("mousemove", onMouseMove);
                 document.removeEventListener("mouseup", onMouseUp);
