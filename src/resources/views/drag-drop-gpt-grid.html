@@ -1,9 +1,6 @@
 <div class="grid-container">
 
-    <div style="background:white;grid-area: 2/4/span 4/span 10;" class="item draggable"></div>
-    <div style="background:green;grid-area: 6/4/span 4/span 10;" class="item draggable"></div>
-    <div style="grid-area: 10/4/span 4/span 10;" class="item draggable"></div>
-
+    <div style="background:yellow;grid-area: 3/6/9/12;" class="item draggable"></div>
 
 </div>
 
@@ -15,8 +12,8 @@
         grid-template-rows: repeat(20, 1fr);
         grid-gap: 4px;
         position: relative;
-        width:800px;
-        height:500px;
+        width:600px;
+        height:400px;
         background:#272725;
     }
 
@@ -81,8 +78,24 @@
         let originalX =0;
         let originalY = 0;
 
+        let draggingElementGridAreaStart = null;
+        let newGridAreaForElement =
+            {
+                gridRowStart: 0,
+                gridRowEnd: 0,
+                gridColumnStart: 0,
+                gridColumnEnd: 0,
+            };
+
         function startDragging(e) {
             draggingElement = this;
+
+            draggingElementGridAreaStart = {
+                gridRowStart: draggingElement.style.gridRowStart,
+                gridRowEnd: draggingElement.style.gridRowEnd,
+                gridColumnStart: draggingElement.style.gridColumnStart,
+                gridColumnEnd: draggingElement.style.gridColumnEnd,
+            };
 
             createDraggingElementShadow =  document.createElement("div");
             createDraggingElementShadow.style.border = '3px solid #09b0ef';
@@ -155,13 +168,35 @@
 
                     // Optionally, you can also update the grid area position for accuracy (uncomment the line below)
 
+                console.log(draggingElementGridAreaStart);
 
                 if (canIMoveY(gridY)) {
-                    createDraggingElementShadow.style.gridRowStart = gridY;
+
+                    newGridRowStart = gridY;
+                    newGridRowEnd =  gridY + (draggingElementGridAreaStart.gridRowEnd - draggingElementGridAreaStart.gridRowStart);
+
+                    if (newGridRowEnd < 22) {
+                        newGridAreaForElement['gridRowStart'] = newGridRowStart;
+                        newGridAreaForElement['gridRowEnd'] = newGridRowEnd;
+                        createDraggingElementShadow.style.gridRowStart = gridY;
+                        createDraggingElementShadow.style.gridRowEnd = gridY + (draggingElementGridAreaStart.gridRowEnd - draggingElementGridAreaStart.gridRowStart);
+                    }
+
                 }
 
                 if (canIMoveX(gridX)) {
-                    createDraggingElementShadow.style.gridColumnStart = gridX
+
+                    newGridColumnStart = gridX;
+                    newGridColumnEnd = gridX + (draggingElementGridAreaStart.gridColumnEnd - draggingElementGridAreaStart.gridColumnStart);
+
+                    if (newGridColumnEnd < 22) {
+
+                        newGridAreaForElement['gridColumnStart'] = newGridColumnStart;
+                        newGridAreaForElement['gridColumnEnd'] = newGridColumnEnd;
+
+                        createDraggingElementShadow.style.gridColumnStart = gridX;
+                        createDraggingElementShadow.style.gridColumnEnd = gridX + (draggingElementGridAreaStart.gridColumnEnd - draggingElementGridAreaStart.gridColumnStart);
+                    }
                 }
 
                     //createDraggingElementShadow.style.gridArea = `${gridY} / ${gridX} / span 4 / span 6`;
@@ -179,9 +214,6 @@
             if (gridY == 0) {
                 canIMove = false;
             }
-            if ((gridY) > (19-2)) {
-                canIMove = false;
-            }
             return canIMove;
         }
         function canIMoveX(gridX)
@@ -192,9 +224,6 @@
                 canIMove = false;
             }
             if (gridX == 0) {
-                canIMove = false;
-            }
-            if ((gridX) > (19-8)) {
                 canIMove = false;
             }
             return canIMove;
@@ -213,15 +242,26 @@
 
                 //draggingElement.style.gridArea = `${gridY} / ${gridX} / span 4 / span 6`;
 
-                if (!canIMoveY(gridY)) {
-                    gridY = createDraggingElementShadow.style.gridRowStart;
-                }
-                if (!canIMoveX(gridX)) {
-                    gridX = createDraggingElementShadow.style.gridColumnStart;
-                }
+                // if (!canIMoveY(gridY)) {
+                //     gridY = createDraggingElementShadow.style.gridRowStart;
+                // }
+                // if (!canIMoveX(gridX)) {
+                //     gridX = createDraggingElementShadow.style.gridColumnStart;
+                // }
 
-                draggingElement.style.gridRowStart = gridY;
-                draggingElement.style.gridColumnStart = gridX;
+
+                // draggingElement.style.gridRowStart = gridY;
+                // draggingElement.style.gridRowEnd =  gridY + (draggingElementGridAreaStart.gridRowEnd - draggingElementGridAreaStart.gridRowStart);
+                //
+                // draggingElement.style.gridColumnStart = gridX;
+                // draggingElement.style.gridColumnEnd = gridX + (draggingElementGridAreaStart.gridColumnEnd - draggingElementGridAreaStart.gridColumnStart);
+
+                console.log(newGridAreaForElement);
+
+                draggingElement.style.gridRowStart = newGridAreaForElement['gridRowStart'];
+                draggingElement.style.gridRowEnd =  newGridAreaForElement['gridRowEnd'];
+                draggingElement.style.gridColumnStart = newGridAreaForElement['gridColumnStart'];
+                draggingElement.style.gridColumnEnd = newGridAreaForElement['gridColumnEnd'];
 
                 draggingElementShadow.remove();
                 draggingElementShadow = null;

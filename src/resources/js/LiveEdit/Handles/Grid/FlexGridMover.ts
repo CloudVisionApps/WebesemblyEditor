@@ -34,6 +34,8 @@ export class FlexGridMover extends ElementHandle {
 
             let clickedElement = instance.liveEdit.clickedElement;
 
+            console.log(clickedElement);
+
             this.currentFlexGrid = elementHasParentsWithAttribute(clickedElement, 'webesembly:flex-grid');
             if (!this.currentFlexGrid) {
                 return false;
