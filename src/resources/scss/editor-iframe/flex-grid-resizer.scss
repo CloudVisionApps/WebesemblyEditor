@@ -94,14 +94,12 @@
 .js-webesembly-grid-column {
     pointer-events: none;
     user-select: none;
-    width:5px;
-    background: #eeeeee;
+    background: rgba(238, 238, 238, 0.12);
     z-index: 0;
 }
 .js-webesembly-grid-row {
     pointer-events: none;
     user-select: none;
-    height:5px;
     z-index: 0;
-    background: #e7e7e7;
+    background: rgba(231, 231, 231, 0.09);
 }
