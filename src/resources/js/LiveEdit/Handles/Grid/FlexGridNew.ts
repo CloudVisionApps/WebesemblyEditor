@@ -36,30 +36,33 @@ export class FlexGridNew extends ElementHandle {
 
         let instance = this;
 
-        //console.log("FlexGridNew constructor");
+        console.log("FlexGridNew constructor");
 
-        this.iframeManager.document.addEventListener('mousedown', (mouseDown) => {
+        this.iframeManager.document.querySelectorAll('[webesembly\\:flex-grid-element]').forEach((flexGridElement) => {
 
-           // console.log('mousedown');
-
-            let mouseOverElement = instance.liveEdit.mouseOverElement;
-            //console.log(mouseOverElement);
-            this.currentFlexGrid = elementHasParentsWithAttribute(mouseOverElement, 'webesembly:flex-grid');
-            if (!this.currentFlexGrid) {
+            let checkForFlexGrid = elementHasParentsWithAttribute(flexGridElement, 'webesembly:flex-grid');
+            if (!checkForFlexGrid) {
                 return false;
             }
 
-            this.flexGridElement = elementHasParentsWithAttribute(mouseOverElement, 'webesembly:flex-grid-element');
-            if (!this.flexGridElement) {
-                return;
-            }
+            this.appendBackgroundGridDisplay(checkForFlexGrid, 20, 20);
 
-            console.log('flexGridElement');
-            console.log(this.flexGridElement);
+            flexGridElement.setAttribute('draggable', 'true');
 
-            this.draggingElement = this.flexGridElement;
+            flexGridElement.addEventListener('dragstart', (e) => {
+                console.log('dragstart');
+                console.log(e);
+            });
 
-            instance.startDragging(mouseDown);
+            flexGridElement.addEventListener('dragend', (e) => {
+                console.log('dragend');
+                console.log(e);
+            });
+
+            // flexGridElement.addEventListener('dragenter', (e) => {
+            //     console.log('dragenter');
+            //     console.log(e);
+            // });
 
         });
 
@@ -149,7 +152,7 @@ export class FlexGridNew extends ElementHandle {
                 let newGridRowStart = instance.gridY;
                 let newGridRowEnd =  instance.gridY + (instance.draggingElementGridAreaStart.gridRowEnd - instance.draggingElementGridAreaStart.gridRowStart);
 
-                if (newGridRowEnd < 22) { 
+                if (newGridRowEnd < 22) {
                     instance.newGridAreaForElement['gridRowStart'] = newGridRowStart;
                     instance.newGridAreaForElement['gridRowEnd'] = newGridRowEnd;
                     instance.draggingElementShadow.style.gridRowStart = newGridRowStart;
@@ -252,9 +255,8 @@ export class FlexGridNew extends ElementHandle {
         }
     }
 
-    public appendBackgroundGridDisplay(gridRows = 20, gridColumns = 20)
+    public appendBackgroundGridDisplay(currentGrid = null, gridRows = 20, gridColumns = 20)
     {
-        let currentGrid = this.currentFlexGrid;
         if (currentGrid) {
 
             // Add grid columns display
