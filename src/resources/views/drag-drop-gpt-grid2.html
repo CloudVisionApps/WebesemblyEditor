@@ -1,0 +1,347 @@
+<!--
+
+<section style="padding:130px; background:purple;">
+    Header
+</section>
+-->
+
+
+<div class="grid-container">
+
+
+    <div style="color:#fff;grid-area: 3 / 7 / 6 / 14;" class="item draggable">
+        <h2>HTML Forms</h2>
+    </div>
+
+    <div style="grid-area: 6 / 7 / 13 / 14;background: #757575;padding: 19px;" class="item draggable">
+        <form action="/action_page.php">
+            <label for="fname">First name:</label><br>
+            <input type="text" id="fname" name="fname" value="John"><br>
+            <label for="lname">Last name:</label><br>
+            <input type="text" id="lname" name="lname" value="Doe"><br><br>
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+
+    <div style="grid-area: 13 / 7 / 16 / 18;color: #ffff;" class="item draggable">
+        <p>If you click the "Submit" button, the form-data will be sent to a page called "/action_page.php".</p>
+    </div>
+
+</div>
+
+
+<style>
+body {
+    color:#fff;
+    line-height:15px;
+    font-family:Tahoma;
+}
+    input {
+        border-radius:0px;
+        border:0px;
+        color:#000;
+        background: #a6a6a6;
+        padding:5px 7px;
+        margin:5px;
+    }
+
+    button {
+        border-radius:0px;
+        border:0px;
+        color:#000;
+        background: #a6a6a6;
+        padding:5px 7px;
+        margin:5px;
+    }
+
+    .grid-container {
+        display: grid;
+        grid-template-columns: repeat(20, 1fr);
+        grid-template-rows: repeat(20, 1fr);
+        grid-gap: 2px;
+        width:100%;
+        height:100%;
+        background:#272725;
+    }
+
+    .grid-fe {
+        border-top:1px solid rgba(238, 238, 238, 0.12);
+        border-right:1px solid rgba(238, 238, 238, 0.12);
+        user-select: none;
+        pointer-events: none;
+    }
+
+    .item {
+        cursor: move;
+    }
+
+    /*.grid-container::before {
+        user-select: none;
+        pointer-events: none;
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: linear-gradient(#aaa 1px, transparent 1px), linear-gradient(90deg, #aaa 1px, transparent 1px);
+        background-size: 52.8px 19.2px;
+    }*/
+</style>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+
+        const gridContainer = document.querySelector(".grid-container");
+        for (let i = 0; i < 20; i++) {
+            const gridItem = document.createElement("div");
+            gridItem.classList.add("grid-fe");
+            gridItem.style.gridArea = '1 / '+i+' / -1 / '+i+'';
+            gridItem.innerHTML = '';
+            gridContainer.appendChild(gridItem);
+        }
+        for (let i = 0; i < 20; i++) {
+            const gridItem = document.createElement("div");
+            gridItem.classList.add("grid-fe");
+            gridItem.style.gridArea = ''+i+' / 1 / '+i+' / -1';
+            gridItem.innerHTML = '';
+            gridContainer.appendChild(gridItem);
+        }
+        // for (let i = 0; i < 20; i++) {
+        //     const gridItem = document.createElement("div");
+        //     gridItem.classList.add("grid-fe");
+        //     gridItem.innerHTML = '';
+        //     gridContainer.appendChild(gridItem);
+        // }
+        //
+
+        let draggingElementShadow = document.createElement("div");
+        draggingElementShadow.style.userSelect = "none";
+        draggingElementShadow.style.pointerEvents = "none";
+        gridContainer.appendChild(draggingElementShadow);
+
+        // document.addEventListener("mousemove", function (e) {
+        //
+        //     let cellWidth = parseFloat(getComputedStyle(gridContainer).gridTemplateColumns.split(" ")[0]);
+        //     let cellHeight = parseFloat(getComputedStyle(gridContainer).gridTemplateRows.split(" ")[0]);
+        //
+        //     const x = e.clientX;
+        //     const y = e.clientY;
+        //
+        //     gridX = Math.round(x / (cellWidth));
+        //     gridY = Math.round(((y-gridContainer.offsetTop)+(document.body.scrollTop)) / (cellHeight));
+        //
+        //     // draggingElementShadow.style.opacity = 1;
+        //     draggingElementShadow.style.border = '3px solid #09b0ef';
+        //     draggingElementShadow.style.gridArea = gridY + ' / '+gridX+' / '+(gridY+1)+' / '+(gridX+1);
+        //
+        // });
+
+
+        const draggableElements = document.querySelectorAll(".draggable");
+        let draggingElement = null;
+        let offsetX = 0;
+        let offsetY = 0;
+        let gridY = 0;
+        let gridX = 0;
+        let originalX =0;
+        let originalY = 0;
+
+        let draggingElementGridAreaStart = null;
+        let newGridAreaForElement =
+            {
+                gridRowStart: 0,
+                gridRowEnd: 0,
+                gridColumnStart: 0,
+                gridColumnEnd: 0,
+            };
+
+        function startDragging(e) {
+            draggingElement = this;
+
+            draggingElementGridAreaStart = {
+                gridRowStart: draggingElement.style.gridRowStart,
+                gridRowEnd: draggingElement.style.gridRowEnd,
+                gridColumnStart: draggingElement.style.gridColumnStart,
+                gridColumnEnd: draggingElement.style.gridColumnEnd,
+            };
+
+            draggingElementShadow.style.opacity = 1;
+            draggingElementShadow.style.border = '3px solid #09b0ef';
+            draggingElementShadow.style.gridArea = draggingElement.style.gridArea;
+
+            originalX = draggingElement.getBoundingClientRect().left;
+            originalY = draggingElement.getBoundingClientRect().top;
+
+            // console.log(gridContainer.getBoundingClientRect().top);
+            // console.log(originalY);
+            // console.log(originalX);
+
+            offsetX = e.clientX - draggingElement.getBoundingClientRect().left;
+            offsetY = e.clientY - draggingElement.getBoundingClientRect().top;
+
+           //draggingElement.style.transform = 'translate(0px, 0px)';
+        //   draggingElement.style.zIndex = 1000000;
+          // draggingElement.style.gridArea = "";
+       //    draggingElement.style.position = "absolute";
+          //  draggingElement.style.pointerEvents = "none";
+          //  draggingElement.style.transition = "transform 0.04s ease-in-out"; // Added transition effect
+
+            document.addEventListener("mousemove", onMouseMove);
+            document.addEventListener("mouseup", onMouseUp);
+        }
+
+        draggableElements.forEach(function(element) {
+            element.addEventListener("mousedown", startDragging);
+        });
+
+        function isNegative(num) {
+            if (Math.sign(num) === -1) {
+                return true;
+            }
+
+            return false;
+        }
+
+        function onMouseMove(e) {
+            if (draggingElement) {
+                const x = e.clientX - offsetX;
+                const y = e.clientY - offsetY;
+
+                const gridContainer = document.querySelector(".grid-container");
+                let cellWidth = parseFloat(getComputedStyle(gridContainer).gridTemplateColumns.split(" ")[0]);
+                let cellHeight = parseFloat(getComputedStyle(gridContainer).gridTemplateRows.split(" ")[0]);
+
+
+                let gridXSmoothly = (x-originalX) - (cellWidth);
+                let gridYSmoothly = (y-originalY) - (cellHeight);
+
+                document.getElementById('log').innerHTML = `
+
+                       originalX: ${originalX} originalY: ${originalY}
+
+                    gridXSmoothly: ${gridXSmoothly} gridYSmoothly: ${gridYSmoothly}
+
+                `;
+
+               // console.log(gridContainer.offsetTop);
+
+                gridX = Math.round(x / (cellWidth));
+                gridY = Math.round(((y-gridContainer.offsetTop)+(document.body.scrollTop)) / (cellHeight));
+                
+
+
+                    document.getElementById('log').innerHTML = 'cellWidth: ' + cellWidth + ' cellHeight: ' + cellHeight + ' gridX: ' + gridX + ' gridY: ' + gridY + ' x: ' + x + ' y: ' + y + ' offsetX: ' + offsetX + ' offsetY: ' + offsetY + ' gridXSmoothly: ' + gridXSmoothly + ' gridYSmoothly: ' + gridYSmoothly;
+
+
+                    draggingElement.style.transform = `translate(${gridXSmoothly}px, ${gridYSmoothly}px)`; // Smooth transition
+
+                    // Optionally, you can also update the grid area position for accuracy (uncomment the line below)
+
+                console.log(draggingElementGridAreaStart);
+
+                if (canIMoveY(gridY)) {
+
+                    newGridRowStart = gridY;
+                    newGridRowEnd =  gridY + (draggingElementGridAreaStart.gridRowEnd - draggingElementGridAreaStart.gridRowStart);
+
+                    if (newGridRowEnd < 22) {
+                        newGridAreaForElement['gridRowStart'] = newGridRowStart;
+                        newGridAreaForElement['gridRowEnd'] = newGridRowEnd;
+                        draggingElementShadow.style.gridRowStart = gridY;
+                        draggingElementShadow.style.gridRowEnd = gridY + (draggingElementGridAreaStart.gridRowEnd - draggingElementGridAreaStart.gridRowStart);
+                    }
+
+                }
+
+                if (canIMoveX(gridX)) {
+
+                    newGridColumnStart = gridX;
+                    newGridColumnEnd = gridX + (draggingElementGridAreaStart.gridColumnEnd - draggingElementGridAreaStart.gridColumnStart);
+
+                    if (newGridColumnEnd < 22) {
+
+                        newGridAreaForElement['gridColumnStart'] = newGridColumnStart;
+                        newGridAreaForElement['gridColumnEnd'] = newGridColumnEnd;
+
+                        draggingElementShadow.style.gridColumnStart = gridX;
+                        draggingElementShadow.style.gridColumnEnd = gridX + (draggingElementGridAreaStart.gridColumnEnd - draggingElementGridAreaStart.gridColumnStart);
+                    }
+                }
+
+                    //createDraggingElementShadow.style.gridArea = `${gridY} / ${gridX} / span 4 / span 6`;
+
+            }
+        }
+
+        function canIMoveY(gridY)
+        {
+            let canIMove = true;
+
+            if (isNegative(gridY)) {
+                canIMove = false;
+            }
+            if (gridY == 0) {
+                canIMove = false;
+            }
+            return canIMove;
+        }
+        function canIMoveX(gridX)
+        {
+            let canIMove = true;
+
+            if (isNegative(gridX)) {
+                canIMove = false;
+            }
+            if (gridX == 0) {
+                canIMove = false;
+            }
+            return canIMove;
+        }
+
+        function onMouseUp() {
+            if (draggingElement) {
+
+
+                // draggingElement.style.zIndex = "";
+                // draggingElement.style.position = "";
+                // draggingElement.style.pointerEvents = "";
+                // draggingElement.style.transition = ""; // Remove transition effect
+                 draggingElement.style.transform = "";
+             //   draggingElement.style.gridArea = `${gridY} / ${gridX} / span 4 / span 6`;
+
+                //draggingElement.style.gridArea = `${gridY} / ${gridX} / span 4 / span 6`;
+
+                // if (!canIMoveY(gridY)) {
+                //     gridY = createDraggingElementShadow.style.gridRowStart;
+                // }
+                // if (!canIMoveX(gridX)) {
+                //     gridX = createDraggingElementShadow.style.gridColumnStart;
+                // }
+
+
+                // draggingElement.style.gridRowStart = gridY;
+                // draggingElement.style.gridRowEnd =  gridY + (draggingElementGridAreaStart.gridRowEnd - draggingElementGridAreaStart.gridRowStart);
+                //
+                // draggingElement.style.gridColumnStart = gridX;
+                // draggingElement.style.gridColumnEnd = gridX + (draggingElementGridAreaStart.gridColumnEnd - draggingElementGridAreaStart.gridColumnStart);
+
+                console.log(newGridAreaForElement);
+
+                draggingElement.style.gridRowStart = newGridAreaForElement['gridRowStart'];
+                draggingElement.style.gridRowEnd =  newGridAreaForElement['gridRowEnd'];
+                draggingElement.style.gridColumnStart = newGridAreaForElement['gridColumnStart'];
+                draggingElement.style.gridColumnEnd = newGridAreaForElement['gridColumnEnd'];
+
+                draggingElementShadow.style.opacity = 0;
+
+                document.removeEventListener("mousemove", onMouseMove);
+                document.removeEventListener("mouseup", onMouseUp);
+
+            }
+        }
+    });
+
+
+</script>
+
+<div id="log"></div>
