@@ -54,7 +54,7 @@ export class LiveEdit {
            app.handles.mouseOverHeaderHandle = new MouseOverHeaderHandle(app);
            app.handles.mouseOverFooterHandle = new MouseOverFooterHandle(app);
 
-           app.handles.mouseOverSectionHandle = new MouseOverSectionHandle(app);
+         //  app.handles.mouseOverSectionHandle = new MouseOverSectionHandle(app);
 
            app.handles.clickedElementHandle = new ClickedElementHandle(app);
            app.handles.mouseOverElementHandle = new MouseOverElementHandle(app);
@@ -63,8 +63,8 @@ export class LiveEdit {
            //app.handles.flexGridMoverHandle = new FlexGridMover(app);
            app.handles.flexGridNewHandle = new FlexGridNew(app);
 
-           app.handles.clickedModuleHandle = new ClickedModuleHandle(app);
-           app.handles.mouseOverModuleHandle = new MouseOverModuleHandle(app);
+           // app.handles.clickedModuleHandle = new ClickedModuleHandle(app);
+           // app.handles.mouseOverModuleHandle = new MouseOverModuleHandle(app);
 
             app.iframeManager.body.addEventListener("keyup", (event) => {
                 app.handles.clickedElementHandle.calculateHandlePosition();

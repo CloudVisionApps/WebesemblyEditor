@@ -127,10 +127,10 @@ body {
             const x = e.clientX;
             const y = e.clientY;
 
-            sizeOfElement = 10;
+            sizeOfElement = 4;
 
-            gridX = Math.round(x / (cellWidth)) - 4;
-            gridY = Math.round(((y-gridContainer.offsetTop)+(document.body.scrollTop)) / (cellHeight)) -4;
+            gridX = Math.round(x / (cellWidth)) - ((sizeOfElement/2) -1);
+            gridY = Math.round(((y-gridContainer.offsetTop)+(document.body.scrollTop)) / (cellHeight)) - ((sizeOfElement/2) -1);
 
             // draggingElementShadow.style.opacity = 1;
             draggingElementShadow.style.border = '3px solid #09b0ef';
