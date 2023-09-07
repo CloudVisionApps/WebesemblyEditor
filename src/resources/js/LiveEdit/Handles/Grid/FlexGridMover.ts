@@ -4,21 +4,9 @@ import {
     elementHasParentsWithId,
     elementHasParentsWithAttribute
 } from "../../helpers";
-import {ElementHandle} from "./../ElementHandle";
+import { ElementHandle } from "./../ElementHandle";
 
 export class FlexGridMover extends ElementHandle {
-
-    public element;
-
-    public resizeMove;
-    public resizeMoveNow = false;
-
-    public currentFlexGrid = null;
-
-    public pos1 = 0;
-    public pos2 = 0;
-    public pos3 = 0;
-    public pos4 = 0;
 
     constructor(public liveEdit) {
 
@@ -26,246 +14,210 @@ export class FlexGridMover extends ElementHandle {
 
         let instance = this;
 
-        this.iframeManager.document.addEventListener('mousedown', (mouseDown) => {
-            console.log('mousedown');
+        console.log("FlexGridNew constructor");
 
-            mouseDown.preventDefault();
-            mouseDown.stopPropagation();
+        var head = this.iframeManager.document.getElementsByTagName('head')[0];
 
-            let clickedElement = instance.liveEdit.clickedElement;
+        var dragselectAppend = this.iframeManager.document.createElement('script');
+        dragselectAppend.src = `https://unpkg.com/dragselect@latest/dist/ds.min.js`;
+        head.appendChild(dragselectAppend);
 
-            console.log(clickedElement);
+        var scriptDraggable = this.iframeManager.document.createElement('script');
+        scriptDraggable.innerHTML = `
 
-            this.currentFlexGrid = elementHasParentsWithAttribute(clickedElement, 'webesembly:flex-grid');
-            if (!this.currentFlexGrid) {
-                return false;
-            }
+        window.webesemblyDragSelectInstances = {};
+        setTimeout(function() {
 
-            let flexGridElement = elementHasParentsWithAttribute(clickedElement, 'webesembly:flex-grid-element');
-            if (!flexGridElement) {
-                return;
-            }
+        let dragSelectI = 0;
+        document.querySelectorAll('[webesembly\\\\:flex-grid]').forEach((flexGrid) => {
 
-            instance.resizeMoveNow = true;
-            instance.initDrag(mouseDown);
-        })
+            let dragSelect = new DragSelect({
+              selectables: flexGrid.querySelectorAll('[webesembly\\\\:flex-grid-element]'),
+              area: flexGrid
+            });
+
+            window.webesemblyDragSelectInstances[dragSelectI] = dragSelect;
+            dragSelectI++;
+        });
+
+}, 600);
+
+`;
+        head.appendChild(scriptDraggable);
+
+        setTimeout(function() {
+            Object.keys(instance.iframeManager.window.webesemblyDragSelectInstances).forEach(key => {
+                let dragSelect = instance.iframeManager.window.webesemblyDragSelectInstances[key];
+
+                let gridContainer = dragSelect.Area._node;
+                console.log(gridContainer);
+
+
+                let draggingElementShadow = document.createElement("div");
+                draggingElementShadow.className = 'draggingElementShadow';
+                draggingElementShadow.style.userSelect = "none";
+                draggingElementShadow.style.pointerEvents = "none";
+                gridContainer.append(draggingElementShadow);
+                //
+                // console.log(item);
+
+                let showBackgroundGrid = false;
+
+                dragSelect.subscribe('predragmove', ({ items, isDragging, isDraggingKeyboard }) => {
+                    if(isDragging) {
+
+                        if (!showBackgroundGrid) {
+                            instance.appendBackgroundGridDisplay(dragSelect.Area._node);
+                            showBackgroundGrid = true;
+                        }
+
+                        console.log('predragmove');
+                        console.log(items);
+
+                        let cellWidth = parseFloat(getComputedStyle(gridContainer).gridTemplateColumns.split(" ")[0]);
+                        let cellHeight = parseFloat(getComputedStyle(gridContainer).gridTemplateRows.split(" ")[0]);
+
+                        console.log('cellWidth' + cellWidth);
+                        console.log('cellHeight' + cellHeight);
+
+                        items.forEach((item) => {
+
+                        const itemBound = item.getBoundingClientRect();
+                      //  console.log(itemBound);
+
+
+                        let draggingElementGridAreaStart = {
+                            gridRowStart: parseInt(item.style.gridRowStart),
+                            gridRowEnd: parseInt(item.style.gridRowEnd),
+                            gridColumnStart: parseInt(item.style.gridColumnStart),
+                            gridColumnEnd: parseInt(item.style.gridColumnEnd),
+                        };
+
+                        const x = itemBound.x;
+                        const y = itemBound.y;
+
+                        let gridX = Math.round((x - gridContainer.offsetLeft) / cellWidth);
+                        let gridY = Math.round(((y-gridContainer.offsetTop)+(instance.iframeManager.document.body.scrollTop)) / (cellHeight));
+
+                       draggingElementShadow.style.opacity = '1';
+                       draggingElementShadow.style.border = '6px solid #09b0ef';
+
+                        let newGridRowStart = gridY;
+                        let newGridRowEnd =  gridY + (draggingElementGridAreaStart.gridRowEnd - draggingElementGridAreaStart.gridRowStart);
+
+                      //  if (newGridRowEnd < 22) {
+                           draggingElementShadow.style.gridRowStart = newGridRowStart + '';
+                           draggingElementShadow.style.gridRowEnd = newGridRowEnd + '';
+
+                            item.setAttribute('data-grid-row-start', newGridRowStart);
+                            item.setAttribute('data-grid-row-end', newGridRowEnd);
+                     //   }
+
+                        let newGridColumnStart = gridX;
+                        let newGridColumnEnd = gridX + (draggingElementGridAreaStart.gridColumnEnd - draggingElementGridAreaStart.gridColumnStart);
+
+                        console.log('newGridColumnStart' + newGridColumnStart);
+                        console.log('newGridColumnEnd' + newGridColumnEnd);
+
+                     //   if (newGridColumnEnd < 22) {
+                           draggingElementShadow.style.gridColumnStart = newGridColumnStart + '';
+                           draggingElementShadow.style.gridColumnEnd = newGridColumnEnd + '';
+
+                            item.setAttribute('data-grid-column-start', newGridColumnStart);
+                            item.setAttribute('data-grid-column-end', newGridColumnEnd);
+                     //  }
+
+                     //   draggingElementShadow.style.gridArea = gridY + ' / '+gridX+' / '+(gridY+1)+' / '+(gridX+1);
+                    });
+
+
+                    }
+                });
+
+                dragSelect.subscribe('callback', () => {
+                    console.log('callback');
+                    instance.applyGridChanges(dragSelect.Area._node);
+                    instance.removeBackgroundGridDisplay();
+                    showBackgroundGrid = false;
+                });
+
+            });
+        }, 1000);
 
     }
 
-    public calculateHandlePosition() {
+    public applyGridChanges(flexGridElement) {
 
-        let app = this;
-        let clickedElement = app.liveEdit.clickedElement;
+        console.log('applyGridChanges');
 
-        this.currentFlexGrid = elementHasParentsWithAttribute(clickedElement, 'webesembly:flex-grid');
-        if (!this.currentFlexGrid) {
-            return false;
+        if (flexGridElement) {
+            flexGridElement.querySelectorAll('[webesembly\\:flex-grid-element]').forEach((flexGridElement) => {
+
+                if (
+                    flexGridElement.getAttribute('data-grid-row-start') &&
+                    flexGridElement.getAttribute('data-grid-row-end') &&
+                    flexGridElement.getAttribute('data-grid-column-start') &&
+                    flexGridElement.getAttribute('data-grid-column-end')
+
+                ) {
+                    flexGridElement.style.gridRowStart = flexGridElement.getAttribute('data-grid-row-start');
+                    flexGridElement.style.gridRowEnd = flexGridElement.getAttribute('data-grid-row-end');
+                    flexGridElement.style.gridColumnStart = flexGridElement.getAttribute('data-grid-column-start');
+                    flexGridElement.style.gridColumnEnd = flexGridElement.getAttribute('data-grid-column-end');
+                    flexGridElement.style.transform = '';
+                }
+            });
         }
-
-        let flexGridElement = elementHasParentsWithAttribute(clickedElement, 'webesembly:flex-grid-element');
-        if (!flexGridElement) {
-            return;
-        }
-
-        // if (!clickedElement.classList.contain('webesembly-grid')) {
-        //     clickedElement.classList.add('webesembly-grid');
-        // }
-
-        // app.element.style.width = (flexGridElement.offsetWidth + 60) + 'px';
-        // app.element.style.height = (flexGridElement.offsetHeight + 60) + 'px';
-        //
-        // let mouseOverElementBounding = flexGridElement.getBoundingClientRect();
-        // app.element.style.top = (mouseOverElementBounding.top + (app.iframeManager.window.scrollY - 30)) + 'px';
-        // app.element.style.left = (mouseOverElementBounding.left + (app.iframeManager.window.scrollX - 30)) + 'px';
-        //
-        // app.element.style.display = 'block';
     }
 
-    public createElementHandle() {
+    isNegative = (num) => {
 
-        const createElementHandle = this.iframeManager.document.createElement("div");
+        if (Math.sign(num) === -1) {
+            return true;
+        }
 
-        createElementHandle.id = 'js-webesembly-element-handle-flex-grid-resizer';
-        createElementHandle.innerHTML = '' +
-            '' +
-            '<button id="js-webesembly-element-handle-flex-grid-resizer-move" type="button"> move </button>' +
-            '' +
-            '';
-        this.iframeManager.body.appendChild(createElementHandle);
-
-        this.element = this.iframeManager.document.getElementById('js-webesembly-element-handle-flex-grid-resizer');
-        //this.resizeMove = this.iframeManager.document.getElementById('js-webesembly-element-handle-flex-grid-resizer-move');
-
-
-        // grid-row-start
-        // grid-row-end
-        // grid-column-start
-        // grid-column-end
-
-        let instance = this;
-        // this.resizeMove.addEventListener('click', (clickEvent) => {
-        //     clickEvent.preventDefault();
-        //     clickEvent.stopPropagation();
-        // });
-
-        // this.resizeMove.addEventListener('mousedown', (clickEvent) => {
-        //
-        //     clickEvent.preventDefault();
-        //     clickEvent.stopPropagation();
-        //     if (!this.liveEdit.clickedElement) {
-        //         return false;
-        //     }
-        //
-        //     instance.resizeMoveNow = true;
-        //     instance.initDrag(clickEvent);
-        // });
-
+        return false;
     }
 
-    public offsetTop = 0;
-    public offsetLeft = 0;
+    canIMoveY = (gridY) => {
+        let canIMove = true;
 
-    initDrag = (e) => {
-
-        let clickedElement = this.liveEdit.clickedElement;
-        let flexGridElement = elementHasParentsWithAttribute(clickedElement, 'webesembly:flex-grid-element');
-        if (!flexGridElement) {
-            return;
+        if (this.isNegative(gridY)) {
+            canIMove = false;
         }
-
-        this.offsetTop = flexGridElement.offsetTop;
-        this.offsetLeft = flexGridElement.offsetLeft;
-
-        this.iframeManager.document.addEventListener('mousemove', this.doDrag, false);
-        this.iframeManager.document.addEventListener('mouseup', this.stopDrag, false);
-
-        console.log('initDrag');
-
-        this.appendBackgroundGridDisplay();
-
-        // let gridRow = this.iframeManager.document.getElementsByClassName('js-webesembly-grid-row');
-        // for (let i = 0; i < gridRow.length; i++) {
-        //     gridRow[i].style['opacity'] = 1;
-        // }
-        // let gridColumn = this.iframeManager.document.getElementsByClassName('js-webesembly-grid-column');
-        // for (let i = 0; i < gridColumn.length; i++) {
-        //     gridColumn[i].style['opacity'] = 1;
-        // }
+        if (gridY == 0) {
+            canIMove = false;
+        }
+        return canIMove;
     }
 
-    doDrag = (e) => {
+    canIMoveX = (gridX) => {
+        let canIMove = true;
 
-       let instance = this;
-
-        let clickedElement = this.liveEdit.clickedElement;
-        let flexGridElement = elementHasParentsWithAttribute(clickedElement, 'webesembly:flex-grid-element');
-        if (!flexGridElement) {
-            return;
+        if (this.isNegative(gridX)) {
+            canIMove = false;
         }
-
-       console.log('doDrag');
-
-        if (instance.resizeMoveNow) {
-
-            //let boundingClientRectMove = this.resizeMove.getBoundingClientRect();
-
-            let currentFlexGridBounding = this.currentFlexGrid.getBoundingClientRect();
-            let mouseInGridY = e.clientY - currentFlexGridBounding.top;
-            let mouseInGridX = e.clientX - currentFlexGridBounding.left;
-
-            // flexGridElement.style.position = "relative";
-            // flexGridElement.style.top = (mouseInGridY - this.offsetTop) + "px";
-            // flexGridElement.style.left = (mouseInGridX - this.offsetLeft) + "px";
-
-
-            console.log("Left? : " + mouseInGridX + " ; Top? : " + mouseInGridY + ".");
-            console.log(this.currentFlexGrid);
-
-            // let diffBetweenMoveY = Math.abs((boundingClientRectMove.y - e.clientY) / e.clientY * 100);
-            // if (diffBetweenMoveY > 5) {
-            //     console.log('diffBetweenMove' + diffBetweenMoveY);
-            //     if (boundingClientRectMove.y > e.clientY) {
-            //         console.log('move top' + boundingClientRectMove.y);
-            //         // flexGridElement.style['grid-row-start'] = (parseInt(flexGridElement.style['grid-row-start']) - 1);
-            //         // flexGridElement.style['grid-row-end'] = (parseInt(flexGridElement.style['grid-row-end']) - 1);
-            //     } else {
-            //         console.log('move down' + boundingClientRectMove.y);
-            //
-            //         // flexGridElement.style['grid-row-start'] = (parseInt(flexGridElement.style['grid-row-start']) + 1);
-            //         // flexGridElement.style['grid-row-end'] = (parseInt(flexGridElement.style['grid-row-end']) + 1);
-            //     }
-            // }
-            //
-            // let diffBetweenMoveX = Math.abs((boundingClientRectMove.x - e.clientX) / e.clientX * 100);
-            // if (diffBetweenMoveX > 5) {
-            //     console.log('diffBetweenMove' + diffBetweenMoveX);
-            //     if (boundingClientRectMove.x > e.clientX) {
-            //         console.log('move top' + boundingClientRectMove.x);
-            //         // flexGridElement.style['grid-column-start'] = (parseInt(flexGridElement.style['grid-column-start']) - 1);
-            //         // flexGridElement.style['grid-column-end'] = (parseInt(flexGridElement.style['grid-column-end']) - 1);
-            //     } else {
-            //         console.log('move down' + boundingClientRectMove.x);
-            //         // flexGridElement.style['grid-column-start'] = (parseInt(flexGridElement.style['grid-column-start']) + 1);
-            //         // flexGridElement.style['grid-column-end'] = (parseInt(flexGridElement.style['grid-column-end']) + 1);
-            //     }
-            // }
-            //
-            // console.log('resizeMoveNow');
-
-
-           // instance.calculateHandlePosition();
-
-            if (instance.liveEdit.clickedElement) {
-                this.liveEdit.handles.clickedElementHandle.calculateHandlePosition();
-            }
-
-            if (this.liveEdit.clickedModule) {
-                this.liveEdit.handles.clickedModuleHandle.calculateHandlePosition();
-            }
-
-            console.log(this.liveEdit.handles.clickedModuleHandle);
+        if (gridX == 0) {
+            canIMove = false;
         }
-
-       console.log('doDrag');
+        return canIMove;
     }
 
-    stopDrag = (e) => {
-
-        this.iframeManager.document.removeEventListener('mousemove', this.doDrag, false);
-        this.iframeManager.document.removeEventListener('mouseup', this.stopDrag, false);
-
-        console.log('stopDrag');
-
-        let clickedElement = this.liveEdit.clickedElement;
-        let flexGridElement = elementHasParentsWithAttribute(clickedElement, 'webesembly:flex-grid-element');
-        if (!flexGridElement) {
-            return;
-        }
-        this.offsetTop = flexGridElement.offsetTop;
-        this.offsetLeft = flexGridElement.offsetLeft;
-
+    public removeBackgroundGridDisplay()
+    {
         let gridRow = this.iframeManager.document.getElementsByClassName('js-webesembly-grid-row');
-        // for (let i = 0; i < gridRow.length; i++) {
-        //     gridRow[i].style['opacity'] = 0;
-        // }
         while(gridRow.length > 0){
             gridRow[0].parentNode.removeChild(gridRow[0]);
         }
 
         let gridColumn = this.iframeManager.document.getElementsByClassName('js-webesembly-grid-column');
-        // for (let i = 0; i < gridColumn.length; i++) {
-        //     gridColumn[i].style['opacity'] = 0;
-        // }
         while(gridColumn.length > 0){
             gridColumn[0].parentNode.removeChild(gridColumn[0]);
         }
-
     }
 
-
-    public appendBackgroundGridDisplay(gridRows = 12, gridColumns = 26)
+    public appendBackgroundGridDisplay(currentGrid = null, gridRows = 20, gridColumns = 20)
     {
-        let currentGrid = elementHasParentsWithAttribute(this.liveEdit.clickedElement, 'webesembly:flex-grid');
         if (currentGrid) {
 
             // Add grid columns display

@@ -138,7 +138,6 @@ export class FlexGridResizer extends ElementHandle {
         this.resizeEast = this.iframeManager.document.getElementById('js-webesembly-element-handle-flex-grid-resizer-east');
         this.resizeMove = this.iframeManager.document.getElementById('js-webesembly-element-handle-flex-grid-resizer-move');
 
-
         // grid-row-start
         // grid-row-end
         // grid-column-start
