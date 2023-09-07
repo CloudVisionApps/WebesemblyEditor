@@ -49,20 +49,49 @@ export class FlexGridNew extends ElementHandle {
 
         var scriptDraggable = this.iframeManager.document.createElement('script');
         scriptDraggable.innerHTML = `
-       setTimeout(function() {
+        window.webesemblyDragSelectInstances = {};
+        setTimeout(function() {
 
+        let dragSelectI = 0;
         document.querySelectorAll('[webesembly\\\\:flex-grid]').forEach((flexGrid) => {
-            new DragSelect({
+
+            let dragSelect = new DragSelect({
               selectables: flexGrid.querySelectorAll('[webesembly\\\\:flex-grid-element]'),
               area: flexGrid
             });
-            console.log(flexGrid);
+
+            window.webesemblyDragSelectInstances[dragSelectI] = dragSelect;
+            dragSelectI++;
         });
 
-}, 300);
+}, 600);
 
 `;
         head.appendChild(scriptDraggable);
+
+        setTimeout(function() {
+            Object.keys(instance.iframeManager.window.webesemblyDragSelectInstances).forEach(key => {
+                let dragSelect = instance.iframeManager.window.webesemblyDragSelectInstances[key];
+
+                dragSelect.subscribe('predragmove', ({ items, isDragging, isDraggingKeyboard }) => {
+                    if(isDragging) {
+                        console.log('predragmove');
+                        console.log(items);
+                    }
+                });
+
+                dragSelect.subscribe('dragstart', (e) => {
+                    console.log('dragstart');
+                    instance.appendBackgroundGridDisplay(dragSelect.Area._node);
+                });
+
+                dragSelect.subscribe('callback', (e) => {
+                    console.log('callback');
+                    instance.removeBackgroundGridDisplay();
+                });
+
+            });
+        }, 1000);
 
       /*  this.iframeManager.document.querySelectorAll('[webesembly\\:flex-grid-element]').forEach((flexGridElement) => {
 
