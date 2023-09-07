@@ -257,6 +257,11 @@
   background: #2976ef;
 }
 
+.ds-selected {
+  outline: 2px solid #027aff;
+  outline-offset: 2px;
+}
+
 #js-live-edit-section-handle {
   -webkit-user-select: none;
      -moz-user-select: none;

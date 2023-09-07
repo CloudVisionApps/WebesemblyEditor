@@ -1,0 +1,15 @@
+{
+  "name": "webesembly-editor",
+  "version": "1.0.0",
+  "description": "",
+  "main": "postcss.config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/dragselect": "^1.13.1",
+    "dragselect": "^2.7.4"
+  }
+}

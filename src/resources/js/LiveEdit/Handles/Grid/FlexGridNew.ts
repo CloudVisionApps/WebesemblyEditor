@@ -4,7 +4,7 @@ import {
     elementHasParentsWithId,
     elementHasParentsWithAttribute
 } from "../../helpers";
-import {ElementHandle} from "./../ElementHandle";
+import { ElementHandle } from "./../ElementHandle";
 
 export class FlexGridNew extends ElementHandle {
 
@@ -30,6 +30,9 @@ export class FlexGridNew extends ElementHandle {
     public gridY = 0;
     public gridX = 0;
 
+    public isDragging = false;
+    public initialTransform = null;
+
     constructor(public liveEdit) {
 
         super(liveEdit);
@@ -38,34 +41,89 @@ export class FlexGridNew extends ElementHandle {
 
         console.log("FlexGridNew constructor");
 
-        this.iframeManager.document.querySelectorAll('[webesembly\\:flex-grid-element]').forEach((flexGridElement) => {
+        var head = this.iframeManager.document.getElementsByTagName('head')[0];
+
+        var dragselectAppend = this.iframeManager.document.createElement('script');
+        dragselectAppend.src = `https://unpkg.com/dragselect@latest/dist/ds.min.js`;
+        head.appendChild(dragselectAppend);
+
+        var scriptDraggable = this.iframeManager.document.createElement('script');
+        scriptDraggable.innerHTML = `
+       setTimeout(function() {
+
+        document.querySelectorAll('[webesembly\\\\:flex-grid]').forEach((flexGrid) => {
+            new DragSelect({
+              selectables: flexGrid.querySelectorAll('[webesembly\\\\:flex-grid-element]'),
+              area: flexGrid
+            });
+            console.log(flexGrid);
+        });
+
+}, 300);
+
+`;
+        head.appendChild(scriptDraggable);
+
+      /*  this.iframeManager.document.querySelectorAll('[webesembly\\:flex-grid-element]').forEach((flexGridElement) => {
 
             let checkForFlexGrid = elementHasParentsWithAttribute(flexGridElement, 'webesembly:flex-grid');
             if (!checkForFlexGrid) {
                 return false;
             }
 
-            this.appendBackgroundGridDisplay(checkForFlexGrid, 20, 20);
+            // flexGridElement.addEventListener("contextmenu", (e) => {
+            //     e.preventDefault();
+            //     console.log("contextmenu");
+            // });
 
             flexGridElement.setAttribute('draggable', 'true');
 
-            flexGridElement.addEventListener('dragstart', (e) => {
-                console.log('dragstart');
-                console.log(e);
-            });
+            // flexGridElement.addEventListener('dragstart', (event) => {
+            //     console.log('dragstart');
+            //     event.target.style.opacity = 0.9;
+            //     event.target.style.boxShadow = '0px 0px 3px #000000';
+            //
+            //     let draggableElement = event.target;
+            //
+            //     // Store the initial cursor position relative to the element
+            //     instance.offsetX = event.clientX - draggableElement.getBoundingClientRect().left;
+            //     instance.offsetY = event.clientY - draggableElement.getBoundingClientRect().top;
+            //
+            //     instance.initialTransform = window.getComputedStyle(draggableElement).transform;
+            //
+            // });
 
-            flexGridElement.addEventListener('dragend', (e) => {
-                console.log('dragend');
-                console.log(e);
-            });
 
-            // flexGridElement.addEventListener('dragenter', (e) => {
-            //     console.log('dragenter');
-            //     console.log(e);
+
+            // flexGridElement.addEventListener('dragend', (e) => {
+            //     console.log('dragend');
+            //
+            //     let draggableElement = e.target;
+            //
+            //     draggableElement.style.opacity = 1;
+            //     draggableElement.style.boxShadow = 'none';
+            //
+            // });
+
+            //
+            // instance.iframeManager.document.addEventListener('drag', (event) => {
+            //
+            //     console.log('drag');
+            //
+            //     console.log(event);
+            //
+            //     let draggableElement = event.target;
+            //
+            //     // Calculate the new translation values
+            //     const translateX = event.clientX - instance.offsetX;
+            //     const translateY = event.clientY - instance.offsetY;
+            //
+            //     // Apply the new transform value to the element
+            //     draggableElement.style.transform = `translate(${translateX}px, ${translateY}px) ${instance.initialTransform}`;
             // });
 
         });
-
+*/
     }
 
     startDragging = (e) => {
@@ -73,7 +131,7 @@ export class FlexGridNew extends ElementHandle {
         console.log('startDragging');
         let instance = this;
 
-        this.appendBackgroundGridDisplay();
+        this.appendBackgroundGridDisplay(instance.currentFlexGrid);
 
         if (!instance.draggingElementShadow) {
             let draggingElementShadow = document.createElement("div");
@@ -107,13 +165,18 @@ export class FlexGridNew extends ElementHandle {
     }
 
     doDragging = (e) => {
-        //console.log('doDragging');
+
+        console.log('doDragging');
+
         let instance = this;
 
         if (instance.draggingElement) {
 
             const x = e.clientX - instance.offsetX;
             const y = e.clientY - instance.offsetY;
+
+            console.log('x' + x);
+            console.log('y' + y);
 
             let cellWidth = parseFloat(getComputedStyle(instance.currentFlexGrid).gridTemplateColumns.split(" ")[0]);
             let cellHeight = parseFloat(getComputedStyle(instance.currentFlexGrid).gridTemplateRows.split(" ")[0]);
@@ -236,9 +299,9 @@ export class FlexGridNew extends ElementHandle {
             instance.draggingElementShadow.style.opacity = 0;
 
         }
-
-        this.iframeManager.document.removeEventListener('mousemove', this.doDragging, false);
-        this.iframeManager.document.removeEventListener('mouseup', this.stopDragging, false);
+        //
+        // this.iframeManager.document.removeEventListener('mousemove', this.doDragging, false);
+        // this.iframeManager.document.removeEventListener('mouseup', this.stopDragging, false);
 
     }
 
