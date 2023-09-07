@@ -50,11 +50,17 @@ export class FlexGridNew extends ElementHandle {
                 let dragSelect = instance.iframeManager.window.webesemblyDragSelectInstances[key];
 
                 let gridContainer = dragSelect.Area._node;
+                console.log(gridContainer);
 
-                let draggingElementShadow = document.createElement("div");
-                draggingElementShadow.style.userSelect = "none";
-                draggingElementShadow.style.pointerEvents = "none";
-                gridContainer.appendChild(draggingElementShadow);
+
+                // let draggingElementShadow = document.createElement("div");
+                // draggingElementShadow.className = 'draggingElementShadow';
+                // draggingElementShadow.style.userSelect = "none";
+                // draggingElementShadow.style.pointerEvents = "none";
+                // item.append(draggingElementShadow);
+                //
+                // console.log(item);
+
 
                 dragSelect.subscribe('predragmove', ({ items, isDragging, isDraggingKeyboard }) => {
                     if(isDragging) {
@@ -68,7 +74,7 @@ export class FlexGridNew extends ElementHandle {
                         console.log('cellHeight' + cellHeight);
 
                         items.forEach((item) => {
-                        //    console.log(item);
+
                         const itemBound = item.getBoundingClientRect();
                       //  console.log(itemBound);
 
@@ -83,25 +89,25 @@ export class FlexGridNew extends ElementHandle {
                         const x = itemBound.x;
                         const y = itemBound.y;
 
-                        let gridX = Math.round(x / cellWidth) + 1;
+                        let gridX = Math.round((x - gridContainer.offsetLeft) / cellWidth) + 1;
                         let gridY = Math.round(((y-gridContainer.offsetTop)+(document.body.scrollTop)) / (cellHeight));
 
 
 
                         // draggingElementShadow.style.opacity = 1;
-                        draggingElementShadow.style.border = '6px solid #09b0ef';
+                       // draggingElementShadow.style.border = '6px solid #09b0ef';
 
 
                         let newGridRowStart = gridY;
                         let newGridRowEnd =  gridY + (draggingElementGridAreaStart.gridRowEnd - draggingElementGridAreaStart.gridRowStart);
 
-                        if (newGridRowEnd < 22) {
-                            draggingElementShadow.style.gridRowStart = newGridRowStart + '';
-                            draggingElementShadow.style.gridRowEnd = newGridRowEnd + '';
+                      //  if (newGridRowEnd < 22) {
+                          //  draggingElementShadow.style.gridRowStart = newGridRowStart + '';
+                           // draggingElementShadow.style.gridRowEnd = newGridRowEnd + '';
 
                             item.setAttribute('data-grid-row-start', newGridRowStart);
                             item.setAttribute('data-grid-row-end', newGridRowEnd);
-                        }
+                     //   }
 
                         let newGridColumnStart = gridX;
                         let newGridColumnEnd = gridX + (draggingElementGridAreaStart.gridColumnEnd - draggingElementGridAreaStart.gridColumnStart);
@@ -109,13 +115,13 @@ export class FlexGridNew extends ElementHandle {
                         // console.log('newGridColumnStart' + newGridColumnStart);
                         // console.log('newGridColumnEnd' + newGridColumnEnd);
 
-                        if (newGridColumnEnd < 22) {
-                            draggingElementShadow.style.gridColumnStart = newGridColumnStart + '';
-                            draggingElementShadow.style.gridColumnEnd = newGridColumnEnd + '';
+                     //   if (newGridColumnEnd < 22) {
+                          //  draggingElementShadow.style.gridColumnStart = newGridColumnStart + '';
+                          //  draggingElementShadow.style.gridColumnEnd = newGridColumnEnd + '';
 
                             item.setAttribute('data-grid-column-start', newGridColumnStart);
                             item.setAttribute('data-grid-column-end', newGridColumnEnd);
-                       }
+                     //  }
 
                         //draggingElementShadow.style.gridArea = gridY + ' / '+gridX+' / '+(gridY+1)+' / '+(gridX+1);
                     });
@@ -141,9 +147,12 @@ export class FlexGridNew extends ElementHandle {
     }
 
     public applyGridChanges(flexGridElement) {
+
         console.log('applyGridChanges');
+
         if (flexGridElement) {
             flexGridElement.querySelectorAll('[webesembly\\:flex-grid-element]').forEach((flexGridElement) => {
+
                 if (
                     flexGridElement.getAttribute('data-grid-row-start') &&
                     flexGridElement.getAttribute('data-grid-row-end') &&
