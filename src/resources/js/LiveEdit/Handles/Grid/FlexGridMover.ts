@@ -74,11 +74,20 @@ export class FlexGridMover extends ElementHandle {
                         console.log('predragmove');
                         console.log(items);
 
-                        let cellWidth = parseFloat(getComputedStyle(gridContainer).gridTemplateColumns.split(" ")[0]);
-                        let cellHeight = parseFloat(getComputedStyle(gridContainer).gridTemplateRows.split(" ")[0]);
+                        const gridStyles = getComputedStyle(gridContainer);
+
+                        let cellWidth = parseFloat(gridStyles.gridTemplateColumns.split(" ")[0]);
+                        let cellHeight = parseFloat(gridStyles.gridTemplateRows.split(" ")[0]);
 
                         console.log('cellWidth' + cellWidth);
                         console.log('cellHeight' + cellHeight);
+
+                        // const gridGapX = parseFloat(gridStyles.width) - cellWidth;
+                        // const gridGapY = parseFloat(gridStyles.height) - cellHeight;
+                        //
+                        // console.log("Grid Gap X:", gridGapX, "px");
+                        // console.log("Grid Gap Y:", gridGapY, "px");
+
 
                         items.forEach((item) => {
 
@@ -94,11 +103,16 @@ export class FlexGridMover extends ElementHandle {
                         };
 
 
+                        // const x = itemBound.x + cellWidth;
+                        // const y = itemBound.y + cellHeight;
+
                         const x = itemBound.x + cellWidth;
-                        const y = itemBound.y + cellHeight;
+                        const y = itemBound.y + cellHeight; 
 
                         let gridX = Math.round((x) / (cellWidth)); // gridContainer.offsetLeft
                         let gridY = Math.round((y - (gridContainer.offsetTop + instance.iframeManager.document.body.scrollTop)) / cellHeight);
+
+                        console.log('scroll-top' + instance.iframeManager.document.body.scrollTop);
 
                        draggingElementShadow.style.opacity = '1';
                        draggingElementShadow.style.border = '6px solid #09b0ef';
@@ -122,7 +136,7 @@ export class FlexGridMover extends ElementHandle {
 
                      //   if (newGridColumnEnd < 22) {
                            draggingElementShadow.style.gridColumnStart = newGridColumnStart + '';
-                           draggingElementShadow.style.gridColumnEnd = newGridColumnEnd + ''; 
+                           draggingElementShadow.style.gridColumnEnd = newGridColumnEnd + '';
 
                            item.setAttribute('data-grid-column-start', newGridColumnStart);
                            item.setAttribute('data-grid-column-end', newGridColumnEnd);
