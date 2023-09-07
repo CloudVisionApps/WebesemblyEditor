@@ -83,7 +83,7 @@ export class FlexGridMover extends ElementHandle {
                         items.forEach((item) => {
 
                         const itemBound = item.getBoundingClientRect();
-                      //  console.log(itemBound);
+                        console.log(itemBound);
 
 
                         let draggingElementGridAreaStart = {
@@ -93,11 +93,12 @@ export class FlexGridMover extends ElementHandle {
                             gridColumnEnd: parseInt(item.style.gridColumnEnd),
                         };
 
-                        const x = itemBound.x;
-                        const y = itemBound.y;
 
-                        let gridX = Math.round((x - gridContainer.offsetLeft) / cellWidth);
-                        let gridY = Math.round(((y-gridContainer.offsetTop)+(instance.iframeManager.document.body.scrollTop)) / (cellHeight));
+                        const x = itemBound.x + cellWidth;
+                        const y = itemBound.y + cellHeight;
+
+                        let gridX = Math.round((x) / (cellWidth)); // gridContainer.offsetLeft
+                        let gridY = Math.round((y - (gridContainer.offsetTop + instance.iframeManager.document.body.scrollTop)) / cellHeight);
 
                        draggingElementShadow.style.opacity = '1';
                        draggingElementShadow.style.border = '6px solid #09b0ef';
@@ -109,8 +110,8 @@ export class FlexGridMover extends ElementHandle {
                            draggingElementShadow.style.gridRowStart = newGridRowStart + '';
                            draggingElementShadow.style.gridRowEnd = newGridRowEnd + '';
 
-                            item.setAttribute('data-grid-row-start', newGridRowStart);
-                            item.setAttribute('data-grid-row-end', newGridRowEnd);
+                           item.setAttribute('data-grid-row-start', newGridRowStart);
+                           item.setAttribute('data-grid-row-end', newGridRowEnd);
                      //   }
 
                         let newGridColumnStart = gridX;
@@ -121,10 +122,10 @@ export class FlexGridMover extends ElementHandle {
 
                      //   if (newGridColumnEnd < 22) {
                            draggingElementShadow.style.gridColumnStart = newGridColumnStart + '';
-                           draggingElementShadow.style.gridColumnEnd = newGridColumnEnd + '';
+                           draggingElementShadow.style.gridColumnEnd = newGridColumnEnd + ''; 
 
-                            item.setAttribute('data-grid-column-start', newGridColumnStart);
-                            item.setAttribute('data-grid-column-end', newGridColumnEnd);
+                           item.setAttribute('data-grid-column-start', newGridColumnStart);
+                           item.setAttribute('data-grid-column-end', newGridColumnEnd);
                      //  }
 
                      //   draggingElementShadow.style.gridArea = gridY + ' / '+gridX+' / '+(gridY+1)+' / '+(gridX+1);
@@ -216,7 +217,7 @@ export class FlexGridMover extends ElementHandle {
         }
     }
 
-    public appendBackgroundGridDisplay(currentGrid = null, gridRows = 20, gridColumns = 20)
+    public appendBackgroundGridDisplay(currentGrid = null, gridRows = 21, gridColumns = 23)
     {
         if (currentGrid) {
 
@@ -225,8 +226,7 @@ export class FlexGridMover extends ElementHandle {
                 let gridColumn = document.createElement("div");
                 gridColumn.setAttribute('style', 'grid-area: 1 / ' + gridColumnI + ' / -1 / ' + gridColumnI);
                 gridColumn.classList.add('js-webesembly-grid-column');
-                //gridColumn.innerHTML = 'x' + gridColumnI;
-
+                gridColumn.innerHTML = '';
                 currentGrid.append(gridColumn);
             }
 
@@ -235,7 +235,20 @@ export class FlexGridMover extends ElementHandle {
                 let gridRow = document.createElement("div");
                 gridRow.setAttribute('style', 'grid-area: ' + gridRowI + ' / 1 / ' + gridRowI + '/ -1');
                 gridRow.classList.add('js-webesembly-grid-row');
-                //gridRow.innerHTML = 'y' + gridRowI;
+
+                 gridRow.innerHTML = '';
+                // gridRow.innerHTML = '' +
+                //     '<svg style="height: 100%; width: calc(100% - 81px); position: absolute; left: 41px;" xmlns="http://www.w3.org/2000/svg">' +
+                //     '<defs>' +
+                //     '<pattern id="flex-grid-mover-row-'+gridRowI+ '" ' +
+                //     'height="100%" width="53.083333333333336px" ' +
+                //     'patternUnits="userSpaceOnUse">' +
+                //     '<rect height="26.350006103515625px" ' +
+                //     'width="41.083333333333336px" x="0.5" y="0.5" rx="3" ' +
+                //     'stroke-width="1" stroke="#B7B7B7" fill="#F2F2F240"></rect>' +
+                //     '</pattern>' +
+                //     '</defs>' +
+                //     '<rect width="100%" height="100%" fill="url(#flex-grid-mover-row-'+gridRowI+ ')"></rect></svg>';
 
                 currentGrid.append(gridRow);
             }

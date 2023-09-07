@@ -106,8 +106,7 @@
   -webkit-user-select: none;
      -moz-user-select: none;
           user-select: none;
-  background: rgba(238, 238, 238, 0.12);
-  z-index: 0;
+  border: 1px solid #7a7a7a;
 }
 
 .js-webesembly-grid-row {
@@ -116,7 +115,7 @@
      -moz-user-select: none;
           user-select: none;
   z-index: 0;
-  background: rgba(231, 231, 231, 0.09);
+  border: 1px solid #7a7a7a;
 }
 
 :root {
@@ -127,13 +126,13 @@
 }
 
 .js-webesembly-element {
-  cursor: pointer;
+  /*cursor: pointer;*/
 }
 
 .js-webesembly-element[contenteditable=true] {
   caret-color: #e110ef;
   outline: 0px;
-  cursor: text;
+  /* cursor: text;*/
 }
 
 #js-webesembly-element-handle {
@@ -187,6 +186,7 @@
   top: 20px;
   z-index: 1000000000;
   display: none;
+  cursor: text;
   /*design*/
   border-radius: var(--live-edit-border-radius);
   border: 2px solid #027aff;
@@ -257,9 +257,8 @@
   background: #2976ef;
 }
 
-.ds-selected {
-  outline: 2px solid #027aff;
-  outline-offset: 2px;
+.ds-selectable {
+  /* cursor: grab;*/
 }
 
 #js-live-edit-section-handle {

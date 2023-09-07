@@ -127,14 +127,12 @@ body {
             const x = e.clientX;
             const y = e.clientY;
 
-            sizeOfElement = 4;
-
-            gridX = Math.round(x / (cellWidth)) - ((sizeOfElement/2) -1);
-            gridY = Math.round(((y-gridContainer.offsetTop)+(document.body.scrollTop)) / (cellHeight)) - ((sizeOfElement/2) -1);
+            gridX = Math.round(x / (cellWidth));
+            gridY = Math.round(((y-gridContainer.offsetTop)+(document.body.scrollTop)) / (cellHeight));
 
             // draggingElementShadow.style.opacity = 1;
             draggingElementShadow.style.border = '3px solid #09b0ef';
-            draggingElementShadow.style.gridArea = gridY + ' / '+gridX+' / '+(gridY+sizeOfElement)+' / '+(gridX+sizeOfElement);
+            draggingElementShadow.style.gridArea = gridY + ' / '+gridX+' / '+(gridY+1)+' / '+(gridX+1);
 
         });
 

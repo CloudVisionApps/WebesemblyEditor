@@ -49,23 +49,23 @@ export class LiveEdit {
         app.iframeManager = new IframeManager(this.iframeId);
         app.iframeManager.onLoad(function() {
 
-           app.handles.mouseOverHeaderHandle = new MouseOverHeaderHandle(app);
-           app.handles.mouseOverFooterHandle = new MouseOverFooterHandle(app);
+           // app.handles.mouseOverHeaderHandle = new MouseOverHeaderHandle(app);
+           // app.handles.mouseOverFooterHandle = new MouseOverFooterHandle(app);
+           //
+           // app.handles.mouseOverSectionHandle = new MouseOverSectionHandle(app);
 
-         //  app.handles.mouseOverSectionHandle = new MouseOverSectionHandle(app);
+           // app.handles.clickedElementHandle = new ClickedElementHandle(app);
+           // app.handles.mouseOverElementHandle = new MouseOverElementHandle(app);
 
-           app.handles.clickedElementHandle = new ClickedElementHandle(app);
-           app.handles.mouseOverElementHandle = new MouseOverElementHandle(app);
-
-           app.handles.flexGridResizerHandle = new FlexGridResizer(app);
+           // app.handles.flexGridResizerHandle = new FlexGridResizer(app);
            app.handles.flexGridMoverHandle = new FlexGridMover(app);
 
-           // app.handles.clickedModuleHandle = new ClickedModuleHandle(app);
-           // app.handles.mouseOverModuleHandle = new MouseOverModuleHandle(app);
+            // app.handles.clickedModuleHandle = new ClickedModuleHandle(app);
+            // app.handles.mouseOverModuleHandle = new MouseOverModuleHandle(app);
 
-            app.iframeManager.body.addEventListener("keyup", (event) => {
-                app.handles.clickedElementHandle.calculateHandlePosition();
-            });
+            // app.iframeManager.body.addEventListener("keyup", (event) => {
+            //     app.handles.clickedElementHandle.calculateHandlePosition();
+            // });
 
            app.appendStyles();
           // app.findDuplicableElements();
