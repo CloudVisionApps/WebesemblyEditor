@@ -119,22 +119,24 @@ body {
         draggingElementShadow.style.pointerEvents = "none";
         gridContainer.appendChild(draggingElementShadow);
 
-        // document.addEventListener("mousemove", function (e) {
-        //
-        //     let cellWidth = parseFloat(getComputedStyle(gridContainer).gridTemplateColumns.split(" ")[0]);
-        //     let cellHeight = parseFloat(getComputedStyle(gridContainer).gridTemplateRows.split(" ")[0]);
-        //
-        //     const x = e.clientX;
-        //     const y = e.clientY;
-        //
-        //     gridX = Math.round(x / (cellWidth));
-        //     gridY = Math.round(((y-gridContainer.offsetTop)+(document.body.scrollTop)) / (cellHeight));
-        //
-        //     // draggingElementShadow.style.opacity = 1;
-        //     draggingElementShadow.style.border = '3px solid #09b0ef';
-        //     draggingElementShadow.style.gridArea = gridY + ' / '+gridX+' / '+(gridY+1)+' / '+(gridX+1);
-        //
-        // });
+        document.addEventListener("mousemove", function (e) {
+
+            let cellWidth = parseFloat(getComputedStyle(gridContainer).gridTemplateColumns.split(" ")[0]);
+            let cellHeight = parseFloat(getComputedStyle(gridContainer).gridTemplateRows.split(" ")[0]);
+
+            const x = e.clientX;
+            const y = e.clientY;
+
+            sizeOfElement = 10;
+
+            gridX = Math.round(x / (cellWidth)) - 4;
+            gridY = Math.round(((y-gridContainer.offsetTop)+(document.body.scrollTop)) / (cellHeight)) -4;
+
+            // draggingElementShadow.style.opacity = 1;
+            draggingElementShadow.style.border = '3px solid #09b0ef';
+            draggingElementShadow.style.gridArea = gridY + ' / '+gridX+' / '+(gridY+sizeOfElement)+' / '+(gridX+sizeOfElement);
+
+        });
 
 
         const draggableElements = document.querySelectorAll(".draggable");
@@ -227,7 +229,7 @@ body {
 
                 gridX = Math.round(x / (cellWidth));
                 gridY = Math.round(((y-gridContainer.offsetTop)+(document.body.scrollTop)) / (cellHeight));
-                
+
 
 
                     document.getElementById('log').innerHTML = 'cellWidth: ' + cellWidth + ' cellHeight: ' + cellHeight + ' gridX: ' + gridX + ' gridY: ' + gridY + ' x: ' + x + ' y: ' + y + ' offsetX: ' + offsetX + ' offsetY: ' + offsetY + ' gridXSmoothly: ' + gridXSmoothly + ' gridYSmoothly: ' + gridYSmoothly;
