@@ -41,16 +41,6 @@
   right: 50%;
 }
 
-#js-webesembly-element-handle-flex-grid-resizer-move {
-  -webkit-user-select: contain;
-     -moz-user-select: contain;
-          user-select: contain;
-  pointer-events: all;
-  bottom: -8px;
-  position: absolute;
-  right: 4%;
-}
-
 #js-webesembly-element-handle-flex-grid-resizer-south-west {
   -webkit-user-select: contain;
      -moz-user-select: contain;
