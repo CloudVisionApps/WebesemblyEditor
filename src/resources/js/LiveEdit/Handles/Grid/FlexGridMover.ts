@@ -141,6 +141,7 @@ export class FlexGridMover extends ElementHandle {
                             }
 
                             //   draggingElementShadow.style.gridArea = gridY + ' / '+gridX+' / '+(gridY+1)+' / '+(gridX+1);
+
                     });
 
 
