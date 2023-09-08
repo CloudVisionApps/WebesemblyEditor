@@ -91,8 +91,7 @@ export class FlexGridMover extends ElementHandle {
                         items.forEach((item) => {
 
                             const itemBound = item.getBoundingClientRect();
-                            console.log(itemBound);
-
+                            //console.log(itemBound);
 
                             let draggingElementGridAreaStart = {
                                 gridRowStart: parseInt(item.style.gridRowStart),
@@ -149,7 +148,7 @@ export class FlexGridMover extends ElementHandle {
                 });
 
                 dragSelect.subscribe('callback', () => {
-                    console.log('callback');
+                    //console.log('callback');
                     instance.applyGridChanges(dragSelect.Area._node);
                     instance.removeBackgroundGridDisplay();
                     showBackgroundGrid = false;

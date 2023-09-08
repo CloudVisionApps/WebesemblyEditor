@@ -9,7 +9,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@moveable/helper": "^0.1.3",
     "@types/dragselect": "^1.13.1",
-    "dragselect": "^2.7.4"
+    "dragselect": "^2.7.4",
+    "moveable": "^0.51.1"
   }
 }
