@@ -5,6 +5,9 @@ import {
     elementHasParentsWithAttribute
 } from "../../helpers";
 import {ElementHandle} from "./../ElementHandle";
+import EditorJS from "@editorjs/editorjs";
+import Header from '@editorjs/header';
+import List from '@editorjs/list';
 
 export class ClickedElementHandle extends ElementHandle {
 
@@ -135,7 +138,22 @@ export class ClickedElementHandle extends ElementHandle {
                 let mainEditableElement = elementHasParentsWithAttribute(clickedElement, 'webesembly:editable');
 
                 if (mainEditableElement) {
-                    mainEditableElement.setAttribute('contenteditable', 'true');
+
+                    const editor = new EditorJS({
+                        holder: mainEditableElement,
+                        tools: {
+                            header: {
+                                class: Header,
+                                inlineToolbar: ['link']
+                            },
+                            list: {
+                                class: List,
+                                inlineToolbar: true
+                            }
+                        },
+                    });
+
+                    //  mainEditableElement.setAttribute('contenteditable', 'true');
                 }
 
                 mainEditableElement.classList.add('js-webesembly-element');
