@@ -1,8 +1,10 @@
+<!--
 
 <section style="padding:130px; background:purple;">
     Header
 </section>
 
+-->
 
 <div class="grid-container">
 
@@ -27,11 +29,13 @@
 
 </div>
 
+<!--
 
 
 <section style="padding:130px; background:purple;">
     f00ter
 </section>
+-->
 
 <style>
 body {
@@ -63,7 +67,7 @@ body {
         grid-template-rows: repeat(20, 1fr);
         grid-gap: 12px;
         width:100%;
-        height:100%;
+        height:600px;
         background:#272725;
     }
 
@@ -125,46 +129,66 @@ body {
         mouseSSSx.style.userSelect = "none";
         mouseSSSx.style.pointerEvents = "none";
         mouseSSSx.style.position = "absolute";
-        mouseSSSx.style.top = "600";
-        mouseSSSx.style.left = "600";
-        mouseSSSx.style.width = "30px";
-        mouseSSSx.style.height = "30px";
-        mouseSSSx.style.background = "#fff";
+        mouseSSSx.style.top = "220";
+        mouseSSSx.style.left = "180";
+        mouseSSSx.style.width = "260px";
+        mouseSSSx.style.height = "300px";
+        mouseSSSx.style.background = "rgba(255,255,255,0.24)";
         gridContainer.appendChild(mouseSSSx);
 
        /////////////////////////////////////////////
 
-        // setTimeout(function() {
-        //
-        //     let cellWidth = parseFloat(getComputedStyle(gridContainer).gridTemplateColumns.split(" ")[0]);
-        //     let cellHeight = parseFloat(getComputedStyle(gridContainer).gridTemplateRows.split(" ")[0]);
-        //
-        //   //   const xCalc = 400;
-        //   //   const yCalc = 420;
-        //   //
-        //   //   let gridXCalc = Math.round(xCalc / (cellWidth));
-        //   // //  let gridYCalc = Math.round(((yCalc - gridContainer.offsetTop) + (document.body.scrollTop)) / (cellHeight));
-        //   //   let gridYCalc = Math.round(yCalc / cellHeight);
-        //
-        //    //
-        //     // alert(gridXCalc + ' ' + gridYCalc);
-        //   //  alert(cellWidth + ' ' + cellHeight);
-        //
-        //     const x = 600;// ((gridXCalc * 20) / 2);
-        //     const y = 600;// ((gridYCalc * 20) / 2);
-        //
-        //     gridX = Math.round(x / (cellWidth + 20));
-        //     gridY = Math.round(((y - gridContainer.offsetTop) + (document.body.scrollTop)) / (cellHeight + 20));
-        //
-        //     // draggingElementShadow.style.opacity = 1;
-        //     draggingElementShadow.style.border = '3px solid #09b0ef';
-        //     draggingElementShadow.style.gridArea = gridY + ' / ' + gridX + ' / ' + (gridY + 1) + ' / ' + (gridX + 1);
-        //
-        // }, 500);
+        setTimeout(function() {
+
+            const gridStyles = getComputedStyle(gridContainer);
+
+            let cellWidth = parseFloat(gridStyles.gridTemplateColumns.split(" ")[0]);
+            let cellHeight = parseFloat(gridStyles.gridTemplateRows.split(" ")[0]);
+
+
+          //   const xCalc = 400;
+          //   const yCalc = 420;
+          //
+          //   let gridXCalc = Math.round(xCalc / (cellWidth));
+          // //  let gridYCalc = Math.round(((yCalc - gridContainer.offsetTop) + (document.body.scrollTop)) / (cellHeight));
+          //   let gridYCalc = Math.round(yCalc / cellHeight);
+
+           //
+            // alert(gridXCalc + ' ' + gridYCalc);
+          //  alert(cellWidth + ' ' + cellHeight);
+
+            // const x = 360;// ((gridXCalc * 20) / 2);
+            // const y = 120;// ((gridYCalc * 20) / 2);
+            //
+            // gridX = Math.round(x / (cellWidth + 12));
+            // gridY = Math.round(((y - gridContainer.offsetTop) + (document.body.scrollTop)) / (cellHeight + 12));
+
+            const itemBound = mouseSSSx.getBoundingClientRect();
+
+            const gridGap = parseFloat(gridStyles.gridGap);
+
+            const x = Math.floor(itemBound.x + cellWidth + gridGap);
+            const y = Math.floor(itemBound.y + cellHeight + gridGap);
+
+            const bottom = Math.floor(itemBound.bottom + cellWidth + gridGap);
+            const right = Math.floor(itemBound.right + cellHeight + gridGap);
+
+            let gridX = Math.round(((x-gridContainer.offsetLeft)+(document.body.scrollLeft)) / Math.floor(cellWidth + gridGap));
+            let gridY = Math.round(((y-gridContainer.offsetTop)+(document.body.scrollTop)) / Math.floor(cellHeight + gridGap));
+
+            let gridXAdd = Math.round(((right-gridContainer.offsetLeft)+(document.body.scrollLeft)) / Math.floor(cellWidth + gridGap));
+            let gridYAdd = Math.round(((bottom-gridContainer.offsetTop)+(document.body.scrollTop)) / Math.floor(cellHeight + gridGap));
+
+
+            // draggingElementShadow.style.opacity = 1;
+            draggingElementShadow.style.border = '3px solid #09b0ef';
+            draggingElementShadow.style.gridArea = gridY + ' / ' + gridX + ' / ' + (gridYAdd) + ' / ' + (gridXAdd);
+
+        }, 500);
 ////////////////////////////////////////////
 
 
-        document.addEventListener("mousemove", function (e) {
+      /*  document.addEventListener("mousemove", function (e) {
 
             let cellWidth = parseFloat(getComputedStyle(gridContainer).gridTemplateColumns.split(" ")[0]);
             let cellHeight = parseFloat(getComputedStyle(gridContainer).gridTemplateRows.split(" ")[0]);
@@ -189,7 +213,7 @@ body {
             draggingElementShadow.style.border = '3px solid #09b0ef';
             draggingElementShadow.style.gridArea = gridY + ' / '+gridX+' / '+(gridY+1)+' / '+(gridX+1);
 
-        });
+        });*/
 
 
         const draggableElements = document.querySelectorAll(".draggable");

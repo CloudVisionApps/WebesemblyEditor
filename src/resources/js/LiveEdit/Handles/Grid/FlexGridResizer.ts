@@ -57,8 +57,9 @@ export class FlexGridResizer extends ElementHandle {
             //     setTargets([]);
             // });
             moveableRef.on("render", e => {
-                // e.target.style.cssText += e.cssText;
+                 e.target.style.cssText += e.cssText;
                  console.log('render');
+                 console.log(e.cssText);
                  e.target.style.transform = e.transform;
                 if (!showingGrid) {
                     instance.appendBackgroundGridDisplay(flexGrid);
@@ -67,14 +68,14 @@ export class FlexGridResizer extends ElementHandle {
                 instance.moveElementInGrid(flexGrid, e.target);
             });
             moveableRef.on("renderGroup", e => {
-                // if (!showingGrid) {
-                //     instance.appendBackgroundGridDisplay(flexGrid);
-                //     showingGrid = true;
-                // }
-                // e.events.forEach(ev => {
-                //     ev.target.style.cssText += ev.cssText;
-                //     instance.moveElementInGrid(flexGrid, ev.target);
-                // });
+                if (!showingGrid) {
+                    instance.appendBackgroundGridDisplay(flexGrid);
+                    showingGrid = true;
+                }
+                e.events.forEach(ev => {
+                    ev.target.style.cssText += ev.cssText;
+                    instance.moveElementInGrid(flexGrid, ev.target);
+                });
                  console.log('renderGroup');
             });
             selectoRef.on("dragStart", (e: any) => {
@@ -132,8 +133,14 @@ export class FlexGridResizer extends ElementHandle {
         const x = Math.floor(itemBound.x + cellWidth + gridGap);
         const y = Math.floor(itemBound.y + cellHeight + gridGap);
 
+        const bottom = Math.floor(itemBound.bottom + cellWidth + gridGap);
+        const right = Math.floor(itemBound.right + cellHeight + gridGap);
+
         let gridX = Math.round(((x-gridContainer.offsetLeft)+(instance.iframeManager.document.body.scrollLeft)) / Math.floor(cellWidth + gridGap));
         let gridY = Math.round(((y-gridContainer.offsetTop)+(instance.iframeManager.document.body.scrollTop)) / Math.floor(cellHeight + gridGap));
+
+        let gridRight = Math.round(((right-gridContainer.offsetLeft)+(instance.iframeManager.document.body.scrollLeft)) / Math.floor(cellWidth + gridGap));
+        let gridBottom = Math.floor(((bottom-gridContainer.offsetTop)+(instance.iframeManager.document.body.scrollTop)) / Math.floor(cellHeight + gridGap));
 
         // console.log('scroll-top: ' + instance.iframeManager.document.body.scrollTop);
         // console.log('gridContainer.offsetTop: ' + gridContainer.offsetTop);
@@ -143,29 +150,31 @@ export class FlexGridResizer extends ElementHandle {
       //  draggingElementShadow.style.border = '3px solid #09b0ef';
 
         let newGridRowStart = gridY;
-        let newGridRowEnd = gridY + (draggingElementGridAreaStart.gridRowEnd - draggingElementGridAreaStart.gridRowStart);
+     //   let newGridRowEnd = gridY + (draggingElementGridAreaStart.gridRowEnd - draggingElementGridAreaStart.gridRowStart);
+        let newGridRowEnd = gridBottom;
 
-        if (newGridRowEnd < 22) {
+      //  if (newGridRowEnd < 22) {
         //    draggingElementShadow.style.gridRowStart = newGridRowStart + '';
           //  draggingElementShadow.style.gridRowEnd = newGridRowEnd + '';
 
             item.setAttribute('data-grid-row-start', newGridRowStart);
             item.setAttribute('data-grid-row-end', newGridRowEnd);
-        }
+        //}
 
         let newGridColumnStart = gridX;
-        let newGridColumnEnd = gridX + (draggingElementGridAreaStart.gridColumnEnd - draggingElementGridAreaStart.gridColumnStart);
+       // let newGridColumnEnd = gridX + (draggingElementGridAreaStart.gridColumnEnd - draggingElementGridAreaStart.gridColumnStart);
+        let newGridColumnEnd = gridRight;
 
         // console.log('newGridColumnStart' + newGridColumnStart);
         // console.log('newGridColumnEnd' + newGridColumnEnd);
 
-        if (newGridColumnEnd < 22) {
+        //if (newGridColumnEnd < 22) {
            // draggingElementShadow.style.gridColumnStart = newGridColumnStart + '';
            // draggingElementShadow.style.gridColumnEnd = newGridColumnEnd + '';
 
             item.setAttribute('data-grid-column-start', newGridColumnStart);
             item.setAttribute('data-grid-column-end', newGridColumnEnd);
-        }
+        //}
     }
 
     public applyGridChanges(flexGrid) {
@@ -187,6 +196,8 @@ export class FlexGridResizer extends ElementHandle {
                     flexGridElement.style.gridColumnStart = flexGridElement.getAttribute('data-grid-column-start');
                     flexGridElement.style.gridColumnEnd = flexGridElement.getAttribute('data-grid-column-end');
                     flexGridElement.style.transform = '';
+                    flexGridElement.style.width = '';
+                    flexGridElement.style.height = '';
                 }
             });
         }

@@ -17,7 +17,7 @@ export class ClickedElementHandle extends ElementHandle {
 
         super(liveEdit);
 
-        this.createElementHandle();
+      // this.createElementHandle();
         this.addListener();
     }
 
@@ -144,15 +144,15 @@ export class ClickedElementHandle extends ElementHandle {
 
                 clickedElement.classList.add('js-webesembly-element');
 
-                app.element.style.width = (clickedElement.offsetWidth + 10) + 'px';
-                app.element.style.height = (clickedElement.offsetHeight + 10) + 'px';
-
-                let mouseOverElementBounding = clickedElement.getBoundingClientRect();
-                app.element.style.top = (mouseOverElementBounding.top + (app.iframeManager.window.scrollY - 5)) + 'px';
-                app.element.style.left = (mouseOverElementBounding.left + (app.iframeManager.window.scrollX - 5)) + 'px';
-
-                app.name.innerText = getElementFriendlyName(clickedElement.tagName);
-                app.element.style.display = 'block';
+                // app.element.style.width = (clickedElement.offsetWidth + 10) + 'px';
+                // app.element.style.height = (clickedElement.offsetHeight + 10) + 'px';
+                //
+                // let mouseOverElementBounding = clickedElement.getBoundingClientRect();
+                // app.element.style.top = (mouseOverElementBounding.top + (app.iframeManager.window.scrollY - 5)) + 'px';
+                // app.element.style.left = (mouseOverElementBounding.left + (app.iframeManager.window.scrollX - 5)) + 'px';
+                //
+                // app.name.innerText = getElementFriendlyName(clickedElement.tagName);
+                // app.element.style.display = 'block';
 
             }
         }, {passive: true});
@@ -162,16 +162,16 @@ export class ClickedElementHandle extends ElementHandle {
         let app = this;
         let clickedElement = app.liveEdit.clickedElement;
 
-        if (app.element && clickedElement) {
-
-            app.element.style.width = (clickedElement.offsetWidth + 20) + 'px';
-            app.element.style.height = (clickedElement.offsetHeight + 20) + 'px';
-
-            let mouseOverElementBounding = clickedElement.getBoundingClientRect();
-            app.element.style.top = (mouseOverElementBounding.top + (app.iframeManager.window.scrollY - 10)) + 'px';
-            app.element.style.left = (mouseOverElementBounding.left + (app.iframeManager.window.scrollX - 10)) + 'px';
-
-        }
+        // if (app.element && clickedElement) {
+        //
+        //     app.element.style.width = (clickedElement.offsetWidth + 20) + 'px';
+        //     app.element.style.height = (clickedElement.offsetHeight + 20) + 'px';
+        //
+        //     let mouseOverElementBounding = clickedElement.getBoundingClientRect();
+        //     app.element.style.top = (mouseOverElementBounding.top + (app.iframeManager.window.scrollY - 10)) + 'px';
+        //     app.element.style.left = (mouseOverElementBounding.left + (app.iframeManager.window.scrollX - 10)) + 'px';
+        //
+        // }
     }
 
 }
