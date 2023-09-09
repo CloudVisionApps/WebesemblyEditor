@@ -139,21 +139,21 @@ export class ClickedElementHandle extends ElementHandle {
 
                 if (mainEditableElement) {
 
-                    const editor = new EditorJS({
-                        holder: mainEditableElement,
-                        tools: {
-                            header: {
-                                class: Header,
-                                inlineToolbar: ['link']
-                            },
-                            list: {
-                                class: List,
-                                inlineToolbar: true
-                            }
-                        },
-                    });
+                    // const editor = new EditorJS({
+                    //     holder: mainEditableElement,
+                    //     // tools: {
+                    //     //     header: {
+                    //     //         class: Header,
+                    //     //         inlineToolbar: ['link']
+                    //     //     },
+                    //     //     list: {
+                    //     //         class: List,
+                    //     //         inlineToolbar: true
+                    //     //     }
+                    //     // },
+                    // });
 
-                    //  mainEditableElement.setAttribute('contenteditable', 'true');
+                      mainEditableElement.setAttribute('contenteditable', 'true');
                 }
 
                 mainEditableElement.classList.add('js-webesembly-element');
