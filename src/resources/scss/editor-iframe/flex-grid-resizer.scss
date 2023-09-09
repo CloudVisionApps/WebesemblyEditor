@@ -84,11 +84,11 @@
 .js-webesembly-grid-column {
     pointer-events: none;
     user-select: none;
-/*    border: 1px solid #7a7a7a;*/
+    opacity: 0.3;
 }
 .js-webesembly-grid-row {
     pointer-events: none;
     user-select: none;
     z-index: 0;
-    /*border: 1px solid #7a7a7a;*/
+    opacity: 0.3;
 }

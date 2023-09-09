@@ -31,7 +31,7 @@ export function allowedEditElementsList()
         'B',
         'BUTTON',
         'IMG',
-        'DIV',
+       // 'DIV',
         'DL',
     ];
 

@@ -64,7 +64,7 @@ class WebesemblyFlexGridTagCompiler extends ComponentTagCompiler
                     $flexGridSetup = '
                           <div webesembly:flex-grid-element-relative="true" style="z-index: 5; position: relative; height: 100%; pointer-events: auto;" >
                         <div webesembly:flex-grid-element-absolute="true" style="height: 100%; width: 100%; position: absolute; left: 0px; top: 0px;">
-                            <div webesembly:flex-grid-element-content="true" style="height: 100%; width: 100%; display: flex; justify-content: center;">
+                            <div webesembly:flex-grid-element-content="true" style="height: 100%; width: 100%; display: flex; justify-content: start;">
 
                                ' . $flexGridElement->innertext . '
 

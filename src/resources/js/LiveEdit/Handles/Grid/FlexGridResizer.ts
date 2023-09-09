@@ -28,8 +28,11 @@ export class FlexGridResizer extends ElementHandle {
                 //scalable: true,
                 resizable: true,
                 keepRatio: false,
-                target: []
+                target: [],
+                preventDefault: false,
+                stopPropagation: false,
             });
+
             let selectoRef = new Selecto({
                 container: flexGrid,
                 dragContainer: flexGrid,
@@ -40,8 +43,8 @@ export class FlexGridResizer extends ElementHandle {
                 toggleContinueSelect: ["shift"],
                 ratio: 0
             });
-            let showingGrid = false;
 
+            let showingGrid = false;
 
             function setTargets(nextTargets) {
                 targets = nextTargets;
@@ -104,7 +107,6 @@ export class FlexGridResizer extends ElementHandle {
                 }
                 setTargets(e.selected);
             });
-
 
         });
     }
@@ -250,8 +252,8 @@ export class FlexGridResizer extends ElementHandle {
                     'height="100%" width="'+(cellWidth + gridGap)+'px" ' +
                     'patternUnits="userSpaceOnUse">' +
                     '<rect height="'+cellHeight+'" ' +
-                    'width="'+cellWidth+'px" x="0.5" y="0.5" rx="3" ' +
-                    'stroke-width="1" stroke="#B7B7B7" fill="#F2F2F240"></rect>' +
+                    'width="'+cellWidth+'px" x="0.5" y="0.5" ' +
+                    'stroke-width="1"></rect>' +
                     '</pattern>' +
                     '</defs>' +
                     '<rect width="100%" height="100%" fill="url(#flex-grid-mover-row-'+gridRowI+ ')"></rect></svg>';

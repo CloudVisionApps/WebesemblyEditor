@@ -17,7 +17,7 @@ export class ClickedElementHandle extends ElementHandle {
 
         super(liveEdit);
 
-      // this.createElementHandle();
+        this.createElementHandle();
         this.addListener();
     }
 
@@ -25,7 +25,8 @@ export class ClickedElementHandle extends ElementHandle {
 
         const createElementHandle = this.iframeManager.document.createElement("div");
         createElementHandle.id = 'js-webesembly-element-handle-active';
-        createElementHandle.innerHTML = '<div id="js-webesembly-element-handle-active-name">Image</div>' +
+        //<div id="js-webesembly-element-handle-active-name">Image</div>
+        createElementHandle.innerHTML = '' +
             '<div id="js-webesembly-element-handle-active-settings">' +
             '<button type="button">Settings</button>' +
             '</div>';
@@ -104,7 +105,7 @@ export class ClickedElementHandle extends ElementHandle {
                     }
                 }
 
-               // this.enableSettingsDelete();
+                this.enableSettingsDelete();
 
                 this.liveEdit.clickedElement = clickedElement;
                 this.liveEdit.handles.mouseOverElementHandle.hide();
@@ -130,29 +131,24 @@ export class ClickedElementHandle extends ElementHandle {
                 document.dispatchEvent(liveEditEvent);
 
 
-                // Add editable element
-                let canIAddContentEditable = true;
-                // if (contentEditableElementsTags[i] == 'h1') {
-                //     if (editorTag[j].children[0].classList.contains('block')) {
-                //         canIAddContentEditable = false;
-                //     }
-                // }
 
-                if (canIAddContentEditable) {
-                    clickedElement.setAttribute('contenteditable', 'true');
+                let mainEditableElement = elementHasParentsWithAttribute(clickedElement, 'webesembly:editable');
+
+                if (mainEditableElement) {
+                    mainEditableElement.setAttribute('contenteditable', 'true');
                 }
 
-                clickedElement.classList.add('js-webesembly-element');
+                mainEditableElement.classList.add('js-webesembly-element');
 
-                // app.element.style.width = (clickedElement.offsetWidth + 10) + 'px';
-                // app.element.style.height = (clickedElement.offsetHeight + 10) + 'px';
-                //
-                // let mouseOverElementBounding = clickedElement.getBoundingClientRect();
-                // app.element.style.top = (mouseOverElementBounding.top + (app.iframeManager.window.scrollY - 5)) + 'px';
-                // app.element.style.left = (mouseOverElementBounding.left + (app.iframeManager.window.scrollX - 5)) + 'px';
-                //
-                // app.name.innerText = getElementFriendlyName(clickedElement.tagName);
-                // app.element.style.display = 'block';
+                app.element.style.width = (mainEditableElement.offsetWidth + 10) + 'px';
+                app.element.style.height = (mainEditableElement.offsetHeight + 10) + 'px';
+
+                let mouseOverElementBounding = mainEditableElement.getBoundingClientRect();
+                app.element.style.top = (mouseOverElementBounding.top + (app.iframeManager.window.scrollY - 5)) + 'px';
+                app.element.style.left = (mouseOverElementBounding.left + (app.iframeManager.window.scrollX - 5)) + 'px';
+
+                app.name.innerText = getElementFriendlyName(clickedElement.tagName);
+                app.element.style.display = 'block';
 
             }
         }, {passive: true});
@@ -162,16 +158,16 @@ export class ClickedElementHandle extends ElementHandle {
         let app = this;
         let clickedElement = app.liveEdit.clickedElement;
 
-        // if (app.element && clickedElement) {
-        //
-        //     app.element.style.width = (clickedElement.offsetWidth + 20) + 'px';
-        //     app.element.style.height = (clickedElement.offsetHeight + 20) + 'px';
-        //
-        //     let mouseOverElementBounding = clickedElement.getBoundingClientRect();
-        //     app.element.style.top = (mouseOverElementBounding.top + (app.iframeManager.window.scrollY - 10)) + 'px';
-        //     app.element.style.left = (mouseOverElementBounding.left + (app.iframeManager.window.scrollX - 10)) + 'px';
-        //
-        // }
+        if (app.element && clickedElement) {
+
+            app.element.style.width = (clickedElement.offsetWidth + 20) + 'px';
+            app.element.style.height = (clickedElement.offsetHeight + 20) + 'px';
+
+            let mouseOverElementBounding = clickedElement.getBoundingClientRect();
+            app.element.style.top = (mouseOverElementBounding.top + (app.iframeManager.window.scrollY - 10)) + 'px';
+            app.element.style.left = (mouseOverElementBounding.left + (app.iframeManager.window.scrollX - 10)) + 'px';
+
+        }
     }
 
 }

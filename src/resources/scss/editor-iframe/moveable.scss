@@ -1,0 +1,22 @@
+.rCS1w3zcxh {
+    --moveable-color: #027aff;
+}
+
+.rCS1w3zcxh .moveable-control {
+    position: absolute;
+    width: 13px;
+    height: 13px;
+    border-radius: 0px;
+    border: 2px solid #027aff;
+    box-sizing: border-box;
+    background: #fff;
+    margin-top: -7px;
+    margin-left: -7px;
+    z-index: 10;
+}
+.rCS1w3zcxh .moveable-line {
+    width: 1px;
+    height: 2px;
+    background: var(--moveable-color);
+    transform-origin: 0px 50%;
+}
