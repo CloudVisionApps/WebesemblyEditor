@@ -229,7 +229,9 @@ export class FlexGridResizer extends ElementHandle {
         if (currentGrid) {
             let findGridRow = currentGrid.getElementsByClassName('js-webesembly-grid-row');
             if (findGridRow.length > 0) {
-                findGridRow[0].style.opacity = '0';
+                for (let i = 0; i < findGridRow.length; i++) {
+                    findGridRow[i].style.opacity = '0';
+                }
             }
         }
     }
@@ -239,7 +241,9 @@ export class FlexGridResizer extends ElementHandle {
         if (currentGrid) {
             let findGridRow = currentGrid.getElementsByClassName('js-webesembly-grid-row');
             if (findGridRow.length > 0) {
-                findGridRow[0].style.opacity = '1';
+                for (let i = 0; i < findGridRow.length; i++) {
+                    findGridRow[i].style.opacity = '0.1';
+                }
             }
         }
     }
