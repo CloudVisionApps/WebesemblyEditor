@@ -40,3 +40,7 @@
 [webesembly\:flex-grid-element] {
     border-radius: 3px;
 }
+
+[webesembly\:page] > [webesembly\:section]:nth-child(1) {
+    padding-top: 150px;
+}

@@ -165,11 +165,16 @@ export class MouseOverSectionHandle extends ElementHandle {
                     app.handleActionMoveElementDown.removeAttribute('disabled');
                 }
 
-                app.handleMainElement.style.width = (getElementParentSectionElement.offsetWidth) + 'px';
-                app.handleMainElement.style.height = (getElementParentSectionElement.offsetHeight) + 'px';
-
                 let mouseOverElementBounding = getElementParentSectionElement.getBoundingClientRect();
-                app.handleMainElement.style.top = (mouseOverElementBounding.top + (app.iframeManager.window.scrollY)) + 'px';
+                let mouseOverElementComputedStyle = getComputedStyle(getElementParentSectionElement);
+
+                let mouseOverElementPaddingTop = parseFloat(mouseOverElementComputedStyle.getPropertyValue('padding-top'));
+
+
+                app.handleMainElement.style.width = (getElementParentSectionElement.offsetWidth) + 'px';
+                app.handleMainElement.style.height = (getElementParentSectionElement.offsetHeight - mouseOverElementPaddingTop) + 'px';
+
+                app.handleMainElement.style.top = ((mouseOverElementBounding.top + mouseOverElementPaddingTop) + (app.iframeManager.window.scrollY)) + 'px';
                 app.handleMainElement.style.left = (mouseOverElementBounding.left + (app.iframeManager.window.scrollX)) + 'px';
 
                 app.handleMainElement.style.display = 'block';
