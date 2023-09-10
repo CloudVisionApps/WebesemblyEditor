@@ -200,7 +200,7 @@ export class MouseOverSectionHandle extends ElementHandle {
                 app.handleMainOutsideElement.style.top = ((mouseOverElementBounding.top + mouseOverElementPaddingTop) + (app.iframeManager.window.scrollY)) + 'px';
                 app.handleMainOutsideElement.style.left = (mouseOverElementBounding.left + (app.iframeManager.window.scrollX)) + 'px';
 
-                /// app.handleMainOutsideElement.style.display = 'block';
+                app.handleMainOutsideElement.style.display = 'block';
 
 
             }
