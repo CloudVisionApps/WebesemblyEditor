@@ -227,20 +227,28 @@ export class FlexGridResizer extends ElementHandle {
     public hideBackgroundGridDisplay(currentGrid)
     {
         if (currentGrid) {
-
+            let findGridRow = currentGrid.getElementsByClassName('js-webesembly-grid-row');
+            if (findGridRow.length > 0) {
+                findGridRow[0].style.opacity = '0';
+            }
         }
     }
 
     public showBackgroundGridDisplay(currentGrid)
     {
         if (currentGrid) {
-
+            let findGridRow = currentGrid.getElementsByClassName('js-webesembly-grid-row');
+            if (findGridRow.length > 0) {
+                findGridRow[0].style.opacity = '1';
+            }
         }
     }
 
     public appendBackgroundGridDisplay(currentGrid = null, gridRows = 21, gridColumns = 23)
     {
         if (currentGrid) {
+
+            let uniqueId = Date.now().toString(36) + Math.random().toString(36).substr(2);;
 
             // Add grid columns display
             for (let gridColumnI = 1; gridColumnI < gridColumns + 1; gridColumnI++) {
@@ -262,12 +270,13 @@ export class FlexGridResizer extends ElementHandle {
                 let gridRow = document.createElement("div");
                 gridRow.setAttribute('style', 'grid-area: ' + gridRowI + ' / 1 / ' + gridRowI + '/ -1');
                 gridRow.classList.add('js-webesembly-grid-row');
+                gridRow.style.opacity = '0';
 
                 //gridRow.innerHTML = '';
                 gridRow.innerHTML = '' +
                     '<svg style="height: 100%; width: calc(100% - 0px); position: absolute; left: 3px;" xmlns="http://www.w3.org/2000/svg">' +
                     '<defs>' +
-                    '<pattern id="flex-grid-mover-row-'+gridRowI+ '" ' +
+                    '<pattern id="flex-grid-mover-row-'+uniqueId+gridRowI+ '" ' +
                     'height="100%" width="'+(cellWidth + gridGap)+'px" ' +
                     'patternUnits="userSpaceOnUse">' +
                     '<rect height="'+cellHeight+'" ' +
@@ -275,7 +284,7 @@ export class FlexGridResizer extends ElementHandle {
                     'stroke-width="1"></rect>' +
                     '</pattern>' +
                     '</defs>' +
-                    '<rect width="100%" height="100%" fill="url(#flex-grid-mover-row-'+gridRowI+ ')"></rect></svg>';
+                    '<rect width="100%" height="100%" fill="url(#flex-grid-mover-row-'+uniqueId+gridRowI+ ')"></rect></svg>';
 
                 currentGrid.append(gridRow);
             }
