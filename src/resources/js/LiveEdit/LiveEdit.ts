@@ -23,6 +23,7 @@ export class LiveEdit {
 
     public mouseOverElement;
     public mouseOverModule;
+    public draggedElement;
 
     public handles = {
         mouseOverHeaderHandle: {},

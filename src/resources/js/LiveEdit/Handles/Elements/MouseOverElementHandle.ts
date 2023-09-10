@@ -60,16 +60,21 @@ export class MouseOverElementHandle extends ElementHandle {
                     return;
                 }
 
-                let mouseOverElementMainEditable = elementHasParentsWithAttribute(mouseOverElement, 'webesembly:editable');
+                let mouseOverFlexGridElement = elementHasParentsWithAttribute(mouseOverElement, 'webesembly:flex-grid-element');
+                if (mouseOverFlexGridElement == this.liveEdit.draggedElement) {
+                    this.hide();
+                    return;
+                }
 
+                let mouseOverElementMainEditable = elementHasParentsWithAttribute(mouseOverElement, 'webesembly:editable');
                 mouseOverElementMainEditable.classList.add('js-webesembly-element');
 
-                app.handleMainElement.style.width = (mouseOverElementMainEditable.offsetWidth + 10) + 'px';
-                app.handleMainElement.style.height = (mouseOverElementMainEditable.offsetHeight + 10) + 'px';
+                app.handleMainElement.style.width = (mouseOverElementMainEditable.offsetWidth) + 'px';
+                app.handleMainElement.style.height = (mouseOverElementMainEditable.offsetHeight) + 'px';
 
                 let mouseOverElementBounding = mouseOverElementMainEditable.getBoundingClientRect();
-                app.handleMainElement.style.top = (mouseOverElementBounding.top + (app.iframeManager.window.scrollY - 5)) + 'px';
-                app.handleMainElement.style.left = (mouseOverElementBounding.left + (app.iframeManager.window.scrollX - 5)) + 'px';
+                app.handleMainElement.style.top = (mouseOverElementBounding.top + (app.iframeManager.window.scrollY )) + 'px';
+                app.handleMainElement.style.left = (mouseOverElementBounding.left + (app.iframeManager.window.scrollX )) + 'px';
 
                 if (app.handleNameElement) {
                     app.handleNameElement.innerText = getElementFriendlyName(mouseOverElement.tagName);

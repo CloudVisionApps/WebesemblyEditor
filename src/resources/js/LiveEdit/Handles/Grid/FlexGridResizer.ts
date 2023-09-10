@@ -69,6 +69,8 @@ export class FlexGridResizer extends ElementHandle {
                     showingGrid = true;
                 }
                 instance.moveElementInGrid(flexGrid, e.target);
+                instance.liveEdit.draggedElement = e.target;
+
             });
             moveableRef.on("renderGroup", e => {
                 if (!showingGrid) {
@@ -95,8 +97,10 @@ export class FlexGridResizer extends ElementHandle {
                 setTargets(e.selected);
             });
             selectoRef.on("selectEnd", e => {
+
                 instance.removeBackgroundGridDisplay();
                 instance.applyGridChanges(flexGrid);
+                instance.liveEdit.draggedElement = null;
                 showingGrid = false;
 
                 if (e.isDragStartEnd) {
