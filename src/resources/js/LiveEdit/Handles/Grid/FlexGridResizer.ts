@@ -21,6 +21,8 @@ export class FlexGridResizer extends ElementHandle {
 
         instance.iframeManager.document.body.querySelectorAll('[webesembly\\:flex-grid]').forEach((flexGrid) => {
 
+            instance.appendBackgroundGridDisplay(flexGrid);
+
             let targets = [];
 
             let moveableRef = new Moveable(flexGrid, {
@@ -55,7 +57,7 @@ export class FlexGridResizer extends ElementHandle {
             });
             // moveableRef.on("dragEnd", e => {
             //     console.log('dragEnd');
-            //     instance.removeBackgroundGridDisplay();
+            //     instance.hideBackgroundGridDisplay(flexGrid);
             //     showingGrid = false;
             //     setTargets([]);
             // });
@@ -65,7 +67,7 @@ export class FlexGridResizer extends ElementHandle {
                  console.log(e.cssText);
                  e.target.style.transform = e.transform;
                 if (!showingGrid) {
-                    instance.appendBackgroundGridDisplay(flexGrid);
+                    instance.showBackgroundGridDisplay(flexGrid);
                     showingGrid = true;
                 }
                 instance.moveElementInGrid(flexGrid, e.target);
@@ -74,7 +76,7 @@ export class FlexGridResizer extends ElementHandle {
             });
             moveableRef.on("renderGroup", e => {
                 if (!showingGrid) {
-                    instance.appendBackgroundGridDisplay(flexGrid);
+                    instance.showBackgroundGridDisplay(flexGrid);
                     showingGrid = true;
                 }
                 e.events.forEach(ev => {
@@ -98,7 +100,7 @@ export class FlexGridResizer extends ElementHandle {
             });
             selectoRef.on("selectEnd", e => {
 
-                instance.removeBackgroundGridDisplay();
+                instance.hideBackgroundGridDisplay(flexGrid);
                 instance.applyGridChanges(flexGrid);
                 instance.liveEdit.draggedElement = null;
                 showingGrid = false;
@@ -222,6 +224,19 @@ export class FlexGridResizer extends ElementHandle {
         }
     }
 
+    public hideBackgroundGridDisplay(currentGrid)
+    {
+        if (currentGrid) {
+
+        }
+    }
+
+    public showBackgroundGridDisplay(currentGrid)
+    {
+        if (currentGrid) {
+
+        }
+    }
 
     public appendBackgroundGridDisplay(currentGrid = null, gridRows = 21, gridColumns = 23)
     {
@@ -250,13 +265,13 @@ export class FlexGridResizer extends ElementHandle {
 
                 //gridRow.innerHTML = '';
                 gridRow.innerHTML = '' +
-                    '<svg style="height: 100%; width: calc(100% - 0px); position: absolute; left: 0px;" xmlns="http://www.w3.org/2000/svg">' +
+                    '<svg style="height: 100%; width: calc(100% - 0px); position: absolute; left: 3px;" xmlns="http://www.w3.org/2000/svg">' +
                     '<defs>' +
                     '<pattern id="flex-grid-mover-row-'+gridRowI+ '" ' +
                     'height="100%" width="'+(cellWidth + gridGap)+'px" ' +
                     'patternUnits="userSpaceOnUse">' +
                     '<rect height="'+cellHeight+'" ' +
-                    'width="'+cellWidth+'px" x="0.5" y="0.5" ' +
+                    'width="'+cellWidth+'px" fill="#fff" x="0.5" y="0.5" ' +
                     'stroke-width="1"></rect>' +
                     '</pattern>' +
                     '</defs>' +

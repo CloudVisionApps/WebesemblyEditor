@@ -69,12 +69,12 @@ export class MouseOverElementHandle extends ElementHandle {
                 let mouseOverElementMainEditable = elementHasParentsWithAttribute(mouseOverElement, 'webesembly:editable');
                 mouseOverElementMainEditable.classList.add('js-webesembly-element');
 
-                app.handleMainElement.style.width = (mouseOverElementMainEditable.offsetWidth) + 'px';
-                app.handleMainElement.style.height = (mouseOverElementMainEditable.offsetHeight) + 'px';
+                app.handleMainElement.style.width = (mouseOverElementMainEditable.offsetWidth + 1) + 'px';
+                app.handleMainElement.style.height = (mouseOverElementMainEditable.offsetHeight + 2) + 'px';
 
                 let mouseOverElementBounding = mouseOverElementMainEditable.getBoundingClientRect();
-                app.handleMainElement.style.top = (mouseOverElementBounding.top + (app.iframeManager.window.scrollY )) + 'px';
-                app.handleMainElement.style.left = (mouseOverElementBounding.left + (app.iframeManager.window.scrollX )) + 'px';
+                app.handleMainElement.style.top = (mouseOverElementBounding.top + (app.iframeManager.window.scrollY - 1)) + 'px';
+                app.handleMainElement.style.left = (mouseOverElementBounding.left + (app.iframeManager.window.scrollX - 1)) + 'px';
 
                 if (app.handleNameElement) {
                     app.handleNameElement.innerText = getElementFriendlyName(mouseOverElement.tagName);
