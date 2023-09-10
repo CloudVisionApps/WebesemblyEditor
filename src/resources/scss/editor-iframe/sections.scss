@@ -1,3 +1,13 @@
+#js-live-edit-section-handle-outside {
+    user-select: none;
+    pointer-events: none;
+    width:100%;
+    position: absolute;
+    top: 20px;
+    display: none;
+    z-index: 1000000;
+}
+
 #js-live-edit-section-handle {
 
     user-select: none;

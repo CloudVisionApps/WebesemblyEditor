@@ -51,7 +51,7 @@
 
                 :src="url"
                 :style="[
-                deviceName == 'Desktop' ? 'width:90%' : '',
+                deviceName == 'Desktop' ? 'width:100%' : '',
                 deviceName == 'Tablet' ? 'width:600px' : '',
                 deviceName == 'Phone' ? 'width:450px' : ''
             ]"></iframe>
@@ -106,7 +106,7 @@ import MessageModal from "./MessageModal.vue";
 
 import Button from "./Button.vue";
 
-let deviceName = 'Phone';
+let deviceName = 'Desktop';
 let lastSelectedElement = [];
 
 export default {

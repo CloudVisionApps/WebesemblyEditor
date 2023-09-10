@@ -270,6 +270,18 @@
   /* cursor: grab;*/
 }
 
+#js-live-edit-section-handle-outside {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+  pointer-events: none;
+  width: 100%;
+  position: absolute;
+  top: 20px;
+  display: none;
+  z-index: 1000000;
+}
+
 #js-live-edit-section-handle {
   -webkit-user-select: none;
      -moz-user-select: none;
