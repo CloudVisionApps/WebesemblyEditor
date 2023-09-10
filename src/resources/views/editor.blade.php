@@ -8,6 +8,8 @@
 
     <link rel="stylesheet" href="{{asset('webesembly-editor/loading-book.css')}}" />
     <script src="{{asset('webesembly-editor/webesembly-editor.js') . '?time='.time()}}"></script>
+
+    <link rel="stylesheet" href="{{asset('webesembly-editor/webesembly-iframe.css')}}" />
 </head>
 <body>
     <div id="webesembly-editor-app" class="w-screen h-screen">
