@@ -109,16 +109,24 @@ export class ClickedElementHandle extends ElementHandle {
         const app = this;
         app.iframeManager.document.addEventListener('click', e => {
 
-            let qlToolbars = app.iframeManager.document.querySelectorAll('.ql-toolbar');
-            for (var i = 0; i < qlToolbars.length; i++) {
-                qlToolbars[i].style.display = 'none';
-            }
-            
             app.element.style.display = 'none';
             app.resetSettings();
 
             let clickedElement = app.iframeManager.document.elementFromPoint(e.clientX, e.clientY);
             if (clickedElement) {
+
+                let removeQlToolbar = true;
+                let checkIsQlToolbar = elementHasParentsWithAttribute(clickedElement, 'ql-toolbar');
+                if (checkIsQlToolbar) {
+                    removeQlToolbar = false;
+                }
+
+                if (removeQlToolbar) {
+                    let qlToolbars = app.iframeManager.document.querySelectorAll('.ql-toolbar');
+                    for (var i = 0; i < qlToolbars.length; i++) {
+                        qlToolbars[i].style.display = 'none';
+                    }
+                }
 
                 if (!this.canIEditThisElement(clickedElement)) {
                     this.liveEdit.clickedElement = null;
