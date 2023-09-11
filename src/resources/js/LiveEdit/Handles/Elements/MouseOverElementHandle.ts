@@ -16,11 +16,12 @@ export class MouseOverElementHandle extends ElementHandle {
         super(liveEdit);
 
         var head = this.iframeManager.document.getElementsByTagName('head')[0];
+        
 
-        var styleAppend = this.iframeManager.document.createElement('link');
-        styleAppend.href = `//cdn.quilljs.com/1.3.6/quill.bubble.css`;
-        styleAppend.rel = 'stylesheet';
-        head.appendChild(styleAppend);
+        var styleCoreAppend = this.iframeManager.document.createElement('link');
+        styleCoreAppend.href = `//cdn.quilljs.com/1.3.6/quill.core.css`;
+        styleCoreAppend.rel = 'stylesheet';
+        head.appendChild(styleCoreAppend);
 
         var dragselectAppend = this.iframeManager.document.createElement('script');
         dragselectAppend.src = `//cdn.quilljs.com/1.3.6/quill.js`;
@@ -33,7 +34,10 @@ export class MouseOverElementHandle extends ElementHandle {
         let quillI = 0;
         document.querySelectorAll('[webesembly\\\\:editable]').forEach((editableElement) => {
              var quill = new Quill(editableElement, {
-                theme: 'bubble'
+                  modules: {
+                    toolbar: true
+                  },
+                theme: 'snow'
               });
             window.webesemblyQwuillInstances[quillI] = quill;
             quillI++;
