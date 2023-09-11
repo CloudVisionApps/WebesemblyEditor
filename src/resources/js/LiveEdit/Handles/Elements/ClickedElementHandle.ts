@@ -2,6 +2,7 @@ import {
     allowedEditElementsList,
     getElementFriendlyName,
     elementHasParentsWithId,
+    elementHasParentsWithClass,
     elementHasParentsWithAttribute
 } from "../../helpers";
 import {ElementHandle} from "./../ElementHandle";
@@ -30,13 +31,32 @@ export class ClickedElementHandle extends ElementHandle {
         var scriptDraggable = this.iframeManager.document.createElement('script');
         scriptDraggable.innerHTML = `
         window.webesemblyQwuillInstances = {};
+        var toolbarOptions = [
+          ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+          ['blockquote', 'code-block'],
+
+          [{ 'header': 1 }, { 'header': 2 }],               // custom button values
+          [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+          [{ 'script': 'sub'}, { 'script': 'super' }],      // superscript/subscript
+          [{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
+          [{ 'direction': 'rtl' }],                         // text direction
+
+          [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
+          [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+
+          [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
+          [{ 'font': [] }],
+          [{ 'align': [] }],
+
+          ['clean']                                         // remove formatting button
+        ];
         setTimeout(function() {
         let quillI = 0;
         document.querySelectorAll('[webesembly\\\\:editable]').forEach((editableElement) => {
              var quill = new Quill(editableElement, {
                   modules: {
-                    toolbar: true
-                  },
+                    toolbar: toolbarOptions
+                  }, 
                 theme: 'snow'
               });
             window.webesemblyQwuillInstances[quillI] = quill;
@@ -115,8 +135,10 @@ export class ClickedElementHandle extends ElementHandle {
             let clickedElement = app.iframeManager.document.elementFromPoint(e.clientX, e.clientY);
             if (clickedElement) {
 
+                console.log(clickedElement);
+
                 let removeQlToolbar = true;
-                let checkIsQlToolbar = elementHasParentsWithAttribute(clickedElement, 'ql-toolbar');
+                let checkIsQlToolbar = elementHasParentsWithClass(clickedElement, 'ql-toolbar ql-snow');
                 if (checkIsQlToolbar) {
                     removeQlToolbar = false;
                 }
@@ -150,7 +172,7 @@ export class ClickedElementHandle extends ElementHandle {
                     }
                 }
 
-                this.enableSettingsDelete();
+               // this.enableSettingsDelete();
 
                 this.liveEdit.clickedElement = clickedElement;
                 this.liveEdit.handles.mouseOverElementHandle.hide();
@@ -176,8 +198,11 @@ export class ClickedElementHandle extends ElementHandle {
                 document.dispatchEvent(liveEditEvent);
 
 
+                console.log(clickedElement);
 
                 let flexGridElementContent = elementHasParentsWithAttribute(clickedElement, 'webesembly:flex-grid-element-content');
+
+                console.log(flexGridElementContent);
 
                 if (flexGridElementContent) {
 
@@ -208,7 +233,10 @@ export class ClickedElementHandle extends ElementHandle {
                 app.element.style.top = (mouseOverElementBounding.top + (app.iframeManager.window.scrollY - 5)) + 'px';
                 app.element.style.left = (mouseOverElementBounding.left + (app.iframeManager.window.scrollX - 5)) + 'px';
 
-                app.name.innerText = getElementFriendlyName(clickedElement.tagName);
+                if (app.name) {
+                    app.name.innerText = getElementFriendlyName(clickedElement.tagName);
+                }
+
                 app.element.style.display = 'block';
 
             }

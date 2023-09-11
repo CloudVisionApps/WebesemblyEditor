@@ -30,6 +30,11 @@ export function allowedEditElementsList()
         'P',
         'SPAN',
         'B',
+        'STRONG',
+        'I',
+        'U',
+        'EM',
+        'LI',
         'BUTTON',
         'IMG',
        // 'DIV',
@@ -85,6 +90,19 @@ export function elementHasParentsWithId(element, id) {
     }
     do {
         if (element && element.id && element.id == id) {
+            return true;
+        }
+        element = element.parentNode;
+    } while (element);
+    return false;
+}
+
+export function elementHasParentsWithClass(element, className) {
+    if (!element) {
+        return false;
+    }
+    do {
+        if (element && element.className && element.className == className) {
             return true;
         }
         element = element.parentNode;
