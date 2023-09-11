@@ -21,6 +21,11 @@ export class ClickedElementHandle extends ElementHandle {
 
         super(liveEdit);
 
+        var toolbarQuill = this.iframeManager.document.createElement('div');
+        toolbarQuill.id = 'js-quill-toolbar';
+        toolbarQuill.innerHTML = ``;
+        this.iframeManager.document.getElementsByTagName('body')[0].appendChild(toolbarQuill);
+
 
         var head = this.iframeManager.document.getElementsByTagName('head')[0];
 
@@ -31,30 +36,15 @@ export class ClickedElementHandle extends ElementHandle {
         var scriptDraggable = this.iframeManager.document.createElement('script');
         scriptDraggable.innerHTML = `
         window.webesemblyQwuillInstances = {};
-        var toolbarOptions = [
-          ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
-          ['blockquote', 'code-block'],
 
-
-          [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-          [{ 'script': 'sub'}, { 'script': 'super' }],      // superscript/subscript
-          [{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
-
-          [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
-          [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-
-          [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
-          [{ 'font': [] }],
-          [{ 'align': [] }],
-
-          ['clean']                                         // remove formatting button
-        ];
         setTimeout(function() {
         let quillI = 0;
         document.querySelectorAll('[webesembly\\\\:editable]').forEach((editableElement) => {
              var quill = new Quill(editableElement, {
                   modules: {
-                    toolbar: toolbarOptions
+                    toolbar: {
+                        container: '#js-quill-toolbar',
+                     }
                   },
                 theme: 'snow'
               });
@@ -197,31 +187,31 @@ export class ClickedElementHandle extends ElementHandle {
                 document.dispatchEvent(liveEditEvent);
 
 
-                console.log(clickedElement);
+                console.log(clickedElement); 
 
-                let flexGridElementContent = elementHasParentsWithAttribute(clickedElement, 'webesembly:flex-grid-element-content');
-
-                console.log(flexGridElementContent);
-
-                if (flexGridElementContent) {
-
-                    // const editor = new EditorJS({
-                    //     holder: mainEditableElement,
-                    //     // tools: {
-                    //     //     header: {
-                    //     //         class: Header,
-                    //     //         inlineToolbar: ['link']
-                    //     //     },
-                    //     //     list: {
-                    //     //         class: List,
-                    //     //         inlineToolbar: true
-                    //     //     }
-                    //     // },
-                    // });
-
-                     // mainEditableElement.setAttribute('contenteditable', 'true');
-                    flexGridElementContent.querySelector('.ql-toolbar').style.display = 'block';
-                }
+                // let flexGridElementContent = elementHasParentsWithAttribute(clickedElement, 'webesembly:flex-grid-element-content');
+                //
+                // console.log(flexGridElementContent);
+                //
+                // if (flexGridElementContent) {
+                //
+                //     // const editor = new EditorJS({
+                //     //     holder: mainEditableElement,
+                //     //     // tools: {
+                //     //     //     header: {
+                //     //     //         class: Header,
+                //     //     //         inlineToolbar: ['link']
+                //     //     //     },
+                //     //     //     list: {
+                //     //     //         class: List,
+                //     //     //         inlineToolbar: true
+                //     //     //     }
+                //     //     // },
+                //     // });
+                //
+                //      // mainEditableElement.setAttribute('contenteditable', 'true');
+                //     flexGridElementContent.querySelector('.ql-toolbar').style.display = 'block';
+                // }
 
                 //flexGridElementContent.classList.add('js-webesembly-element');
 
