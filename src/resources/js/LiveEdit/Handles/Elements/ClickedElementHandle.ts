@@ -23,7 +23,23 @@ export class ClickedElementHandle extends ElementHandle {
 
         var toolbarQuill = this.iframeManager.document.createElement('div');
         toolbarQuill.id = 'js-quill-toolbar';
-        toolbarQuill.innerHTML = ``;
+        toolbarQuill.innerHTML = `
+
+          <!-- Add font size dropdown -->
+  <select class="ql-size">
+    <option value="small"></option>
+    <!-- Note a missing, thus falsy value, is used to reset to default -->
+    <option selected></option>
+    <option value="large"></option>
+    <option value="huge"></option>
+  </select>
+  <!-- Add a bold button -->
+  <button class="ql-bold"></button>
+  <!-- Add subscript and superscript buttons -->
+  <button class="ql-script" value="sub"></button>
+  <button class="ql-script" value="super"></button>
+
+        `;
         this.iframeManager.document.getElementsByTagName('body')[0].appendChild(toolbarQuill);
 
 
@@ -35,6 +51,7 @@ export class ClickedElementHandle extends ElementHandle {
 
         var scriptDraggable = this.iframeManager.document.createElement('script');
         scriptDraggable.innerHTML = `
+
         window.webesemblyQwuillInstances = {};
 
         setTimeout(function() {
@@ -124,20 +141,20 @@ export class ClickedElementHandle extends ElementHandle {
             let clickedElement = app.iframeManager.document.elementFromPoint(e.clientX, e.clientY);
             if (clickedElement) {
 
-                console.log(clickedElement);
-
-                let removeQlToolbar = true;
-                let checkIsQlToolbar = elementHasParentsWithClass(clickedElement, 'ql-toolbar ql-snow');
-                if (checkIsQlToolbar) {
-                    removeQlToolbar = false;
-                }
-
-                if (removeQlToolbar) {
-                    let qlToolbars = app.iframeManager.document.querySelectorAll('.ql-toolbar');
-                    for (var i = 0; i < qlToolbars.length; i++) {
-                        qlToolbars[i].style.display = 'none';
-                    }
-                }
+                // console.log(clickedElement);
+                //
+                // let removeQlToolbar = true;
+                // let checkIsQlToolbar = elementHasParentsWithClass(clickedElement, 'ql-toolbar ql-snow');
+                // if (checkIsQlToolbar) {
+                //     removeQlToolbar = false;
+                // }
+                //
+                // if (removeQlToolbar) { 
+                //     let qlToolbars = app.iframeManager.document.querySelectorAll('.ql-toolbar');
+                //     for (var i = 0; i < qlToolbars.length; i++) {
+                //         qlToolbars[i].style.display = 'none';
+                //     }
+                // }
 
                 if (!this.canIEditThisElement(clickedElement)) {
                     this.liveEdit.clickedElement = null;
@@ -186,8 +203,9 @@ export class ClickedElementHandle extends ElementHandle {
                 })
                 document.dispatchEvent(liveEditEvent);
 
+                let flexGridElementContent = elementHasParentsWithAttribute(clickedElement, 'webesembly:flex-grid-element-content');
 
-                console.log(clickedElement); 
+                console.log(clickedElement);
 
                 // let flexGridElementContent = elementHasParentsWithAttribute(clickedElement, 'webesembly:flex-grid-element-content');
                 //
