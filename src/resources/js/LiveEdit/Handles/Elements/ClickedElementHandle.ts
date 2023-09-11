@@ -109,7 +109,11 @@ export class ClickedElementHandle extends ElementHandle {
         const app = this;
         app.iframeManager.document.addEventListener('click', e => {
 
-            app.iframeManager.document.querySelector('.ql-toolbar').style.display = 'none';
+            let qlToolbars = app.iframeManager.document.querySelectorAll('.ql-toolbar');
+            for (var i = 0; i < qlToolbars.length; i++) {
+                qlToolbars[i].style.display = 'none';
+            }
+            
             app.element.style.display = 'none';
             app.resetSettings();
 
