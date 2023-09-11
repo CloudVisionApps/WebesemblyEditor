@@ -20,8 +20,37 @@ export class ClickedElementHandle extends ElementHandle {
 
         super(liveEdit);
 
+
+        var head = this.iframeManager.document.getElementsByTagName('head')[0];
+
+        var dragselectAppend = this.iframeManager.document.createElement('script');
+        dragselectAppend.src = `//cdn.quilljs.com/1.3.6/quill.js`;
+        head.appendChild(dragselectAppend);
+
+        var scriptDraggable = this.iframeManager.document.createElement('script');
+        scriptDraggable.innerHTML = `
+        window.webesemblyQwuillInstances = {};
+        setTimeout(function() {
+        let quillI = 0;
+        document.querySelectorAll('[webesembly\\\\:editable]').forEach((editableElement) => {
+             var quill = new Quill(editableElement, {
+                  modules: {
+                    toolbar: true
+                  },
+                theme: 'snow'
+              });
+            window.webesemblyQwuillInstances[quillI] = quill;
+            quillI++;
+        });
+}, 600);
+`;
+        head.appendChild(scriptDraggable);
+
         this.createElementHandle();
         this.addListener();
+
+
+
     }
 
     public createElementHandle() {
@@ -80,6 +109,7 @@ export class ClickedElementHandle extends ElementHandle {
         const app = this;
         app.iframeManager.document.addEventListener('click', e => {
 
+            app.iframeManager.document.querySelector('.ql-toolbar').style.display = 'none';
             app.element.style.display = 'none';
             app.resetSettings();
 
@@ -135,9 +165,9 @@ export class ClickedElementHandle extends ElementHandle {
 
 
 
-                let mainEditableElement = elementHasParentsWithAttribute(clickedElement, 'webesembly:editable');
+                let flexGridElementContent = elementHasParentsWithAttribute(clickedElement, 'webesembly:flex-grid-element-content');
 
-                if (mainEditableElement) {
+                if (flexGridElementContent) {
 
                     // const editor = new EditorJS({
                     //     holder: mainEditableElement,
@@ -153,15 +183,16 @@ export class ClickedElementHandle extends ElementHandle {
                     //     // },
                     // });
 
-                      mainEditableElement.setAttribute('contenteditable', 'true');
+                     // mainEditableElement.setAttribute('contenteditable', 'true');
+                    flexGridElementContent.querySelector('.ql-toolbar').style.display = 'block';
                 }
 
-                mainEditableElement.classList.add('js-webesembly-element');
+                //flexGridElementContent.classList.add('js-webesembly-element');
 
-                app.element.style.width = (mainEditableElement.offsetWidth + 10) + 'px';
-                app.element.style.height = (mainEditableElement.offsetHeight + 10) + 'px';
+                app.element.style.width = (flexGridElementContent.offsetWidth + 10) + 'px';
+                app.element.style.height = (flexGridElementContent.offsetHeight + 10) + 'px';
 
-                let mouseOverElementBounding = mainEditableElement.getBoundingClientRect();
+                let mouseOverElementBounding = flexGridElementContent.getBoundingClientRect();
                 app.element.style.top = (mouseOverElementBounding.top + (app.iframeManager.window.scrollY - 5)) + 'px';
                 app.element.style.left = (mouseOverElementBounding.left + (app.iframeManager.window.scrollX - 5)) + 'px';
 

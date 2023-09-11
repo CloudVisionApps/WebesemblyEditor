@@ -897,6 +897,7 @@
     top: -40px;
     display: none;
     height: 36px;
+    background: #fff;
 }
 .ql-toolbar.ql-snow .ql-formats {
     margin-right: 15px;
