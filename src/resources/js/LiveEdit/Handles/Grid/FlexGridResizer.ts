@@ -6,10 +6,10 @@ import {
 } from "../../helpers";
 import {ElementHandle} from "./../ElementHandle";
 
-import { deepFlat } from "@daybrush/utils";
 import Selecto from "selecto";
 import Moveable, { MoveableTargetGroupsType } from "moveable";
-import { GroupManager, TargetList } from "@moveable/helper";
+const Parser = require('boreas/lib/parser');
+var AST = require('boreas/lib/ast');
 
 export class FlexGridResizer extends ElementHandle {
 
@@ -22,10 +22,59 @@ export class FlexGridResizer extends ElementHandle {
         instance.iframeManager.document.body.querySelectorAll('.webesembly-flex-grid').forEach((flexGrid) => {
 
             // Add Style To Flex Grid
-            let flexGridStyle = document.createElement("style");
-            flexGridStyle.innerHTML = '.webesembly-flex-grid { background: red; }'; 
-            flexGrid.append(flexGridStyle);
 
+            let flexGridId = Math.floor(Math.random() * 1000000000);
+            let flexGridClass = "webesembly-flex-grid-" + flexGridId;
+            let flexGridStyleClass = "webesembly-flex-grid-style-" + flexGridId;
+            let flexGridTemplateColumns = 12;
+            let flexGridTemplateRows = 12;
+            let flexGridGap = 2;
+            if (flexGrid.hasAttribute('data-grid-template-columns')) {
+                flexGridTemplateColumns = parseInt(flexGrid.getAttribute('data-grid-template-columns'));
+            }
+            if (flexGrid.hasAttribute('data-grid-template-rows')) {
+                flexGridTemplateRows = parseInt(flexGrid.getAttribute('data-grid-template-rows'));
+            }
+            if (flexGrid.hasAttribute('data-grid-gap')) {
+                flexGridGap = parseInt(flexGrid.getAttribute('data-grid-gap'));
+            }
+            let flexGridStyle = document.createElement("style");
+            flexGridStyle.className = flexGridStyleClass;
+            flexGridStyle.innerHTML = `
+            .${flexGridClass} {
+                display: grid;
+                grid-template-columns: repeat(${flexGridTemplateColumns}, 1fr);
+                grid-template-rows: repeat(${flexGridTemplateRows}, 1fr);
+                grid-gap: ${flexGridGap}px;
+                width: 100%;
+                height: 100%;
+            }
+            `;
+            flexGrid.before(flexGridStyle);
+            flexGrid.classList.add(flexGridClass);
+
+            flexGrid.querySelectorAll('.webesembly-flex-grid-block').forEach((flexGridBlock) => {
+                let flexGridBlockId = Math.floor(Math.random() * 1000000000);
+                let flexGridBlockClass = "webesembly-flex-grid-block-" + flexGridBlockId;
+                let flexGridBlockStyleClass = "webesembly-flex-grid-block-style-" + flexGridBlockId;
+                let flexGridBlockGridArea = "1 / 1 / 2 / 2";
+                if (flexGridBlock.hasAttribute('data-grid-area')) {
+                    flexGridBlockGridArea = flexGridBlock.getAttribute('data-grid-area');
+                }
+
+                let flexGridBlockStyle = document.createElement("style");
+                flexGridBlockStyle.className = flexGridBlockStyleClass;
+                flexGridBlockStyle.innerHTML = `
+                .${flexGridBlockClass} {
+                    grid-area: ${flexGridBlockGridArea};
+                }
+                `;
+                flexGrid.before(flexGridBlockStyle);
+                flexGridBlock.classList.add(flexGridBlockClass);
+
+            });
+
+            // Add Background Grid Display
             instance.appendBackgroundGridDisplay(flexGrid);
 
             let targets = [];
@@ -195,22 +244,58 @@ export class FlexGridResizer extends ElementHandle {
         console.log('applyGridChanges');
 
         if (flexGrid) {
-            flexGrid.querySelectorAll('[webesembly\\:flex-grid-element]').forEach((flexGridElement) => {
+            flexGrid.querySelectorAll('.webesembly-flex-grid-block').forEach((flexGridBlock) => {
 
                 if (
-                    flexGridElement.getAttribute('data-grid-row-start') &&
-                    flexGridElement.getAttribute('data-grid-row-end') &&
-                    flexGridElement.getAttribute('data-grid-column-start') &&
-                    flexGridElement.getAttribute('data-grid-column-end')
+                    flexGridBlock.getAttribute('data-grid-row-start') &&
+                    flexGridBlock.getAttribute('data-grid-row-end') &&
+                    flexGridBlock.getAttribute('data-grid-column-start') &&
+                    flexGridBlock.getAttribute('data-grid-column-end')
 
                 ) {
-                    flexGridElement.style.gridRowStart = flexGridElement.getAttribute('data-grid-row-start');
-                    flexGridElement.style.gridRowEnd = flexGridElement.getAttribute('data-grid-row-end');
-                    flexGridElement.style.gridColumnStart = flexGridElement.getAttribute('data-grid-column-start');
-                    flexGridElement.style.gridColumnEnd = flexGridElement.getAttribute('data-grid-column-end');
-                    flexGridElement.style.transform = '';
-                    flexGridElement.style.width = '';
-                    flexGridElement.style.height = '';
+                    // flexGridBlock.style.gridRowStart = flexGridBlock.getAttribute('data-grid-row-start');
+                    // flexGridBlock.style.gridRowEnd = flexGridBlock.getAttribute('data-grid-row-end');
+                    // flexGridBlock.style.gridColumnStart = flexGridBlock.getAttribute('data-grid-column-start');
+                    // flexGridBlock.style.gridColumnEnd = flexGridBlock.getAttribute('data-grid-column-end');
+                    //
+                    flexGridBlock.style.transform = '';
+                    flexGridBlock.style.width = '';
+                    flexGridBlock.style.height = '';
+
+                    let flexGridBlockNewGridArea = flexGridBlock.getAttribute('data-grid-row-start')
+                        + ' / ' + flexGridBlock.getAttribute('data-grid-column-start')
+                        + ' / ' + flexGridBlock.getAttribute('data-grid-row-end')
+                        + ' / ' + flexGridBlock.getAttribute('data-grid-column-end');
+
+                    let flexGridBlockId = '';
+                    flexGridBlock.classList.forEach((className) => {
+                        if (className.indexOf('webesembly-flex-grid-block-') > -1) {
+                            flexGridBlockId = className.replace('webesembly-flex-grid-block-', '');
+                        }
+                    });
+
+                    console.log(flexGridBlockId);
+
+                    let findStyleElement = this.iframeManager.document.getElementsByClassName('webesembly-flex-grid-block-style-' + flexGridBlockId);
+                    if (findStyleElement) {
+
+                        let src = findStyleElement[0].innerHTML;
+                        let ast = Parser.parse(src);
+
+                        ast.getRules().forEach(function (rule) {
+                            if (rule.getSelectors().toString().trim() == '.webesembly-flex-grid-block-' + flexGridBlockId) {
+                                rule.getDeclarations().forEach(function (declaration) {
+                                    if (declaration.getName() == 'grid-area') {
+                                        declaration.setValue(flexGridBlockNewGridArea);
+                                    }
+                                });
+                            }
+                        })
+
+                        console.log(ast.toString());
+
+                        findStyleElement[0].innerHTML = ast.toString();
+                    }
                 }
             });
         }
