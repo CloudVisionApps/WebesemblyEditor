@@ -51,7 +51,7 @@ export class LiveEdit {
            app.handles.mouseOverHeaderHandle = new MouseOverHeaderHandle(app);
            app.handles.mouseOverFooterHandle = new MouseOverFooterHandle(app);
 
-           app.handles.mouseOverSectionHandle = new MouseOverSectionHandle(app);
+           // app.handles.mouseOverSectionHandle = new MouseOverSectionHandle(app);
 
            app.handles.clickedElementHandle = new ClickedElementHandle(app);
            app.handles.mouseOverElementHandle = new MouseOverElementHandle(app);

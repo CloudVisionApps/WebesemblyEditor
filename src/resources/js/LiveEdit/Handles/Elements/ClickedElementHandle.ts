@@ -21,56 +21,56 @@ export class ClickedElementHandle extends ElementHandle {
 
         super(liveEdit);
 
-        var toolbarQuill = this.iframeManager.document.createElement('div');
-        toolbarQuill.id = 'js-quill-toolbar';
-        toolbarQuill.innerHTML = `
-
-          <!-- Add font size dropdown -->
-  <select class="ql-size">
-    <option value="small"></option>
-    <!-- Note a missing, thus falsy value, is used to reset to default -->
-    <option selected></option>
-    <option value="large"></option>
-    <option value="huge"></option>
-  </select>
-  <!-- Add a bold button -->
-  <button class="ql-bold"></button>
-  <!-- Add subscript and superscript buttons -->
-  <button class="ql-script" value="sub"></button>
-  <button class="ql-script" value="super"></button>
-
-        `;
-        this.iframeManager.document.getElementsByTagName('body')[0].appendChild(toolbarQuill);
-
-
-        var head = this.iframeManager.document.getElementsByTagName('head')[0];
-
-        var dragselectAppend = this.iframeManager.document.createElement('script');
-        dragselectAppend.src = `//cdn.quilljs.com/1.3.6/quill.js`;
-        head.appendChild(dragselectAppend);
-
-        var scriptDraggable = this.iframeManager.document.createElement('script');
-        scriptDraggable.innerHTML = `
-
-        window.webesemblyQwuillInstances = {};
-
-        setTimeout(function() {
-        let quillI = 0;
-        document.querySelectorAll('[webesembly\\\\:editable]').forEach((editableElement) => {
-             var quill = new Quill(editableElement, {
-                  modules: {
-                    toolbar: {
-                        container: '#js-quill-toolbar',
-                     }
-                  },
-                theme: 'snow'
-              });
-            window.webesemblyQwuillInstances[quillI] = quill;
-            quillI++;
-        });
-}, 600);
-`;
-        head.appendChild(scriptDraggable);
+//         var toolbarQuill = this.iframeManager.document.createElement('div');
+//         toolbarQuill.id = 'js-quill-toolbar';
+//         toolbarQuill.innerHTML = `
+//
+//           <!-- Add font size dropdown -->
+//   <select class="ql-size">
+//     <option value="small"></option>
+//     <!-- Note a missing, thus falsy value, is used to reset to default -->
+//     <option selected></option>
+//     <option value="large"></option>
+//     <option value="huge"></option>
+//   </select>
+//   <!-- Add a bold button -->
+//   <button class="ql-bold"></button>
+//   <!-- Add subscript and superscript buttons -->
+//   <button class="ql-script" value="sub"></button>
+//   <button class="ql-script" value="super"></button>
+//
+//         `;
+//         this.iframeManager.document.getElementsByTagName('body')[0].appendChild(toolbarQuill);
+//
+//
+//         var head = this.iframeManager.document.getElementsByTagName('head')[0];
+//
+//         var dragselectAppend = this.iframeManager.document.createElement('script');
+//         dragselectAppend.src = `//cdn.quilljs.com/1.3.6/quill.js`;
+//         head.appendChild(dragselectAppend);
+//
+//         var scriptDraggable = this.iframeManager.document.createElement('script');
+//         scriptDraggable.innerHTML = `
+//
+//         window.webesemblyQwuillInstances = {};
+//
+//         setTimeout(function() {
+//         let quillI = 0;
+//         document.querySelectorAll('[webesembly\\\\:editable]').forEach((editableElement) => {
+//              var quill = new Quill(editableElement, {
+//                   modules: {
+//                     toolbar: {
+//                         container: '#js-quill-toolbar',
+//                      }
+//                   },
+//                 theme: 'snow'
+//               });
+//             window.webesemblyQwuillInstances[quillI] = quill;
+//             quillI++;
+//         });
+// }, 600);
+// `;
+//         head.appendChild(scriptDraggable);
 
         this.createElementHandle();
         this.addListener();
@@ -149,7 +149,7 @@ export class ClickedElementHandle extends ElementHandle {
                 //     removeQlToolbar = false;
                 // }
                 //
-                // if (removeQlToolbar) { 
+                // if (removeQlToolbar) {
                 //     let qlToolbars = app.iframeManager.document.querySelectorAll('.ql-toolbar');
                 //     for (var i = 0; i < qlToolbars.length; i++) {
                 //         qlToolbars[i].style.display = 'none';
@@ -231,7 +231,8 @@ export class ClickedElementHandle extends ElementHandle {
                 //     flexGridElementContent.querySelector('.ql-toolbar').style.display = 'block';
                 // }
 
-                //flexGridElementContent.classList.add('js-webesembly-element');
+                flexGridElementContent.setAttribute('contenteditable', 'true');
+                flexGridElementContent.classList.add('js-webesembly-element');
 
                 app.element.style.width = (flexGridElementContent.offsetWidth + 10) + 'px';
                 app.element.style.height = (flexGridElementContent.offsetHeight + 10) + 'px';
