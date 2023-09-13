@@ -19,7 +19,12 @@ export class FlexGridResizer extends ElementHandle {
 
         const instance = this;
 
-        instance.iframeManager.document.body.querySelectorAll('[webesembly\\:flex-grid]').forEach((flexGrid) => {
+        instance.iframeManager.document.body.querySelectorAll('.webesembly-flex-grid').forEach((flexGrid) => {
+
+            // Add Style To Flex Grid
+            let flexGridStyle = document.createElement("style");
+            flexGridStyle.innerHTML = '.webesembly-flex-grid { background: red; }'; 
+            flexGrid.append(flexGridStyle);
 
             instance.appendBackgroundGridDisplay(flexGrid);
 
@@ -38,7 +43,7 @@ export class FlexGridResizer extends ElementHandle {
             let selectoRef = new Selecto({
                 container: flexGrid,
                 dragContainer: flexGrid,
-                selectableTargets: ["[webesembly\\:flex-grid-element]"],
+                selectableTargets: [".webesembly-flex-grid-block"],
                 hitRate: 0,
                 selectByClick: true,
                 selectFromInside: false,
