@@ -47,7 +47,7 @@ export class FlexGridResizer extends ElementHandle {
                 grid-template-rows: repeat(${flexGridTemplateRows}, 1fr);
                 grid-gap: ${flexGridGap}px;
                 width: 100%;
-                height: 100%;
+                height: 600px;
             }
             `;
             flexGrid.before(flexGridStyle);
