@@ -28,7 +28,7 @@ class WebesemblyEditorServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->registerWebesemblySingleton();
+       // $this->registerWebesemblySingleton();
     }
 
 
@@ -45,45 +45,45 @@ class WebesemblyEditorServiceProvider extends ServiceProvider
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'webesembly-editor');
 
-        $this->registerTagCompiler();
+   //     $this->registerTagCompiler();
 
-        WebesemblyModule::component('alert', Alert::class);
-        WebesemblyModule::component('menu', Menu::class);
-        WebesemblyModule::component('text', Text::class);
-        WebesemblyModule::component('logo', Logo::class);
-        WebesemblyModule::component('social-links', SocialLinks::class);
-
-        Blade::directive('webesembly_module', [WebesemblyModuleBladeDirectives::class, 'module']);
+//        WebesemblyModule::component('alert', Alert::class);
+//        WebesemblyModule::component('menu', Menu::class);
+//        WebesemblyModule::component('text', Text::class);
+//        WebesemblyModule::component('logo', Logo::class);
+//        WebesemblyModule::component('social-links', SocialLinks::class);
+//
+//        Blade::directive('webesembly_module', [WebesemblyModuleBladeDirectives::class, 'module']);
 
     }
 
-    protected function registerWebesemblySingleton()
-    {
-        $this->app->singleton(WebesemblyModuleManager::class);
-        $this->app->alias(WebesemblyModuleManager::class, 'webesembly-module');
-
-        $this->app->singleton(WebesemblySectionManager::class);
-        $this->app->alias(WebesemblySectionManager::class, 'webesembly-section');
-
-        $this->app->singleton(WebesemblyPageManager::class);
-        $this->app->alias(WebesemblyPageManager::class, 'webesembly-page');
-    }
-
-    protected function registerTagCompiler()
-    {
-        if (method_exists($this->app['blade.compiler'], 'precompiler')) {
-
-            include(__DIR__ . '/../helpers/simple_html_dom.php');
-
-            $this->app['blade.compiler']->precompiler(function ($string) {
-                return app(WebesemblyModuleTagCompiler::class)->compile($string);
-            });
-            $this->app['blade.compiler']->precompiler(function ($string) {
-                return app(WebesemblySectionTagCompiler::class)->compile($string);
-            });
-            $this->app['blade.compiler']->precompiler(function ($string) {
-                return app(WebesemblyFlexGridTagCompiler::class)->compile($string);
-            });
-        }
-    }
+//    protected function registerWebesemblySingleton()
+//    {
+//        $this->app->singleton(WebesemblyModuleManager::class);
+//        $this->app->alias(WebesemblyModuleManager::class, 'webesembly-module');
+//
+//        $this->app->singleton(WebesemblySectionManager::class);
+//        $this->app->alias(WebesemblySectionManager::class, 'webesembly-section');
+//
+//        $this->app->singleton(WebesemblyPageManager::class);
+//        $this->app->alias(WebesemblyPageManager::class, 'webesembly-page');
+//    }
+//
+//    protected function registerTagCompiler()
+//    {
+//        if (method_exists($this->app['blade.compiler'], 'precompiler')) {
+//
+//            include(__DIR__ . '/../helpers/simple_html_dom.php');
+//
+//            $this->app['blade.compiler']->precompiler(function ($string) {
+//                return app(WebesemblyModuleTagCompiler::class)->compile($string);
+//            });
+//            $this->app['blade.compiler']->precompiler(function ($string) {
+//                return app(WebesemblySectionTagCompiler::class)->compile($string);
+//            });
+//            $this->app['blade.compiler']->precompiler(function ($string) {
+//                return app(WebesemblyFlexGridTagCompiler::class)->compile($string);
+//            });
+//        }
+//    }
 }
