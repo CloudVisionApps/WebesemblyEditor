@@ -54,7 +54,7 @@ class WebesemblyEditorController
 
     public function savePage(Request $request)
     {
-        $pageName = $request->get('name', false);
+        $pageName = $request->post('name', false);
         if (!empty($pageName)) {
             $findPage = WebesemblyPage::where('name', $pageName)->first();
             if (!$findPage) {
@@ -63,14 +63,13 @@ class WebesemblyEditorController
             }
 
             $findPage->params = [];
-            $findPage->html = $request->get('html');
+            $findPage->html = '';
             $findPage->save();
 
             $sections = $request->get('sections', []);
             if (!empty($sections)) {
-                foreach ($sections as $section) {
+                foreach ($sections as $sectionName=>$section) {
 
-                    $sectionName = $section['name'];
                     $findSection = WebesemblySection::where('name', $sectionName)->where('page_id', $findPage->id)->first();
                     if (!$findSection) {
                         $findSection = new WebesemblySection();
@@ -78,7 +77,10 @@ class WebesemblyEditorController
                         $findSection->page_id = $findPage->id;
                     }
 
-                    $findSection->html = $section['html'];
+                   // $findSection->html = $section['html'];
+                  //  $findSection->background_settings_json = json_encode($section['backgroundSettingsJson']);
+                    $findSection->grid_settings_json = json_encode($section['gridSettings']);
+                    $findSection->content_json = json_encode($section['content']);
                     $findSection->params = [];
                     $findSection->save();
                 }

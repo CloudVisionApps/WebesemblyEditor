@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->longText('params');
             $table->longText('html');
+            $table->bigInteger('user_id')->nullable();
             $table->timestamps();
         });
     }

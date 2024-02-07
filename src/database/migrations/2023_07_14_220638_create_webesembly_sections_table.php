@@ -18,8 +18,12 @@ return new class extends Migration
 
             $table->string('name');
             $table->longText('params')->nullable();
-            $table->longText('html');
+            $table->longText('html')->nullable();
             $table->bigInteger('page_id')->nullable();
+
+            $table->longText('grid_settings_json')->nullable();
+            $table->longText('content_json')->nullable();
+            $table->longText('background_settings_json')->nullable();
 
             $table->timestamps();
         });

@@ -20,6 +20,8 @@ return new class extends Migration
             $table->longText('params')->nullable();
             $table->longText('categories')->nullable();
             $table->longText('html');
+            $table->bigInteger('user_id')->nullable();
+            $table->longText('json')->nullable();
 
             $table->timestamps();
         });
