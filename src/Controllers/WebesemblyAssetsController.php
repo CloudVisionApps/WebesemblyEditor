@@ -2,8 +2,6 @@
 
 namespace WebesemblyEditor\Controllers;
 
-use Livewire\Controllers\CanPretendToBeAFile;
-
 class WebesemblyAssetsController
 {
     use CanPretendToBeAFile;
