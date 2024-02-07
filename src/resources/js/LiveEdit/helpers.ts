@@ -90,7 +90,7 @@ export function elementHasParentsWithId(element, id) {
     }
     do {
         if (element && element.id && element.id == id) {
-            return true;
+            return element;
         }
         element = element.parentNode;
     } while (element);
@@ -102,8 +102,10 @@ export function elementHasParentsWithClass(element, className) {
         return false;
     }
     do {
-        if (element && element.className && element.className == className) {
-            return true;
+        if (element && element.classList &&
+            element.classList.length > 0
+            && element.classList.contains(className)) {
+            return element;
         }
         element = element.parentNode;
     } while (element);

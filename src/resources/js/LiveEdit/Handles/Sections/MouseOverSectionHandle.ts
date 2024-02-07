@@ -3,7 +3,7 @@ import {
     elementHasParentsWithId,
     allowedEditElementsList,
     elementHasParentsWithTagName,
-    elementHasParentsWithAttribute,
+    elementHasParentsWithAttribute, elementHasParentsWithClass,
 } from "../../helpers";
 import {ElementHandle} from "./../ElementHandle";
 import {nextTick} from "vue";
@@ -127,12 +127,38 @@ export class MouseOverSectionHandle extends ElementHandle {
         this.handleActionMoveElementFavorite = document.getElementById('js-live-edit-section-handle-action-favorite');
         this.handleActionMoveElementFavorite.addEventListener('click', () => {
 
+            let sectionObject = {
+                gridSettings: {
+                    gridGap: '12',
+                    gridTemplateColumns: 20,
+                    gridTemplateRows: 20,
+                },
+                content: []
+            };
+
+            this.currentSectionElement.querySelectorAll('.webesembly-flex-grid-block').forEach(flexGridBlock => {
+                let webesebmlyEditable = flexGridBlock.querySelector('.webesembly-editable');
+                console.log(webesebmlyEditable);
+
+                if (webesebmlyEditable) {
+                    let flexGridBlockId = flexGridBlock.classList.item(1).replace('webesembly-flex-grid-block-', '');
+                    let computedStyle = getComputedStyle(flexGridBlock);
+                    let flexGridBlockObject = {
+                        'id': flexGridBlockId,
+                        'value': webesebmlyEditable.innerHTML,
+                        'gridArea': computedStyle.gridArea,
+                    };
+                    sectionObject.content.push(flexGridBlockObject);
+                }
+            });
+
             console.log('favorite');
             console.log(this.currentSectionElement);
 
             axios.post('/webesembly/save-section-favorite', {
-                'name':this.currentSectionElement.getAttribute('webesembly:section'),
+                'name':this.currentSectionElement.classList.item(1).replace('webesembly-section-', ''),
                 'html':this.currentSectionElement.innerHTML,
+                'section':sectionObject
             }).then(() => {
                 this.liveEdit.successMessageModal('Секцията е добавена към любими!');
             }).catch(error => {
@@ -159,13 +185,11 @@ export class MouseOverSectionHandle extends ElementHandle {
             let mouseOverElement = app.iframeManager.document.elementFromPoint(e.clientX, e.clientY);
             if (mouseOverElement) {
 
-                let getElementParentSectionElement = elementHasParentsWithAttribute(mouseOverElement, 'webesembly:section');
+                let getElementParentSectionElement = elementHasParentsWithClass(mouseOverElement, 'webesembly-section');
                 if (!getElementParentSectionElement) {
                     return;
                 }
-
                 app.currentSectionElement = getElementParentSectionElement;
-
 
                 let mouseOverElementBounding = getElementParentSectionElement.getBoundingClientRect();
                 let mouseOverElementComputedStyle = getComputedStyle(getElementParentSectionElement);

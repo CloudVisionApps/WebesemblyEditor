@@ -51,7 +51,7 @@ export class LiveEdit {
            app.handles.mouseOverHeaderHandle = new MouseOverHeaderHandle(app);
            app.handles.mouseOverFooterHandle = new MouseOverFooterHandle(app);
 
-           // app.handles.mouseOverSectionHandle = new MouseOverSectionHandle(app);
+           app.handles.mouseOverSectionHandle = new MouseOverSectionHandle(app);
 
            app.handles.clickedElementHandle = new ClickedElementHandle(app);
            app.handles.mouseOverElementHandle = new MouseOverElementHandle(app);
@@ -72,38 +72,48 @@ export class LiveEdit {
 
         document.addEventListener("JsLiveEdit::RequestToSavePage", (event) => {
 
-            let findPageElements = app.iframeManager.body.querySelectorAll('[webesembly\\:page]');
-            for (let i = 0; i < findPageElements.length; i++) {
-                let savePageElement = findPageElements[i];
-                let saveSections = [];
+            let sections = {};
 
-                let currentPageDomCloned  = document.createElement('div');
-                currentPageDomCloned.innerHTML = savePageElement.innerHTML;
+            let getElementSections = app.iframeManager.body.querySelectorAll('.webesembly-section');
+            for (let i = 0; i < getElementSections.length; i++) {
+                let sectionElement = getElementSections[i];
 
-                let findSections = currentPageDomCloned.querySelectorAll('[webesembly\\:section]');
-                for (let j = 0; j < findSections.length; j++) {
+                let sectionObject = {
+                    gridSettings: {
+                        gridGap: '12',
+                        gridTemplateColumns: 20,
+                        gridTemplateRows: 20,
+                    },
+                    content: []
+                };
+                let sectionId = sectionElement.classList.item(1).replace('webesembly-section-', '');
 
+                sectionElement.querySelectorAll('.webesembly-flex-grid-block').forEach(flexGridBlock => {
+                    let webesebmlyEditable = flexGridBlock.querySelector('.webesembly-editable');
+                    console.log(webesebmlyEditable);
 
-                   // console.log(findSections);
-                    saveSections.push({
-                        'name':findSections[j].getAttribute('webesembly:section'),
-                        'attributes':findSections[j].attributes,
-                        'pageName:':savePageElement.getAttribute('webesembly:page'),
-                        'html':findSections[j].innerHTML,
-                    });
-                    findSections[j].innerHTML = '';
-                }
-
-                axios.post('/webesembly/save-page', {
-                    'name':savePageElement.getAttribute('webesembly:page'),
-                    'html':currentPageDomCloned.innerHTML,
-                    'sections': saveSections
-                }).then(() => {
-                    this.successMessageModal('Промените са запазени!');
-                }).catch(error => {
-                    this.errorMessageModal('Възникна грешка при запазването на промените!');
+                    if (webesebmlyEditable) {
+                        let flexGridBlockId = flexGridBlock.classList.item(1).replace('webesembly-flex-grid-block-', '');
+                        let computedStyle = getComputedStyle(flexGridBlock);
+                        let flexGridBlockObject = {
+                            'id': flexGridBlockId,
+                            'value': webesebmlyEditable.innerHTML,
+                            'gridArea': computedStyle.gridArea,
+                        };
+                        sectionObject.content.push(flexGridBlockObject);
+                    }
                 });
+                sections[sectionId] = sectionObject;
             }
+
+            axios.post('/webesembly/save-page', {
+                'name': 'Home',
+                'sections': sections,
+            }).then(() => {
+                this.successMessageModal('Промените са запазени!');
+            }).catch(error => {
+                this.errorMessageModal('Възникна грешка при запазването на промените!');
+            });
 
         });
 

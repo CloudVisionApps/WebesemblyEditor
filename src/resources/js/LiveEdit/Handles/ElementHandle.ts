@@ -15,17 +15,17 @@ export class ElementHandle {
             return false;
         }
 
-        if (!elementHasParentsWithAttribute(element, 'webesembly:editable')) {
-            return false;
-        }
-
-        if (elementHasParentsWithAttribute(element, 'webesembly:module')) {
-            return false;
-        }
-
-        if (element.hasAttribute('webesembly:module')) {
-            return false;
-        }
+        // if (!elementHasParentsWithAttribute(element, 'webesembly:editable')) {
+        //     return false;
+        // }
+        //
+        // if (elementHasParentsWithAttribute(element, 'webesembly:module')) {
+        //     return false;
+        // }
+        //
+        // if (element.hasAttribute('webesembly:module')) {
+        //     return false;
+        // }
 
         if (elementHasParentsWithId(element, 'js-webesembly-element-handle')) {
             return false;
