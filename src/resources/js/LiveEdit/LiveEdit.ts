@@ -132,8 +132,6 @@ export class LiveEdit {
                 sections[sectionId] = sectionObject;
             }
 
-            console.log(sections);
-            return;
             axios.post('/webesembly/save-page', {
                 'name': 'Home',
                 'sections': sections,
