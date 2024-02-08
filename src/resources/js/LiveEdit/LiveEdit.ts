@@ -81,12 +81,33 @@ export class LiveEdit {
                 let sectionObject = {
                     gridSettings: {
                         gridGap: '12',
-                        gridTemplateColumns: 20,
-                        gridTemplateRows: 20,
+                        gridTemplateColumns: '20',
+                        gridTemplateRows: '20',
                     },
+                    backgroundSettings: {},
                     content: []
                 };
+
                 let sectionId = sectionElement.classList.item(1).replace('webesembly-section-', '');
+
+                let sectionComputedStyle = getComputedStyle(sectionElement.querySelector('.webesembly-flex-grid'));
+                let sectionGridTemplateColumns = '20';
+                let sectionGridTemplateRows = '20';
+                let sectionGridGap = '12';
+
+                if (sectionComputedStyle.gridTemplate) {
+                    let parseSectionGridTemplate = sectionComputedStyle.gridTemplate;
+                    let parseSectionGridTemplateColumns = parseSectionGridTemplate.split('/')[0].trim();
+                    let parseSectionGridTemplateRows = parseSectionGridTemplate.split('/')[1].trim();
+                    sectionGridTemplateColumns = parseSectionGridTemplateColumns.replace('repeat(', '').replace(')', '').split(',')[0].trim();
+                    sectionGridTemplateRows = parseSectionGridTemplateRows.replace('repeat(', '').replace(')', '').split(',')[0].trim();
+                }
+
+                if (sectionComputedStyle.gridGap) {
+                    sectionGridGap = sectionComputedStyle.gridGap;
+                }
+
+                sectionObject.gridSettings.gridGap = sectionGridGap;
 
                 sectionElement.querySelectorAll('.webesembly-flex-grid-block').forEach(flexGridBlock => {
                     let webesebmlyEditable = flexGridBlock.querySelector('.webesembly-editable');
@@ -106,6 +127,8 @@ export class LiveEdit {
                 sections[sectionId] = sectionObject;
             }
 
+            console.log(sections);
+            return;
             axios.post('/webesembly/save-page', {
                 'name': 'Home',
                 'sections': sections,
