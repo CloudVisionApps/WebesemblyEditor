@@ -21,56 +21,45 @@ export class ClickedElementHandle extends ElementHandle {
 
         super(liveEdit);
 
-//         var toolbarQuill = this.iframeManager.document.createElement('div');
-//         toolbarQuill.id = 'js-quill-toolbar';
-//         toolbarQuill.innerHTML = `
-//
-//           <!-- Add font size dropdown -->
-//   <select class="ql-size">
-//     <option value="small"></option>
-//     <!-- Note a missing, thus falsy value, is used to reset to default -->
-//     <option selected></option>
-//     <option value="large"></option>
-//     <option value="huge"></option>
-//   </select>
-//   <!-- Add a bold button -->
-//   <button class="ql-bold"></button>
-//   <!-- Add subscript and superscript buttons -->
-//   <button class="ql-script" value="sub"></button>
-//   <button class="ql-script" value="super"></button>
-//
-//         `;
-//         this.iframeManager.document.getElementsByTagName('body')[0].appendChild(toolbarQuill);
-//
-//
-//         var head = this.iframeManager.document.getElementsByTagName('head')[0];
-//
-//         var dragselectAppend = this.iframeManager.document.createElement('script');
-//         dragselectAppend.src = `//cdn.quilljs.com/1.3.6/quill.js`;
-//         head.appendChild(dragselectAppend);
-//
-//         var scriptDraggable = this.iframeManager.document.createElement('script');
-//         scriptDraggable.innerHTML = `
-//
-//         window.webesemblyQwuillInstances = {};
-//
-//         setTimeout(function() {
-//         let quillI = 0;
-//         document.querySelectorAll('[webesembly\\\\:editable]').forEach((editableElement) => {
-//              var quill = new Quill(editableElement, {
-//                   modules: {
-//                     toolbar: {
-//                         container: '#js-quill-toolbar',
-//                      }
-//                   },
-//                 theme: 'snow'
-//               });
-//             window.webesemblyQwuillInstances[quillI] = quill;
-//             quillI++;
-//         });
-// }, 600);
-// `;
-//         head.appendChild(scriptDraggable);
+        var toolbarQuill = this.iframeManager.document.createElement('div');
+        toolbarQuill.id = 'js-quill-toolbar';
+        toolbarQuill.innerHTML = `
+
+          <!-- Add font size dropdown -->
+  <select class="ql-size">
+    <option value="small"></option>
+    <!-- Note a missing, thus falsy value, is used to reset to default -->
+    <option selected></option>
+    <option value="large"></option>
+    <option value="huge"></option>
+  </select>
+  <!-- Add a bold button -->
+  <button class="ql-bold"></button>
+  <!-- Add subscript and superscript buttons -->
+  <button class="ql-script" value="sub"></button>
+  <button class="ql-script" value="super"></button>
+
+        `;
+        this.iframeManager.document.getElementsByTagName('body')[0].appendChild(toolbarQuill);
+
+
+        var head = this.iframeManager.document.getElementsByTagName('head')[0];
+
+        var dragselectAppend = this.iframeManager.document.createElement('script');
+        dragselectAppend.src = `//cdn.quilljs.com/1.3.6/quill.js`;
+        head.appendChild(dragselectAppend);
+
+        var scriptDraggable = this.iframeManager.document.createElement('script');
+        scriptDraggable.innerHTML = `
+
+        document.addEventListener("JsLiveEdit::EditElement", (event) => {
+                let currentElement = event.detail.element;
+
+          });
+
+
+`;
+        head.appendChild(scriptDraggable);
 
         this.createElementHandle();
         this.addListener();
@@ -161,12 +150,12 @@ export class ClickedElementHandle extends ElementHandle {
                     return;
                 }
 
-                let getElementParentSectionElement = elementHasParentsWithAttribute(clickedElement, 'webesembly:section');
+                let getElementParentSectionElement = elementHasParentsWithClass(clickedElement, 'webesembly-section');
                 if (!getElementParentSectionElement) {
                     return;
                 }
 
-                if (clickedElement.hasAttribute('webesembly:flex-grid')) {
+                if (clickedElement.classList.contains('webesembly-flex-grid')) {
                     return;
                 }
 
@@ -194,6 +183,16 @@ export class ClickedElementHandle extends ElementHandle {
                     this.enableSettingsDuplicate();
                 }
 
+
+                let liveEditEventEditElement = new CustomEvent('JsLiveEdit::EditElement', {
+                    detail: {
+                        element: clickedElement,
+                        elementType: clickedElement.tagName,
+                        classList: clickedElement.classList,
+                    }
+                })
+                this.iframeManager.document.dispatchEvent(liveEditEventEditElement);
+
                 let liveEditEvent = new CustomEvent('JsLiveEdit::ElementChange', {
                     detail: {
                         element: clickedElement,
@@ -203,7 +202,7 @@ export class ClickedElementHandle extends ElementHandle {
                 })
                 document.dispatchEvent(liveEditEvent);
 
-                let flexGridElementContent = elementHasParentsWithAttribute(clickedElement, 'webesembly:flex-grid-element-content');
+                let flexGridElementContent = elementHasParentsWithClass(clickedElement, 'webesembly-flex-grid-element-content');
 
                 console.log(clickedElement);
 
