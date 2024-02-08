@@ -85,8 +85,7 @@ export class LiveEdit {
                         gridTemplateRows: '20',
                     },
                     backgroundSettings: {
-                        backgroundColor: '',
-                        backgroundImage: '',
+                        image: '',
                     },
                     content: []
                 };
@@ -94,8 +93,7 @@ export class LiveEdit {
                 let sectionId = sectionElement.classList.item(1).replace('webesembly-section-', '');
 
                 let sectionComputedStyle = getComputedStyle(sectionElement);
-                sectionObject.backgroundSettings.backgroundColor = sectionComputedStyle.backgroundColor;
-                sectionObject.backgroundSettings.backgroundImage = sectionComputedStyle.backgroundImage;
+                sectionObject.backgroundSettings.image = sectionComputedStyle.backgroundImage;
 
                 let sectionFlexGridComputedStyle = getComputedStyle(sectionElement.querySelector('.webesembly-flex-grid'));
                 let sectionGridTemplateColumns = '20';
