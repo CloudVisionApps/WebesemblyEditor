@@ -84,27 +84,34 @@ export class LiveEdit {
                         gridTemplateColumns: '20',
                         gridTemplateRows: '20',
                     },
-                    backgroundSettings: {},
+                    backgroundSettings: {
+                        backgroundColor: '',
+                        backgroundImage: '',
+                    },
                     content: []
                 };
 
                 let sectionId = sectionElement.classList.item(1).replace('webesembly-section-', '');
 
-                let sectionComputedStyle = getComputedStyle(sectionElement.querySelector('.webesembly-flex-grid'));
+                let sectionComputedStyle = getComputedStyle(sectionElement);
+                sectionObject.backgroundSettings.backgroundColor = sectionComputedStyle.backgroundColor;
+                sectionObject.backgroundSettings.backgroundImage = sectionComputedStyle.backgroundImage;
+
+                let sectionFlexGridComputedStyle = getComputedStyle(sectionElement.querySelector('.webesembly-flex-grid'));
                 let sectionGridTemplateColumns = '20';
                 let sectionGridTemplateRows = '20';
                 let sectionGridGap = '12';
 
-                if (sectionComputedStyle.gridTemplate) {
-                    let parseSectionGridTemplate = sectionComputedStyle.gridTemplate;
+                if (sectionFlexGridComputedStyle.gridTemplate) {
+                    let parseSectionGridTemplate = sectionFlexGridComputedStyle.gridTemplate;
                     let parseSectionGridTemplateColumns = parseSectionGridTemplate.split('/')[0].trim();
                     let parseSectionGridTemplateRows = parseSectionGridTemplate.split('/')[1].trim();
                     sectionGridTemplateColumns = parseSectionGridTemplateColumns.replace('repeat(', '').replace(')', '').split(',')[0].trim();
                     sectionGridTemplateRows = parseSectionGridTemplateRows.replace('repeat(', '').replace(')', '').split(',')[0].trim();
                 }
 
-                if (sectionComputedStyle.gridGap) {
-                    sectionGridGap = sectionComputedStyle.gridGap;
+                if (sectionFlexGridComputedStyle.gridGap) {
+                    sectionGridGap = sectionFlexGridComputedStyle.gridGap;
                 }
 
                 sectionObject.gridSettings.gridGap = sectionGridGap;
